@@ -1,0 +1,19 @@
+{
+    "type": "project",
+    "name": "singular-project",
+    "description": "Projeto base Singular Framework da Net On",
+    "authors": [
+      {
+        "name": "Otávio Fernandes",
+        "email": "otavio@netonsolucoes.com.br"
+      }
+    ],
+    "autoload": {
+      "psr-0": {"" : "src/"}
+    },
+    "require": {
+        "singular/singular": "~1.0",
+        "symfony/console": "~2.6",
+        "symfony/filesystem": "2.5.*@dev"
+    }
+}

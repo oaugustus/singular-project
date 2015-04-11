@@ -1,0 +1,7 @@
+{
+  "db.name": "database",
+  "db.host": "host",
+  "db.user": "user",
+  "db.pass": "pass",
+  "db.charset": "charset"
+}
