@@ -4,7 +4,7 @@ $app->register(new \Silex\Provider\TwigServiceProvider(), array(
 ));
 
 $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
-    $twig->addGlobal('jsloader', $app['jsloader']);
+    $twig->addGlobal('injector', $app['injector']);
 
     return $twig;
 }));

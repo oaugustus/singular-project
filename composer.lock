@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f5f0bd3287ce0065a758186567f7633f",
+    "hash": "171722e940d54be980972d8baae5333c",
     "packages": [
         {
             "name": "doctrine/common",
@@ -422,6 +422,42 @@
                 "microframework"
             ],
             "time": "2013-07-04 07:15:36"
+        },
+        {
+            "name": "singular/injector",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oaugustus/injector.git",
+                "reference": "488eb81919b00681a447e4f0606d175fea458e49"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oaugustus/injector/zipball/488eb81919b00681a447e4f0606d175fea458e49",
+                "reference": "488eb81919b00681a447e4f0606d175fea458e49",
+                "shasum": ""
+            },
+            "require": {
+                "silex/silex": "1.1",
+                "symfony/filesystem": "2.5.*@dev",
+                "symfony/finder": "2.*",
+                "tedivm/jshrink": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Injector": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "A JavaScript dinamic loader service to Silex.",
+            "keywords": [
+                "assets",
+                "dinamic",
+                "loading",
+                "silex"
+            ],
+            "time": "2015-04-12 17:20:10"
         },
         {
             "name": "singular/singular",
@@ -1000,6 +1036,52 @@
             "time": "2015-03-28 16:22:38"
         },
         {
+            "name": "tedivm/jshrink",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tedious/JShrink.git",
+                "reference": "7575d9d96f113bc7c1c28ec8231ee086751a9078"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tedious/JShrink/zipball/7575d9d96f113bc7c1c28ec8231ee086751a9078",
+                "reference": "7575d9d96f113bc7c1c28ec8231ee086751a9078",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "0.4.0",
+                "phpunit/phpunit": "4.0.*",
+                "satooshi/php-coveralls": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "JShrink": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Robert Hafner",
+                    "email": "tedivm@tedivm.com"
+                }
+            ],
+            "description": "Javascript Minifier built in PHP",
+            "homepage": "http://github.com/tedious/JShrink",
+            "keywords": [
+                "javascript",
+                "minifier"
+            ],
+            "time": "2014-11-11 03:54:14"
+        },
+        {
             "name": "twig/twig",
             "version": "v1.18.0",
             "source": {
@@ -1059,9 +1141,10 @@
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
-        "symfony/filesystem": 20
+        "symfony/filesystem": 20,
+        "singular/injector": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

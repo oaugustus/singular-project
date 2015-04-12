@@ -1,6 +1,6 @@
 {
     "type": "project",
-    "name": "singular-project",
+    "name": "singular/singular-project",
     "description": "Projeto base Singular Framework da Net On",
     "authors": [
       {
@@ -8,12 +8,14 @@
         "email": "otavio@netonsolucoes.com.br"
       }
     ],
+    "minimum-stability": "dev",
     "autoload": {
       "psr-0": {"" : "src/"}
     },
     "require": {
         "singular/singular": "~1.0",
         "symfony/console": "~2.6",
-        "symfony/filesystem": "2.5.*@dev"
+        "symfony/filesystem": "2.5.*@dev",
+        "singular/injector": "dev-master"
     }
 }

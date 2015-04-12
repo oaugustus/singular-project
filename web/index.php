@@ -7,7 +7,7 @@ $app = new Singular\Application(array(
     "base_dir"=>__DIR__.'/../',
     "web_dir"=>__DIR__,
     "js_dir" => __DIR__."/src",
-    "deploy_path" => "deploy/",
+    "deploy_path" => __DIR__."/deploy",
     "env"=>'prod'
 ));
 
