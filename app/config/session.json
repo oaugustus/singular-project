@@ -2,5 +2,6 @@
   "session.storage.options": {
     "name": "SINGULAR_PROJECT",
     "id": "SINGULAR_PROJECT"
-  }
+  },
+  "session.name": ""
 }

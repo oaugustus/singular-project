@@ -26,6 +26,7 @@ $console
             $tpl = file_get_contents(__DIR__."/templates/Store.tpl");
             $tpl = str_replace('$PACKNAMESPACE', $namespace, $tpl);
             $tpl = str_replace('$SERVICE', ucfirst($input->getArgument('name')), $tpl);
+            $tpl = str_replace('$_table', strtolower($input->getArgument('name')), $tpl);
 
             if (!$fs->exists($ctrlDir.ucfirst($input->getArgument('name')).".php")){
                 //$output->write($ctrlDir.ucfirst($input->getArgument('name')));

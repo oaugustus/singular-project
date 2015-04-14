@@ -16,5 +16,5 @@ use Singular\Annotation\Parameter;
  */
 class $SERVICE extends SingularStore
 {
-
+    protected $table = '$_table';
 }
