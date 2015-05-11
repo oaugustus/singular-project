@@ -7,6 +7,7 @@ vendor/*
 */cache/*
 web/uploads/*
 web/bundles/*
+web/deploy/*
 
 #phpstorm
 .idea/*

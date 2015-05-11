@@ -1,0 +1,17 @@
+<!-- list -->
+<ul class="nav" ng-repeat="app in session.menu">
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span>{{app.aplicacao}}</span>
+    </li>
+
+    <li ui-sref-active="active" ng-repeat="mod in app.modules">
+        <a ui-sref="{{mod.ui-sref}}" class="auto">
+            <i class="{{mod.icon_cls}} icon"></i>
+            <span>{{mod.modulo}}</span>
+        </a>
+        <ul class="nav nav-sub dk"></ul>
+    </li>
+
+    <li class="line dk" ng-if="!$last"></li>
+</ul>
+<!-- / list -->
