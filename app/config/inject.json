@@ -1,0 +1,7 @@
+{
+  "inject.vendor": "assets/vendor",
+  "inject.css": "assets/css",
+  "inject.ui": "src/ui",
+  "inject.login": "src/login",
+  "inject.secure": "src/secure"
+}
