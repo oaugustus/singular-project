@@ -7,7 +7,7 @@ $app->before(function (Request $request) use ($app) {
 
     if ($session) {
         foreach ($session as $key => $value) {
-            $request->request->set($key, $value);
+            $request->request->set("session.".$key, $value);
         }
     }
 });

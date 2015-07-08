@@ -5,17 +5,19 @@
             <strong>Crie sua conta agora</strong>
         </div>
         <form name="form" class="form-validation">
-            <div class="text-danger wrapper text-center" ng-show="authError">
-                {{authError}}
-            </div>
+            <alert type="danger" close="registerError=false;" ng-show="registerError"><b>{{errorMessage}}</b></alert>
+
             <div class="list-group list-group-sm">
-                <div class="list-group-item">
-                    <input placeholder="Nome" class="form-control no-border" ng-model="user.name" required>
+                <div class="list-group-item required">
+                    <label><i class="fa fa-user"></i> Nome</label>
+                    <input placeholder="Nome" autofocus class="form-control no-border" ng-model="user.name" required>
                 </div>
-                <div class="list-group-item">
+                <div class="list-group-item required">
+                    <label><i class="fa fa-envelope"></i> Email</label>
                     <input type="email" placeholder="Email" class="form-control no-border" ng-model="user.email" required>
                 </div>
-                <div class="list-group-item">
+                <div class="list-group-item required">
+                    <label><i class="fa fa-key"></i> Senha</label>
                     <input type="password" placeholder="Senha" class="form-control no-border" ng-model="user.pass" required>
                 </div>
             </div>

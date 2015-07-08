@@ -7,7 +7,8 @@
     }
 
     var module = angular.module('app.secure', ['ngAnimate', 'ngCookies', 'ngResource', 'ngSanitize',
-            'ngTouch', 'ngStorage', 'ui.router', 'ui.bootstrap', 'singular.ui'
+            'ngTouch', 'ngStorage', 'ui.router', 'ui.bootstrap', 'singular.ui','upload.button',
+            'lr.upload','angularMoment', 'ui.utils.masks'
         ]
     );
 

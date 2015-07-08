@@ -29,6 +29,9 @@
                 templateUrl: getView('registro')
             });
 
-    }]);
+    }])
+        .run(function(){
+            $.backstretch("assets/img/bg.jpg");
+        });
 
 }());

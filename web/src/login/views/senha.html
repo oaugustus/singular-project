@@ -6,8 +6,9 @@
         </div>
         <form name="reset" ng-init="isCollapsed=true">
             <div class="list-group list-group-sm">
-                <div class="list-group-item">
-                    <input type="email" placeholder="Email" ng-model="email" class="form-control no-border" required>
+                <div class="list-group-item required">
+                    <label><i class="fa fa-envelope"></i> Email</label>
+                    <input type="text" autofocus class="form-control" ng-model="user.email" required placeholder="Seu email">
                 </div>
             </div>
             <button type="submit" ng-disabled="reset.$invalid" class="btn btn-lg btn-primary btn-block"  ng-click="isCollapsed = !isCollapsed" >Enviar</button>

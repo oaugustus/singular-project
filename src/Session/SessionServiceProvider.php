@@ -3,6 +3,8 @@ namespace Session;
 
 
 use Singular\Provider\PackServiceProvider;
+use Silex\Application;
+use Session\Controller\Main;
 
 class SessionServiceProvider extends PackServiceProvider
 {

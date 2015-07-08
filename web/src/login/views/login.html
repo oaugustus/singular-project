@@ -5,17 +5,19 @@
       <strong>Login</strong>
     </div>
     <form name="form" class="form-validation">
-      <div class="text-danger wrapper text-center" ng-show="authError">
-          {{authError}}
-      </div>
-      <div class="list-group list-group-sm">
-        <div class="list-group-item">
-          <input type="email" placeholder="Email" class="form-control no-border" ng-model="user.email" required>
+        <alert type="danger" close="authError=false;" ng-show="authError"><b>Usuário ou senha inválidos!</b></alert>
+        <div class="list-group list-group-sm">
+            <div class="list-group-item required">
+                <label><i class="fa fa-envelope"></i> Email</label>
+                <input type="email" placeholder="Email" autofocus class="form-control no-border" ng-model="user.email" required>
+            </div>
+            <div class="list-group-item required">
+                <label><i class="fa fa-key"></i> Senha</label>
+                <input type="password" placeholder="Senha" class="form-control no-border" ng-model="user.pass" required>
+            </div>
         </div>
-        <div class="list-group-item">
-           <input type="password" placeholder="Senha" class="form-control no-border" ng-model="user.pass" required>
-        </div>
-      </div>
+
+        <div class="clear"></div>
       <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="login()" ng-disabled='form.$invalid'>Acessar</button>
       <div class="text-center m-t m-b"><a ui-sref="recover">Esqueci a senha</a></div>
       <div class="line line-dashed"></div>
