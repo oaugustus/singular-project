@@ -37,8 +37,46 @@ class Modulo extends SingularStore
             ->from($this->table,'t')
             ->where('t.aplicacao_id = '.$aplicacaoId)
             ->andWhere('t.ativo = "1"')
+            ->andWhere('t.modulo_id IS NULL')
             ->orderBy('t.ordem','ASC');
 
-        return $this->db->fetchAll($qb->getSQL());
+        $rs = $this->db->fetchAll($qb->getSQL());
+        $modulos = array();
+
+        foreach ($rs as $modulo){
+            $modulo['modulos'] = $this->getSubModulos($modulo['id']);
+
+            $modulos[] = $modulo;
+        }
+
+        return $modulos;
+    }
+
+    /**
+     * Recupera a relação de submódulos de um determinado módulo.
+     *
+     * @param $moduloId
+     *
+     * @return array
+     */
+    private function getSubModulos($moduloId)
+    {
+        $qb = $this->db->createQueryBuilder();
+
+        $qb->select('m.*')
+            ->from($this->table,'m')
+            ->where('m.modulo_id = '.$moduloId)
+            ->orderBy('m.ordem','ASC');
+
+        $rs = $this->db->fetchAll($qb->getSQL());
+
+        $modulos = array();
+
+        foreach ($rs as $modulo) {
+            $modulo['modulos'] = $this->getSubModulos($modulo['id']);
+            $modulos[] = $modulo;
+        }
+
+        return $modulos;
     }
 }

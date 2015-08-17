@@ -5,11 +5,20 @@
     </li>
 
     <li ui-sref-active="active" ng-repeat="mod in app.modules">
-        <a ui-sref="{{mod.ui_sref}}" class="auto">
+        <a class="auto" ng-if="mod.modulos.length > 0">
+              <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+              </span>
+
             <i class="{{mod.icon_cls}} icon"></i>
             <span>{{mod.modulo}}</span>
         </a>
-        <ul class="nav nav-sub dk"></ul>
+        <a ui-sref="{{mod.ui_sref}}" class="auto" ng-if="mod.modulos.length == 0">
+            <i class="{{mod.icon_cls}} icon"></i>
+            <span>{{mod.modulo}}</span>
+        </a>
+        <ul class="nav nav-sub dk" ng-if="mod.modulos.length > 0" ng-include="'src/ui/views/submodulo.html'" ng-init="modulos = mod.modulos; name = mod.modulo;"></ul>
     </li>
 
     <li class="line dk" ng-if="!$last"></li>
