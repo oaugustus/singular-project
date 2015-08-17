@@ -2,5 +2,5 @@
 Startup base e rápido para projetos da Net On com singular framework. 
 ## Instalação
 
-```composer create-project singular/singular-project nomedoprojeto --stability=dev
+``composer create-project singular/singular-project nomedoprojeto --stability=dev
 
