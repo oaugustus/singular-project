@@ -66,6 +66,7 @@ class Modulo extends SingularStore
         $qb->select('m.*')
             ->from($this->table,'m')
             ->where('m.modulo_id = '.$moduloId)
+            ->andWhere('m.ativo = "1"')
             ->orderBy('m.ordem','ASC');
 
         $rs = $this->db->fetchAll($qb->getSQL());
