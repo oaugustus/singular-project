@@ -17,7 +17,8 @@
         $urlRouterProvider.otherwise('/app/dashboard');
 
         $stateProvider.state('app.dashboard', {
-            url: '/dashboard'
+            url: '/dashboard',
+            menu: 'configuracao'
         });
 
 
