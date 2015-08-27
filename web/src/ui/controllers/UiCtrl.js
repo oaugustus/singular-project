@@ -10,7 +10,7 @@
      * @param $window
      * @constructor
      */
-    var UiCtrl = function($scope, $localStorage, $window, SweetAlert, Session, Notification)
+    var UiCtrl = function($scope, $rootScope, $state, $localStorage, $window, SweetAlert, Session, Notification)
     {
         $scope.logout = function(){
             SweetAlert.swal({
@@ -31,6 +31,13 @@
                 });
         }
 
+        $rootScope.$on('$stateChangeStart',
+            function(event, toState, toParams, fromState, fromParams){
+                $scope.selectedModule = toState.menu || toState.name;
+            })
+
+        $scope.selectedModule = $state.current.menu || $state.current.name;
+
         $scope.session = Session;
 
         $scope.notification = Notification
@@ -43,5 +50,5 @@
 
     }
 
-    angular.module('singular.ui').controller('ui.UiCtrl',['$scope','$localStorage','$window','SweetAlert','ui.Session','ui.Notification', UiCtrl]);
+    angular.module('singular.ui').controller('ui.UiCtrl',['$scope','$rootScope','$state','$localStorage','$window','SweetAlert','ui.Session','ui.Notification', UiCtrl]);
 }());
