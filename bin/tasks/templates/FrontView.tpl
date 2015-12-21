@@ -6,7 +6,7 @@
                     <i class="fa fa-plus"></i> Novo
                 </button>
                 <div class="font-normal h3">
-                    <i class="fa fa-puzzle-piece"></i> $name
+                    <i class="fa fa-puzzle-piece"></i> $title
                 </div>
             </div>
 

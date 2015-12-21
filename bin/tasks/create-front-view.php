@@ -10,7 +10,7 @@ $console
     ->setDefinition(array(
         new InputArgument("view",InputArgument::REQUIRED),
         new InputArgument("dest",InputArgument::REQUIRED),
-        new InputOption("name", null, InputOption::VALUE_OPTIONAL)
+        new InputOption("title", null, InputOption::VALUE_OPTIONAL)
         //new InputOption('some-option', null, InputOption::VALUE_NONE, 'Some help'),
     ))
     ->setDescription('Cria uma nova view de front-end')
@@ -19,7 +19,7 @@ $console
 
         $view = $input->getArgument("view");
         $dest = strtolower($input->getArgument("dest"));
-        $name = $input->getOption('name');
+        $title = $input->getOption('title');
 
 
         $destDir = $app['web_dir']."/src/".$dest."/views/";
@@ -27,7 +27,7 @@ $console
         if ($fs->exists($destDir)) {
 
             $tpl = file_get_contents(__DIR__."/templates/FrontView.tpl");
-            $tpl = str_replace('$name', $name, $tpl);
+            $tpl = str_replace('$title', $title, $tpl);
 
             $fs->dumpFile($destDir.$view.".html", $tpl);
 

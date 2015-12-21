@@ -1,8 +1,9 @@
 <?php
 namespace $PACKNAMESPACE\Controller;
 
-use Singular\SingularController;
 use Symfony\Component\HttpFoundation\Request;
+use Singular\SingularController;
+use Singular\Crud;
 use Singular\Annotation\Controller;
 use Singular\Annotation\Route;
 use Singular\Annotation\Direct;
@@ -21,13 +22,12 @@ use Singular\Annotation\Before;
  */
 class $CONTROLLER extends SingularController
 {
+    use Crud;
 
     /**
-     * @Route(method="get")
-     * @param Request $request
+     * Defina o store padrão do controlador.
+     *
+     * @var $store
      */
-    public function metodo(Request $request)
-    {
-        return "resposta";
-    }
+    protected $store = '';
 }
