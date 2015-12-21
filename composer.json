@@ -16,6 +16,7 @@
         "singular/singular": "~1.1",
         "symfony/console": "~2.6",
         "symfony/filesystem": "2.5.*@dev",
-        "singular/injector": "dev-master"
+        "singular/injector": "dev-master",
+        "mpdf/mpdf": "dev-master"
     }
 }

@@ -19,3 +19,4 @@ app/config/parameters.yml
 # Composer
 composer.phar
 .c9/
+composer.lock
