@@ -21,11 +21,7 @@
          * @param {Function} callback
          */
         me.requestLogin = function(data, callback){
-            $http.post('session/session/login', data).success(function(response){
-                if (response.success) {
-                    self.location.reload();
-                }
-            })
+            $http.post('session/session/login', data).success(callback)
         }
 
         return me;

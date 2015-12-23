@@ -55,5 +55,5 @@
         };
     }
 
-    angular.module('singular.ui').directive('',['uiJqConfig', '$timeout', uiJq]).value('uiJqConfig', {});
+    //angular.module('singular.ui').directive('',['uiJqConfig', '$timeout', uiJq]).value('uiJqConfig', {});
 }());

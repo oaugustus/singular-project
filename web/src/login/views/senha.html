@@ -1,19 +1,37 @@
-<div class="container w-xl w-auto-xs" ng-init="app.settings.container = false;">
+<div class="container w-xxl w-auto-xs" ng-init="app.settings.container = false;">
     <a href class="navbar-brand block m-t">{{app.name}}</a>
     <div class="m-b-lg">
-        <div class="wrapper text-center">
-            <strong>Digite seu e-mail para recuperar sua senha</strong>
-        </div>
         <form name="reset" ng-init="isCollapsed=true">
-            <div class="list-group list-group-sm">
-                <div class="list-group-item required">
-                    <label><i class="fa fa-envelope"></i> Email</label>
-                    <input type="text" autofocus class="form-control" ng-model="user.email" required placeholder="Seu email">
+            <div class="card">
+                <div class="card-heading indigo primary dker">
+                    <h2 class="text-white">Recuperar senha</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row row-sm">
+                        <md-input-container class="md-icon-float col-sm-12 m-t-md m-b-sm">
+                            <label>Seu email</label>
+                            <md-icon>email</md-icon>
+                            <input ng-model="user.email" autofocus name="email" type="email" required ng-pattern="/^.+@.+\..+$/" ng-required="true">
+                            <div ng-messages="form.email.$error"  >
+                                <div ng-message-exp="['required',  'pattern']">
+                                    Você precisa informar um endereço de email válido
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
                 </div>
             </div>
-            <button type="submit" ng-disabled="reset.$invalid" class="btn btn-lg btn-primary btn-block"  ng-click="isCollapsed = !isCollapsed" >Enviar</button>
-            <div class="text-center m-t m-b"><a ui-sref="login">Voltar para o login</a></div>
+            <div class="clear"></div>
+            <md-button class="md-primary btn-block md-raised m-n"  ng-click="recover()" ng-disabled="form.$invalid">
+                Enviar
+            </md-button>
+            <div class="clear"></div>
         </form>
+        <br>
+        <md-button class="btn-block md-raised m-n"  ui-sref="login" >
+            Voltar para o login
+        </md-button>
+
         <div collapse="isCollapsed" class="m-t">
             <div class="alert alert-success">
                 <p>Um link para resetar sua senha foi enviado para o seu e-mail. <a ui-sref="access.signin" class="btn btn-sm btn-success">Acessar</a></p>
