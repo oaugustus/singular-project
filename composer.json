@@ -13,10 +13,21 @@
       "psr-0": {"" : "src/"}
     },
     "require": {
-        "singular/singular": "~1.1",
-        "symfony/console": "~2.6",
-        "symfony/filesystem": "2.5.*@dev",
+        "singular/singular": "dev-master",
         "singular/injector": "dev-master",
-        "mpdf/mpdf": "dev-master"
-    }
+        "singular/capsule": "dev-master",
+        "singular/command": "dev-master",
+        "robmorgan/phinx": "^0.8.1"
+    },
+    "repositories": [
+      {
+        "type": "vcs",
+        "url": "https://github.com/singularphp/Singular"
+      },
+      {
+        "type": "vcs",
+        "url": "https://github.com/singularphp/Injector"
+      }
+    ]
+
 }

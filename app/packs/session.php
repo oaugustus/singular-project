@@ -1,3 +1,4 @@
 <?php
+use Session\SessionServiceProvider;
 
-$app->register(new Session\SessionServiceProvider());
+$app->register(new SessionServiceProvider());

@@ -16,20 +16,15 @@ use Singular\Annotation\Parameter;
  */
 class Modulo extends SingularStore
 {
-    protected $conn = 'sqlite';
-    protected $table = 'modulo';
-
     /**
      * Recupera os módulos que um usuário possui privilégio de acesso.
      *
      * @param int $usuarioId
      * @param int $aplicacaoId
      *
-     * @todo implementar restrição da listagem de módulos de acordo com a permissão de acesso do usuário.
-     *
      * @return array
      */
-    public function getModulosByAplicacao($usuarioId, $aplicacaoId)
+    public function getModulosByAplicacao($perfilId, $aplicacaoId)
     {
         $qb = $this->db->createQueryBuilder();
 

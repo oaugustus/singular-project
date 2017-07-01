@@ -1,6 +1,7 @@
 <?php
 namespace Session\Store;
 
+use Session\Service\Session;
 use Singular\SingularStore;
 use Symfony\Component\HttpFoundation\Request;
 use Singular\Annotation\Service;
@@ -16,27 +17,18 @@ use Singular\Annotation\Parameter;
  */
 class Aplicacao extends SingularStore
 {
-    protected $conn = 'sqlite';
-    protected $table = 'aplicacao';
-
     /**
      * Recupera as aplicações que o usuário possui acesso.
      *
-     * @param int $usuarioId
-     *
-     * @todo Implementar restrição de listagem de acordo com o usuário ID.
+     * @param array $filter
+     * @param array $paging
      *
      * @return array
      */
-    public function getApplications($usuarioId)
+    public function filter($filter = [], $paging = [])
     {
-        $qb = $this->db->createQueryBuilder();
+        $aplicacao = \Session\Model\Aplicacao::class;
 
-        $qb->select('t.*')
-            ->from($this->table,'t')
-            ->where('t.ativo = "1"')
-            ->orderBy('t.ordem','ASC');
-
-        return $this->db->fetchAll($qb->getSQL());
+        return $aplicacao::ativos()->get();
     }
 }

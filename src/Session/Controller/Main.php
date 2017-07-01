@@ -11,6 +11,7 @@ use Singular\Annotation\Assert;
 use Singular\Annotation\Convert;
 use Singular\Annotation\After;
 use Singular\Annotation\Before;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Classe Main
@@ -80,6 +81,10 @@ class Main extends SingularController
     public function index(Request $request)
     {
         $app = $this->app;
+
+        if (php_sapi_name() === 'cli') {
+            return new Response();
+        }
 
         // redireciona o acesso para a página de autenticação
         return $app->redirect($app["url_generator"]->generate("auth"));

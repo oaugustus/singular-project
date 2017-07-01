@@ -3,19 +3,20 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 date_default_timezone_set ('America/Sao_Paulo');
 
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
 $app = new Singular\Application(array(
-    "base_dir"=>__DIR__.'/../',
-    "web_dir"=>__DIR__,
-    "src_dir" => __DIR__."/src",
-    "deploy_dir" => "deploy",
-    "env"=>'prod'
+    "singular.directory.root" =>__DIR__.'/../',
+    "singular.directory.app" =>__DIR__.'/../app/',
+    "singular.directory.src" => __DIR__."/../src",
+    "injector.directory.web" => __DIR__,
+    "injector.directory.src" => __DIR__."/src",
+    "injector.directory.deploy" => __DIR__."/deploy",
+    "env"=>'prod',
+    "debug" => true
 ));
 
-//$app->get('/', function()use($app){
-//    $app['debug'] = false;
-//   $app['injector']->inject('vendor');
-//    $app['injector']->inject('css','css');
-//    die();
-//});
-
 $app->run();
+
+return $app;

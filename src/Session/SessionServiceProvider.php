@@ -5,10 +5,19 @@ namespace Session;
 use Singular\Provider\PackServiceProvider;
 use Silex\Application;
 use Session\Controller\Main;
+use Pimple\Container;
 
 class SessionServiceProvider extends PackServiceProvider
 {
     protected $pack = 'session';
+
+    public function register(Container $app)
+    {
+    }
+
+    public function boot(Application $app)
+    {
+    }
 
     /**
      * Registra as rotas de inicialização da aplicação.
@@ -18,9 +27,9 @@ class SessionServiceProvider extends PackServiceProvider
     public function connect(Application $app)
     {
         // define o serviço do controlador principal
-        $app['session.controller.main'] = $app->share(function() use ($app) {
-            return new Main($app, $app['packs'][$this->getPackName()]);
-        });
+        $app['session.controller.main'] = function() use ($app) {
+            return new Main($app, $app['singular.packs'][$this->pack]);
+        };
 
         // define a rota de acesso autenticado da aplicação
         $app->get('/secure.app', 'session.controller.main:showSecure')->bind('secure');
@@ -30,5 +39,10 @@ class SessionServiceProvider extends PackServiceProvider
 
         // define a rota default do sistema
         $app->get('/', 'session.controller.main:index');
+    }
+
+    public function autoRegisterCommands()
+    {
+        echo "Registrou";
     }
 }
