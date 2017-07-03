@@ -1,16 +1,17 @@
 # Singular Project
 Startup base e rápido para projetos da Net On com Singular framework.
-## Instalação
+
+## 1. Criação de um novo projeto
 
 ```terminal
 composer create-project singular/singular-project nomedoprojeto --stability=dev
 ```
 
-## Configurações iniciais
+## 2. Configurações iniciais
 
 Após o projeto ser criado, é necessário realizar as configurações iniciais.
 
-### Inicialização do Phinx
+### 2.1 Inicialização do Phinx
 
 Para gerenciar as migrações de banco de dados da aplicação, o projeto baseado no Singular utiliza o
 [Phinx](https://phinx.org).
