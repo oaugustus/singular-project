@@ -11,7 +11,7 @@ use Singular\Annotation\Parameter;
  *
  * @Service
  *
- * @author Author <author@email.com>
+ * @author Otávio Fernandes <otavio@netonsolucoes.com.br>
  */
 class Perfil extends SingularStore
 {
