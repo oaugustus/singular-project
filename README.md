@@ -41,7 +41,7 @@ mysql em sua máquina. Exemplo de configuração
 ```
 + Em seguida, teste suas configurações:
 
-```terminal
+```shell
 vendor/bin/phinx test
 ..
 Phinx by Rob Morgan - https://phinx.org. 0.8.1
@@ -56,6 +56,6 @@ Se ocorrer algum erro, realize a alteração no arquivo e teste novamente até o
 Linux ou MacOS, basta digitar o seguinte comando, substituíndo o __seunome__ pelo nome que você colocou no
 arquivo de configuração:
 
-```terminal
+```shell
 export PHINX_ENVIRONMENT=dev-seunome
 ```
