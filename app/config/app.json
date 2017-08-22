@@ -1,3 +1,4 @@
 {
-  "debug": true
+  "debug": true,
+  "app.service.user": "session.service.usuario"
 }

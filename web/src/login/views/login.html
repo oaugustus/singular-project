@@ -12,18 +12,18 @@
                     <md-input-container class="md-icon-float col-sm-12 m-t-md m-b-sm">
                         <label>Email</label>
                         <md-icon>email</md-icon>
-                        <input ng-model="user.email" autofocus name="email" type="email" required ng-pattern="/^.+@.+\..+$/" ng-required="true">
-                        <div ng-messages="form.email.$error"  >
+                        <input ng-model="user.login" autofocus name="login" type="text" required ng-required="true">
+                        <div ng-messages="form.login.$error"  >
                             <div ng-message-exp="['required',  'pattern']">
-                                Você precisa informar um endereço de email válido
+                                Login obrigatório
                             </div>
                         </div>
                     </md-input-container>
                     <md-input-container class="md-icon-float col-sm-12 m-t-md m-b-sm">
                         <label>Senha</label>
                         <md-icon>lock</md-icon>
-                        <input ng-model="user.pass" name="pass" type="password" ng-required="true">
-                        <div ng-messages="form.pass.$error" role="alert">
+                        <input ng-model="user.senha" name="pass" type="password" ng-required="true">
+                        <div ng-messages="form.senha.$error" role="alert">
                             <ng-message when="required">
                                 Você precisa informar a senha
                             </ng-message>

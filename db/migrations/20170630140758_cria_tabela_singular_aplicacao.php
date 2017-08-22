@@ -38,7 +38,9 @@ class CriaTabelaSingularAplicacao extends AbstractMigration
                 'ativo',
                 'integer',
                 [
-                    'comment' => 'Se o registro da aplicação está ativo ou não. [1 = Ativo, 0 = Inativo]'
+                    'limit' => \Phinx\Db\Adapter\MysqlAdapter::INT_TINY,
+                    'comment' => 'Se o registro da aplicação está ativo ou não. [1 = Ativo, 0 = Inativo]',
+                    'default' => 1
                 ]
             );
 

@@ -1,3 +1,7 @@
 .ff-roboto{
     font-family: 'Roboto', 'PT Sans', sans-serif;
 }
+
+body {
+    background-color: transparent !important;
+}

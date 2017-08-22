@@ -18,7 +18,7 @@
             $scope.user.id = 1;
 
             Login.requestLogin($scope.user, function(response){
-                if (response.success) {
+                if (response.code == 200) {
                     self.location.reload();
                 } else {
                     $mdToast.show(

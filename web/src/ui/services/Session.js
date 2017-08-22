@@ -50,7 +50,7 @@
          * @param {Function} callback
          */
         me.logout = function(callback){
-            $http.post(UI.url + 'session/session/logout', {}).success(function(response){
+            $http.post(UI.url + 'sessao/sessao/logout', {}).success(function(response){
                 if (response.success) {
                     callback();
                 }

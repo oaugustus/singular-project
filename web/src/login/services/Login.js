@@ -21,11 +21,11 @@
          * @param {Function} callback
          */
         me.requestLogin = function(data, callback){
-            $http.post('session/session/login', data).success(callback)
-        }
+            $http.post('sessao/sessao/login', data).success(callback)
+        };
 
         return me;
-    }
+    };
 
     angular.module('app.login').factory('login.Login', ['$http','UI', LoginService]);
 }());
