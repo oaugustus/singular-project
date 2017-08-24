@@ -8,14 +8,14 @@
      * @author Otávio Fernandes <otavio@neton.com.br>
      */
     angular.module('app.login').controller(
-        'login.LoginCtrl',
+        'login.SenhaCtrl',
         [
             '$scope',
             'toaster',
             'login.Login',
             '$mdToast',
             'UI',
-            LoginCtrl
+            SenhaCtrl
         ]
     );
 
@@ -28,7 +28,7 @@
      * @param $mdToast
      * @constructor
      */
-    function LoginCtrl(
+    function SenhaCtrl(
         $scope,
         toaster,
         Login,
@@ -38,22 +38,6 @@
 
         $scope.appSettings = UI;
         
-        $scope.login = function() {
-
-            Login.requestLogin($scope.user, function(response){
-                if (response.code == 200) {
-                    self.location.reload();
-                } else {
-                    $mdToast.show(
-                        $mdToast.simple()
-                            .textContent('Usuário ou senha inválidos!')
-                            .position('top right')
-                            .hideDelay(3000)
-                    );
-                }
-
-            })
-        }
     }
 
 }());

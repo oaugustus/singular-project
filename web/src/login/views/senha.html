@@ -3,7 +3,7 @@
     <div class="m-b-lg">
         <form name="reset" ng-init="isCollapsed=true">
             <div class="card">
-                <div class="card-heading indigo primary dker">
+                <div class="card-heading {{appSettings.titleBarColor}} primary dker">
                     <h2 class="text-white">Recuperar senha</h2>
                 </div>
                 <div class="card-body">
@@ -22,13 +22,13 @@
                 </div>
             </div>
             <div class="clear"></div>
-            <md-button class="md-primary btn-block md-raised m-n"  ng-click="recover()" ng-disabled="form.$invalid">
+            <md-button class="{{appSettings.primaryButtonColor}} btn-block md-raised m-n"  ng-click="recover()" ng-disabled="form.$invalid">
                 Enviar
             </md-button>
             <div class="clear"></div>
         </form>
         <br>
-        <md-button class="btn-block md-raised m-n"  ui-sref="login" >
+        <md-button class="{{appSettings.secondaryButtonColor}} btn-block md-raised m-n"  ui-sref="login" >
             Voltar para o login
         </md-button>
 

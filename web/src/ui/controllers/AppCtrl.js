@@ -3,6 +3,22 @@
     'use strict';
 
     /**
+     * Controlador principal da aplicação.
+     *
+     * @author Otávio Fernandes <otavio@neton.com.br>
+     */
+    angular.module('singular.ui').controller(
+        'AppCtrl',
+        [
+            '$scope',
+            '$localStorage',
+            '$window',
+            'UI',
+            AppCtrl
+        ]
+    );
+
+    /**
      * Controlador principal da interface de usuário da aplicação.
      *
      * @param $scope
@@ -10,8 +26,12 @@
      * @param $window
      * @constructor
      */
-    var AppCtrl = function($scope, $localStorage, $window)
-    {
+    function AppCtrl(
+        $scope,
+        $localStorage,
+        $window,
+        UI
+    ) {
         // add 'ie' classes to html
         var isIE = !!navigator.userAgent.match(/MSIE/i);
         isIE && angular.element($window.document.body).addClass('ie');
@@ -19,37 +39,28 @@
 
         // config
         $scope.app = {
-            name: 'Singular',
-            version: '2.0.1',
-            // for chart colors
-            color: {
-                primary: '#7266ba',
-                info:    '#23b7e5',
-                success: '#27c24c',
-                warning: '#fad733',
-                danger:  '#f05050',
-                light:   '#e8eff0',
-                dark:    '#3a3f51',
-                black:   '#1c2b36'
-            },
+            name: UI.appName,
+            version: UI.appVersion,
             settings: {
-                themeID: 1,
-                navbarHeaderColor: 'bg-black',
-                navbarCollapseColor: 'bg-white-only',
-                asideColor: 'bg-black',
-                headerFixed: false,
-                asideFixed: false,
-                asideFolded: false,
-                asideDock: false,
-                container: false
+                navbarHeaderColor: UI.navbarHeaderColor,
+                navbarCollapseColor: UI.headerColor,
+                asideColor: UI.navbarColor,
+                headerFixed: UI.headerFixed,
+                asideFixed: UI.asideFixed,
+                asideFolded: UI.asideFolded,
+                asideDock: UI.asideDock,
+                container: UI.container,
+                titleBarColor: UI.titleBarColor,
+                primaryButtonColor: UI.primaryButtonColor,
+                secondaryButtonColor: UI.secondaryButtonColor
             }
-        }
+        };
 
         // save settings to local storage
         if ( angular.isDefined($localStorage.settings) ) {
-            $scope.app.settings = $localStorage.settings;
+            // $scope.app.settings = $localStorage.settings;
         } else {
-            $localStorage.settings = $scope.app.settings;
+            // $localStorage.settings = $scope.app.settings;
         }
 
         $scope.$watch('app.settings', function(){
@@ -58,7 +69,7 @@
                 $scope.app.settings.headerFixed = true;
             }
             // save to local storage
-            $localStorage.settings = $scope.app.settings;
+            // $localStorage.settings = $scope.app.settings;
         }, true);
 
         function isSmartDevice( $window )
@@ -71,5 +82,4 @@
 
     }
 
-    angular.module('singular.ui').controller('AppCtrl',['$scope','$localStorage','$window', AppCtrl]);
 }());

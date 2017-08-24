@@ -22,11 +22,8 @@
         })
             .state('recover', {
                 url: '/recuperarSenha',
+                controller: 'login.SenhaCtrl',
                 templateUrl: getView('senha')
-            })
-            .state('registro',{
-                url: '/registrar',
-                templateUrl: getView('registro')
             });
 
     }])

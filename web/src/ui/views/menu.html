@@ -18,9 +18,9 @@
             <i class="{{mod.icon_cls}} icon"></i>
             <span class="fs-14">{{mod.modulo}}</span>
         </a>
-        <ul class="nav nav-sub dk" ng-if="mod.modulos.length > 0" ng-include="'src/ui/views/submodulo.html'" ng-init="modulos = mod.modulos; name = mod.modulo;"></ul>
+        <ul class="nav nav-sub dk" ng-if="mod.modulos.length >= 0" ng-include="'src/ui/views/submodulo.html'" ng-init="modulos = mod.modulos; name = mod.modulo;"></ul>
     </li>
 
-    <li class="line dk" ng-if="!$last"></li>
+    <!--<li class="line dk" ng-if="!$last"></li>-->
 </ul>
 <!-- / list -->

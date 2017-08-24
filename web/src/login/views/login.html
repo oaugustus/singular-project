@@ -4,7 +4,7 @@
     <form name="form" class="form-validation">
 
         <div class="card">
-            <div class="card-heading indigo primary dker">
+            <div class="card-heading {{appSettings.titleBarColor}}">
                 <h2 class="text-white">Login</h2>
             </div>
             <div class="card-body">
@@ -34,14 +34,14 @@
             </div>
         </div>
         <div class="clear"></div>
-        <md-button class="md-primary btn-block md-raised m-n"  ng-click="login()" ng-disabled="form.$invalid">
+        <md-button class="{{appSettings.primaryButtonColor}} btn-block md-raised m-n"  ng-click="login()" ng-disabled="form.$invalid">
             Acessar
         </md-button>
 
         <div class="text-center m-t m-b"><a ui-sref="recover">Esqueci a senha</a></div>
         <div class="line line-dashed"></div>
         <p class="text-center"><small>Não tem uma conta ainda?</small></p>
-        <md-button class="btn-block md-raised m-n"  ui-sref="registro" >
+        <md-button class="{{appSettings.secondaryButtonColor}} btn-block md-raised m-n"  ui-sref="registro" >
             Criar uma conta
         </md-button>
 

@@ -5,6 +5,7 @@
   "inject.login": "src/login",
   "inject.secure": "src/secure",
   "inject.app_less": "assets/less/app.less",
+  "inject.md_less": "assets/less/md.less",
   "injector.compile": false,
   "injector.minify": false
 }

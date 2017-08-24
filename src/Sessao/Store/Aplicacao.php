@@ -18,5 +18,16 @@ use Singular\Annotation\Parameter;
  */
 class Aplicacao extends SingularStore
 {
+    /**
+     * Tabela relacionada no banco de dados.
+     *
+     * @var string
+     */
     protected $table = 'singular_aplicacao';
+
+    protected $profiles = [
+        'default' => [
+            'filters' => ['t.ativo' => 1]
+        ]
+    ];
 }
