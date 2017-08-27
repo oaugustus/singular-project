@@ -52,7 +52,9 @@
                 container: UI.container,
                 titleBarColor: UI.titleBarColor,
                 primaryButtonColor: UI.primaryButtonColor,
-                secondaryButtonColor: UI.secondaryButtonColor
+                secondaryButtonColor: UI.secondaryButtonColor,
+                showFilterModule: UI.showFilterModule,
+                asideCollapsible: UI.asideCollapsible
             }
         };
 

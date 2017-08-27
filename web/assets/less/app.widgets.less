@@ -4,19 +4,20 @@
 .list-icon div:hover i{font-size:26px;}
 
 // settings
-.settings{
-	z-index: 1050;
+.filters{
+	z-index: 100;
 	position: fixed;
-	top: 120px;
-	right: -240px;
-	width: 240px;
+	top: 50px;
+	right: -380px;
+	width: 380px;
+	height: 100% !important;
 	.transition(all 0.2s);
 }
-.settings.active{
+.filters.active{
 	right: -1px;
 }
 
-.settings > .btn{
+.filters > .btn{
 	background: @panel-heading-bg !important;
 	border-right-width: 0;
 	border-color: @border-color;
@@ -26,14 +27,20 @@
 	padding: 10px 15px;
 }
 
-.settings .i-checks span b{
+.filters .i-checks span b{
 	width: 50%;
 	height: 20px;
 	display: inline-block;
 	float: left;
 }
-.settings .i-checks span b.header{
+.filters .i-checks span b.header{
 	height: 10px;
+}
+
+.filters .panel-body{
+	height: 100%;
+	padding: 0px;
+	padding-bottom: 96px;
 }
 
 // streamline

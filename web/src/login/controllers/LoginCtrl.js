@@ -36,11 +36,30 @@
         UI
     ) {
 
+        /**
+         * Configurações da aplicação.
+         *
+         * @type {object}
+         */
         $scope.appSettings = UI;
-        
+
+        /**
+         * Variável utilizada para desabilitar o botão enquanto espera pelo carregamento.
+         *
+         * @type {boolean}
+         */
+        $scope.waiting = false;
+
+        /**
+         * Efetua a validação da autenticação do usuário.
+         */
         $scope.login = function() {
 
+            $scope.waiting = true;
+
             Login.requestLogin($scope.user, function(response){
+                $scope.waiting = false;
+
                 if (response.code == 200) {
                     self.location.reload();
                 } else {

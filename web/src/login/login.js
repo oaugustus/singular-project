@@ -2,16 +2,48 @@
 {
     'use strict';
 
-    var getView = function(view){
-        return 'src/login/views/' + view + '.html';
-    }
-
-    var module = angular.module('app.login', ['ngAnimate', 'ngCookies', 'ngResource', 'ngSanitize',
-            'ngTouch', 'ngStorage', 'ui.router', 'ui.bootstrap', 'singular.ui','ngMaterial','ngMessages'
+    /**
+     * Módulo de login da aplicação.
+     *
+     * @author Otávio Fernandes <otavio@neton.com.br>
+     */
+    angular.module(
+        'app.login',
+        [
+            'ngAnimate',
+            'ngCookies',
+            'ngResource',
+            'ngSanitize',
+            'ngTouch',
+            'ngStorage',
+            'ui.router',
+            'ui.bootstrap',
+            'singular.ui',
+            'ngMaterial',
+            'ngMessages'
         ]
-    );
+    )
+        .config(
+            [
+                '$stateProvider',
+                '$urlRouterProvider',
+                configFn
+            ]
+        )
+        .run(function(){
+            $.backstretch("assets/img/bg-triangles.jpg");
+        });
 
-    module.config(['$stateProvider','$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+    /**
+     * Definição da função de configuração do módulo.
+     *
+     * @param $stateProvider
+     * @param $urlRouterProvider
+     */
+    function configFn(
+        $stateProvider,
+        $urlRouterProvider
+    ) {
 
         $urlRouterProvider.otherwise('/login');
 
@@ -26,9 +58,17 @@
                 templateUrl: getView('senha')
             });
 
-    }])
-        .run(function(){
-            $.backstretch("assets/img/bg.jpg");
-        });
+    }
+
+    /**
+     * Retorna o caminho completo para um template.
+     *
+     * @param view
+     * @returns {string}
+     */
+    function getView(view){
+        return 'src/login/views/' + view + '.html';
+    }
+
 
 }());

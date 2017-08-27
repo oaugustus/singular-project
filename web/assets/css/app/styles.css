@@ -2,6 +2,11 @@
     font-family: 'Roboto', 'PT Sans', sans-serif;
 }
 
-body {
-    background-color: transparent !important;
+.logo-login-wrapper{
+    text-align: center;
+    padding: 20px;
+}
+
+.logo-login{
+    height: 100px !important;
 }

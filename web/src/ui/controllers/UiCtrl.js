@@ -3,16 +3,66 @@
     'use strict';
 
     /**
-     * Controlador da principal do sistema.
+     * Controlador responsável pela interface principal do sistema.
+     *
+     * @author Otávio Fernandes <otavio@neton.com.br>
+     */
+    angular.module('singular.ui').controller(
+        'ui.UiCtrl',
+        [
+            '$scope',
+            '$rootScope',
+            '$state',
+            '$localStorage',
+            '$window',
+            'SweetAlert',
+            'ui.Session',
+            'ui.Notification',
+            UiCtrl
+        ]
+    );
+
+    /**
+     * Função de definição do controlador.
      *
      * @param $scope
+     * @param $rootScope
+     * @param $state
      * @param $localStorage
      * @param $window
+     * @param SweetAlert
+     * @param Session
+     * @param Notification
      * @constructor
      */
-    var UiCtrl = function($scope, $rootScope, $state, $localStorage, $window, SweetAlert, Session, Notification)
-    {
-        $scope.logout = function(){
+    function UiCtrl(
+        $scope,
+        $rootScope,
+        $state,
+        $localStorage,
+        $window,
+        SweetAlert,
+        Session,
+        Notification
+    ) {
+        /**
+         * Referência ao serviço de sessão.
+         *
+         * @type {Session}
+         */
+        $scope.session = Session;
+
+        /**
+         * Referência ao serviço de notificação.
+         *
+         * @type {Notification}
+         */
+        $scope.notification = Notification
+
+        /**
+         * Confirma e efetua o encerramento da sessão do usuário logado.
+         */
+        $scope.logout = function() {
             SweetAlert.swal({
                     title: "Sair",
                     text: "Deseja realmente sair do sistema?",
@@ -29,26 +79,17 @@
                         });
                     }
                 });
-        }
+        };
 
-        $rootScope.$on('$stateChangeStart',
-            function(event, toState, toParams, fromState, fromParams){
-                $scope.selectedModule = toState.menu || toState.name;
-            })
 
-        $scope.selectedModule = $state.current.menu || $state.current.name;
-
-        $scope.session = Session;
-
-        $scope.notification = Notification
-
+        /*
+         Exemplo de inclusão de notificação na pilha
         $scope.notification.addNotification({
             message: 'Notificação 1',
             date: new Date()
-        });
+        });*/
 
 
     }
 
-    angular.module('singular.ui').controller('ui.UiCtrl',['$scope','$rootScope','$state','$localStorage','$window','SweetAlert','ui.Session','ui.Notification', UiCtrl]);
 }());

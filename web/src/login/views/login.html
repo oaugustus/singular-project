@@ -1,7 +1,9 @@
 <div class="container w-xxl w-auto-xs" ng-init="app.settings.container = false;">
-  <a href class="navbar-brand block m-t-lg ff-roboto">{{app.name}}</a>
+  <div class="logo-login-wrapper">
+      <img src="assets/img/logo-login.png" class="logo-login">
+  </div>
   <div class="m-b-lg">
-    <form name="form" class="form-validation">
+    <form name="form" class="form-validation" ng-submit="login()">
 
         <div class="card">
             <div class="card-heading {{appSettings.titleBarColor}}">
@@ -10,9 +12,9 @@
             <div class="card-body">
                 <div class="row row-sm">
                     <md-input-container class="md-icon-float col-sm-12 m-t-md m-b-sm">
-                        <label>Email</label>
-                        <md-icon>email</md-icon>
-                        <input ng-model="user.login" autofocus name="login" type="text" required ng-required="true">
+                        <label>Login</label>
+                        <md-icon>person</md-icon>
+                        <input ng-model="user.login" autofocus name="login" type="text" ng-required="true">
                         <div ng-messages="form.login.$error"  >
                             <div ng-message-exp="['required',  'pattern']">
                                 Login obrigatório
@@ -34,15 +36,15 @@
             </div>
         </div>
         <div class="clear"></div>
-        <md-button class="{{appSettings.primaryButtonColor}} btn-block md-raised m-n"  ng-click="login()" ng-disabled="form.$invalid">
-            Acessar
+        <md-button class="{{appSettings.primaryButtonColor}} btn-block md-raised m-n" type="submit"  ng-disabled="form.$invalid || waiting">
+            <span ng-if="!waiting">Acessar</span>
+            <span ng-if="waiting">Validando...</span>
         </md-button>
 
-        <div class="text-center m-t m-b"><a ui-sref="recover">Esqueci a senha</a></div>
         <div class="line line-dashed"></div>
-        <p class="text-center"><small>Não tem uma conta ainda?</small></p>
-        <md-button class="{{appSettings.secondaryButtonColor}} btn-block md-raised m-n"  ui-sref="registro" >
-            Criar uma conta
+
+        <md-button class="{{appSettings.secondaryButtonColor}} btn-block md-raised m-n"  ui-sref="recover" >
+            Esqueci a senha
         </md-button>
 
     </form>

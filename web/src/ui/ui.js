@@ -20,17 +20,19 @@
             url: "",
             appName: 'Singular',
             appVersion: '2.0',
-            navbarHeaderColor: 'deep-purple',
+            navbarHeaderColor: 'deep-orange',
             headerColor: 'bg-white-only',
             navbarColor: 'bg-white',
             headerFixed: true,
-            titleBarColor: 'deep-purple',
-            primaryButtonColor: 'deep-purple',
+            titleBarColor: 'deep-orange',
+            primaryButtonColor: 'deep-orange',
             secondaryButtonColor: '',
             asideFixed: true,
             asideFolded: false,
             asideDock: false,
-            container: false
+            container: false,
+            showFilterModule: true,
+            asideCollapsible: true
         })
 
         // definição de configurações de interface

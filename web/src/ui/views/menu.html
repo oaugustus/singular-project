@@ -4,12 +4,12 @@
         <span>{{app.aplicacao}}</span>
     </li>
 
-    <li ng-class="{'active': mod.menu == selectedModule}" ng-repeat="mod in app.modules">
+    <li ng-class="{'active': mod.menu == selectedModule}" ng-repeat="mod in app.modules | filter:queryModulo as results">
         <a class="auto" ng-if="mod.modulos.length > 0">
-              <span class="pull-right text-muted">
+            <span class="pull-right text-muted">
                 <i class="fa fa-fw fa-angle-right text"></i>
                 <i class="fa fa-fw fa-angle-down text-active"></i>
-              </span>
+            </span>
 
             <i class="{{mod.icon_cls}} icon"></i>
             <span class="fs-14">{{mod.modulo}}</span>
@@ -21,6 +21,5 @@
         <ul class="nav nav-sub dk" ng-if="mod.modulos.length >= 0" ng-include="'src/ui/views/submodulo.html'" ng-init="modulos = mod.modulos; name = mod.modulo;"></ul>
     </li>
 
-    <!--<li class="line dk" ng-if="!$last"></li>-->
 </ul>
 <!-- / list -->
