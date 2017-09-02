@@ -68,7 +68,17 @@ class CriaTabelaSingularComponente extends AbstractMigration
                     através do campo [id]. Refere-se ao módulo de menu, caso o componente seja do tipo M',
                     'null' => true
                 ]
+            )
+            ->addColumn(
+                'tem_migration',
+                'integer',
+                [
+                    'limit' => \Phinx\Db\Adapter\MysqlAdapter::INT_TINY,
+                    'comment' => 'Se o registro já possui uma entrada no mecanismo de migrations. [1 = Tem, 0 = Não tem]',
+                    'default' => 0
+                ]
             );
+
 
         // define os relacionamentos
         $componente

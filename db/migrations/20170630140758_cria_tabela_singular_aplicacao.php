@@ -42,6 +42,15 @@ class CriaTabelaSingularAplicacao extends AbstractMigration
                     'comment' => 'Se o registro da aplicação está ativo ou não. [1 = Ativo, 0 = Inativo]',
                     'default' => 1
                 ]
+            )
+            ->addColumn(
+                'tem_migration',
+                'integer',
+                [
+                    'limit' => \Phinx\Db\Adapter\MysqlAdapter::INT_TINY,
+                    'comment' => 'Se o registro já possui uma entrada no mecanismo de migrations. [1 = Tem, 0 = Não tem]',
+                    'default' => 0
+                ]
             );
 
         // cria a tabela
