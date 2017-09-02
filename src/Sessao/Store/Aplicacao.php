@@ -25,6 +25,11 @@ class Aplicacao extends SingularStore
      */
     protected $table = 'singular_aplicacao';
 
+    /**
+     * Perfis de consulta.
+     * 
+     * @var array
+     */
     protected $profiles = [
         'default' => [
             'filters' => ['t.ativo' => 1]
