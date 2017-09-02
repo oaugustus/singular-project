@@ -2,17 +2,50 @@
 {
     'use strict';
 
-    var getView = function(view){
-        return 'src/secure/views/' + view + '.html';
-    }
-
-    var module = angular.module('app.secure', ['ngAnimate', 'ngCookies', 'ngResource', 'ngSanitize',
-            'ngTouch', 'ngStorage', 'ui.router', 'ui.bootstrap', 'singular.ui','upload.button',
-            'lr.upload','angularMoment', 'ui.utils.masks'
+    angular.module(
+        'app.secure',
+        [
+            'ngAnimate'
+            ,'ngCookies'
+            ,'ngResource'
+            ,'ngSanitize'
+            ,'ngTouch'
+            ,'ngStorage'
+            ,'ui.router'
+            ,'ui.bootstrap'
+            ,'singular.ui'
+            ,'upload.button'
+            ,'lr.upload'
+            ,'angularMoment'
+            ,'ui.utils.masks'
+            ,'singular.cadastro'
+            /*@modules*/
         ]
-    );
+    )
+        .config(
+            [
+                '$stateProvider',
+                '$urlRouterProvider',
+                configFn
+            ]
+        )
+        .run(
+            [
+                'ui.Session',
+                runFn
+            ]
+        );
 
-    module.config(['$stateProvider','$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+    /**
+     * Definição da função de configuração do módulo.
+     *
+     * @param $stateProvider
+     * @param $urlRouterProvider
+     */
+    function configFn(
+        $stateProvider,
+        $urlRouterProvider
+    ) {
 
         $urlRouterProvider.otherwise('/app/dashboard');
 
@@ -21,11 +54,28 @@
             menu: 'configuracao'
         });
 
+    }
 
-    }])
-        .run(['ui.Session', function(Session){
-            Session.setSession(window.APP.session);
-            Session.setMenu(window.APP.menu);
-        }]);
+    /**
+     * Definição da função de execução.
+     *
+     * @param Session
+     */
+    function runFn(
+        Session
+    ){
+        Session.setSession(window.APP.session);
+        Session.setMenu(window.APP.menu);
+    }
+
+    /**
+     * Retorna a view a ser renderizada para um state na raiz do módulo.
+     *
+     * @param view
+     * @returns {string}
+     */
+    function getView(view){
+        return 'src/secure/views/' + view + '.html';
+    }
 
 }());

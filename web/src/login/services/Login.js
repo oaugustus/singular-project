@@ -3,15 +3,31 @@
    'use strict';
 
     /**
-     * Serviço que fornece a api para conexão.
+     * Serviço que fornece api para autenticação do usuário.
+     *
+     * @author Otávio Fernandes <otavio@neton.com.br>
+     */
+    angular.module('app.login').factory(
+        'login.Login',
+        [
+            '$http',
+            'UI',
+            LoginService
+        ]
+    );
+
+    /**
+     * Função de definição do serviço.
      *
      * @param $http
      * @param UI
-     *
+     * @returns {LoginService}
      * @constructor
      */
-    var LoginService = function($http, UI)
-    {
+    function LoginService(
+        $http,
+        UI
+    ) {
         var me = this;
 
         /**
@@ -27,5 +43,5 @@
         return me;
     };
 
-    angular.module('app.login').factory('login.Login', ['$http','UI', LoginService]);
+
 }());

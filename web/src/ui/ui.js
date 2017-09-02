@@ -12,7 +12,8 @@
         [
             'toaster',
             'angular-loading-bar',
-            'ngSweetAlert'
+            'ngSweetAlert',
+            'ui.router'
         ]
     )
         // definição de constantes de interface
@@ -40,7 +41,21 @@
             [
                 '$httpProvider',
                 '$stateProvider',
+                '$urlRouterProvider',
+                '$localStorageProvider',
                 configFn
+            ]
+        )
+        .run(
+            [
+                '$rootScope',
+                '$state',
+                '$localStorage',
+                '$urlRouter',
+                '$location',
+                'toaster',
+                'ui.Session',
+                runFn
             ]
         );
 
@@ -52,8 +67,11 @@
      */
     function configFn(
         $httpProvider,
-        $stateProvider
+        $stateProvider,
+        $urlRouterProvider,
+        $localStorageProvider
     ) {
+        var state = '/login';
 
         $stateProvider.state('app', {
             url: '/app',
@@ -62,6 +80,82 @@
             templateUrl: 'src/ui/views/app.html'
         });
 
+        if (typeof $localStorageProvider.$get('ngStorage').state != 'undefined' &&
+            $localStorageProvider.$get('ngStorage').state != '/login') {
+            state = $localStorageProvider.$get('ngStorage').state;
+        }
+
+        $urlRouterProvider.otherwise(state);
+    }
+
+    /**
+     * Definição da função de execução do módulo.
+     *
+     * @param $rootScope
+     * @param $state
+     * @param $localStorage
+     * @param $urlRouter
+     * @param $location
+     * @param toaster
+     * @param Session
+     */
+    function runFn(
+        $rootScope,
+        $state,
+        $localStorage,
+        $urlRouter,
+        $location,
+        toaster,
+        Session
+    ) {
+
+        if (window.APP) {
+            var acl = window.APP.acl;
+
+            Session.setSession(window.APP.session);
+            Session.setMenu(window.APP.menu);
+
+            $rootScope.$on("$locationChangeStart",function(event, next, current){
+                var url = next.substring(next.indexOf('#')+1),
+                    state = $state.fromUrl(url);
+
+                if (state){
+                    if (state.self.acl) {
+                        if (acl.indexOf('|' + state.self.acl + '|') == -1) {
+                            event.preventDefault();
+                        }
+                    }
+                }
+            });
+
+
+            $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+                if (toState.acl) {
+                    if (acl.indexOf('|' + toState.acl + '|') == -1) {
+                        toaster.clear();
+                        toaster.pop('error','ACESSO NEGADO','Seu usuário não tem permissão para executar esta ação!');
+                        event.preventDefault();
+                    }
+                }
+            });
+
+
+            $rootScope.$on('$locationChangeSuccess', function(
+                event,
+                next
+            ){
+                var url = next.substring(next.indexOf('#')+1),
+                    state = $state.fromUrl(url),
+                    address = window.location.hash;
+
+                if (state.self.persistent) {
+                    address = address.substring(1);
+                    $localStorage.state = address;
+                }
+
+            });
+
+        }
     }
 
 }());
