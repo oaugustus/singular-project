@@ -18,7 +18,6 @@
             ,'lr.upload'
             ,'angularMoment'
             ,'ui.utils.masks'
-            ,'singular.cadastro'
             /*@modules*/
         ]
     )
