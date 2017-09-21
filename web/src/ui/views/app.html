@@ -23,5 +23,10 @@
 </div>
 <!-- / footer -->
 
-<div data-ng-include=" 'src/ui/views/filter.html'" class="filters active  panel panel-default">-->
-</div>
+<form
+        data-ng-include=" 'src/ui/views/filter.html'"
+        class="filters panel panel-default"
+        ng-class="{'active': Filter.isVisible}"
+        ng-submit="Filter.applyFilter()"
+>
+</form>

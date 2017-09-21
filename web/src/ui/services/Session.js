@@ -23,7 +23,7 @@
          */
         me.setSession = function(session){
             me.session = session;
-        }
+        };
 
         /**
          * Recupera a sessão aberta para o usuário.
@@ -32,7 +32,7 @@
          */
         me.getSession = function(){
             return me.session;
-        }
+        };
 
         /**
          * Seta o menu de navegação principal do sistema.
@@ -41,7 +41,7 @@
          */
         me.setMenu = function(menu){
             me.menu = menu;
-        }
+        };
 
 
         /**
@@ -55,7 +55,7 @@
                     callback();
                 }
             })
-        }
+        };
 
         return me;
     }

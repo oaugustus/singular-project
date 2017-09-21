@@ -8,13 +8,14 @@
      * @author Otávio Fernandes <otavio@neton.com.br>
      */
     angular.module('singular.ui').controller(
-        'AppCtrl',
+        'ui.AppCtrl',
         [
-            '$scope',
-            '$localStorage',
-            '$window',
-            'UI',
-            AppCtrl
+            '$scope'
+            ,'$localStorage'
+            ,'$window'
+            ,'UI'
+            ,'ui.Filter'
+            ,AppCtrl
         ]
     );
 
@@ -27,15 +28,21 @@
      * @constructor
      */
     function AppCtrl(
-        $scope,
-        $localStorage,
-        $window,
-        UI
+        $scope
+        ,$localStorage
+        ,$window
+        ,UI
+        ,UIFilter
     ) {
         // add 'ie' classes to html
         var isIE = !!navigator.userAgent.match(/MSIE/i);
         isIE && angular.element($window.document.body).addClass('ie');
         isSmartDevice( $window ) && angular.element($window.document.body).addClass('smart');
+
+        /**
+         * Serviço de filtro.
+         */
+        $scope.Filter = UIFilter;
 
         // config
         $scope.app = {
@@ -54,7 +61,8 @@
                 primaryButtonColor: UI.primaryButtonColor,
                 secondaryButtonColor: UI.secondaryButtonColor,
                 showFilterModule: UI.showFilterModule,
-                asideCollapsible: UI.asideCollapsible
+                asideCollapsible: UI.asideCollapsible,
+                isFilterVisible: false
             }
         };
 

@@ -18,6 +18,9 @@
             ,'lr.upload'
             ,'angularMoment'
             ,'ui.utils.masks'
+            ,'ngMaterial'
+            ,'md.data.table'
+            ,'singular.admin'
             /*@modules*/
         ]
     )

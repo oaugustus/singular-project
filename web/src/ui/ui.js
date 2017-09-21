@@ -148,6 +148,10 @@
                     state = $state.fromUrl(url),
                     address = window.location.hash;
 
+                if (!state) {
+                    return false;
+                }
+                
                 if (state.self.persistent) {
                     address = address.substring(1);
                     $localStorage.state = address;

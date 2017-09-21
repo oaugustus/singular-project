@@ -1,0 +1,32 @@
+<div ng-controller="usuario.FilterCtrl">
+    <div class="row">
+
+        <div class="form-group col-sm-12">
+            <label class="control-label label-sm" for="nome">Nome </label>
+            <div class="input-group">
+                <input class="form-control" type="text" autofocus placeholder="Nome contém" ng-model="filter.nome" id="nome" name="nome">
+                <span class="input-group-btn">
+                    <button class="btn btn-default btn-icon" type="button" ng-click="clear('nome')" ng-disabled="!filter.nome.length"><i class="fa fa-times"></i></button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group col-sm-12">
+            <label class="control-label label-sm" for="nome">Login </label>
+            <div class="input-group">
+                <input class="form-control" type="text" autofocus placeholder="Login contém" ng-model="filter.login" id="login" name="login">
+                <span class="input-group-btn">
+                    <button class="btn btn-default btn-icon" type="button" ng-click="clear('login')" ng-disabled="!filter.login.length"><i class="fa fa-times"></i></button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group col-sm-12">
+            <label class="control-label label-sm" for="nome">Perfil </label>
+            <div class="input-group">
+                <input class="form-control" type="text" autofocus placeholder="Perfil contém" ng-model="filter.perfil" id="perfil" name="perfil">
+                <span class="input-group-btn">
+                    <button class="btn btn-default btn-icon" type="button" ng-click="clear('perfil')" ng-disabled="!filter.perfil.length"><i class="fa fa-times"></i></button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
