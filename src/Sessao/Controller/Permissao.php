@@ -53,18 +53,20 @@ class Permissao extends SingularController
         $componentes = $app['sessao.store.componente']->findAll();
 
         if (count($permissoes) == 0) {
-            return $app->json($componentes);
+            return $app->json([
+                'results' => $componentes
+            ]);
         } else {
-            foreach ($permissoes['results'] as $permissao) {
+            foreach ($permissoes as $permissao) {
                 $i=0;
 
-                foreach ($componentes['results'] as $componente) {
+                foreach ($componentes as $componente) {
 
                     if ($permissao['componente_id'] == $componente['id']) {
                         if ($componente['tipo'] == 'M') {
 
                         } else {
-                            $componentes['results'][$i]['state'] = ["selected"=>true,"opened"=>true] ;
+                            $componentes[$i]['state'] = ["selected"=>true,"opened"=>true] ;
                         }
                     }
 
@@ -72,7 +74,9 @@ class Permissao extends SingularController
                 }
             }
 
-            return $app->json($componentes);
+            return $app->json([
+                'results' => $componentes
+            ]);
         }
     }
 
@@ -103,23 +107,21 @@ class Permissao extends SingularController
 
             $permissaoId = 1;
 
-            $permissoes = $app['sessao.store.permissao']->findBy(array('perfil_id' => '=:' . $data['codfuncao']));
+            $permissoes = $app['sessao.store.permissao']->findBy(array('perfil_id' => '=:' . $data['id']));
 
-            if($permissoes['total']>0){
-                foreach($permissoes['results'] as $permissao){
+            if (count($permissoes) > 0) {
+                foreach($permissoes as $permissao){
                     $app['sessao.store.permissao']->remove($permissao['id']);
                 }
             }
 
-            if(count($data['selecteds'])>0){
+            if (count($data['selecteds']) > 0) {
                 foreach($data['selecteds'] as $selected){
                     $dataSave = array();
 
                     if($selected == '#'){
                     }else{
-                        print_r($data);
-                        die();
-                        $dataSave['perfil_id']= $data['codfuncao'];
+                        $dataSave['perfil_id']= $data['id'];
                         $dataSave['componente_id']= $selected;
                         $permissaoId = $app['sessao.store.permissao']->save($dataSave);
                     }
@@ -151,7 +153,7 @@ class Permissao extends SingularController
      *
      * @return JsonResponse
      */
-    public function copiaPermissoesFuncao (Request $request)
+    public function copiaPermissoesPerfil(Request $request)
     {
 
         try {
@@ -163,21 +165,21 @@ class Permissao extends SingularController
             $store = $this->getStore();
 
 
-            $store->removeBy(array('funcao_id' => $data['funcao_destino_id']));
+            $store->removeBy(array('perfil_id' => $data['destino_perfil_id']));
 
 
-            $filters['funcao_id'] = $data['funcao_origem_id'];
+            $filters['perfil_id'] = $data['origem_perfil_id'];
             $pageOpts = array();
             $sort = array();
 
             $permissoes = $store->findBy($filters, $pageOpts, $sort);
 
-            foreach ($permissoes['results'] as $permissao) {
+            foreach ($permissoes as $permissao) {
 
                 $data_permissao = array();
 
                 $data_permissao['componente_id'] = $permissao['componente_id'];
-                $data_permissao['funcao_id'] = $data['funcao_destino_id'];
+                $data_permissao['perfil_id'] = $data['destino_perfil_id'];
 
                 $store->save($data_permissao);
 

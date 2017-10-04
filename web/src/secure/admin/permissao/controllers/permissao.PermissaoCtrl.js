@@ -41,7 +41,7 @@
         $scope.alterado = false;
         $scope.forms = {};
         $scope.permissao = {};
-        $scope.funcao = {};
+        $scope.perfil = {};
 
         $scope.vm = {};
         $scope.vm.ignoreChanges = false;
@@ -57,7 +57,7 @@
          * Função que possibilita recarregar a lista de permissao
          */
         $scope.reload = function(){
-            $scope.PermissaoStore.listarPermissoes($scope.funcao, function(response){
+            $scope.PermissaoStore.listarPermissoes($scope.perfil, function(response){
                 $scope.PermissaoStore.results = response.results;
             });
         };
@@ -65,12 +65,12 @@
         /**
          * Função que seleciona o grupo de acesso apara ser caregada as permissões...
          */
-        $scope.onSelectPerfil = function(funcao){
+        $scope.onSelectPerfil = function(perfil){
 
             $scope.showBtnCopiar = true;
 
-            $scope.funcao = funcao;
-            $scope.nomeFuncao = funcao.descricao;
+            $scope.perfil = perfil;
+            $scope.nomePerfil = perfil.perfil;
             $scope.showPanel = true;
             $scope.reload();
             // $scope.vm.loadNodes();
@@ -78,21 +78,75 @@
         };
 
 
+        /**
+         * Abre a modal de copiar permissão
+         */
         $scope.abreModalCopiar = function () {
 
             var modal = $modal.open({
-                templateUrl: 'src/secure/administracao/permissao/views/copiar.modal.html',
+                templateUrl: 'src/secure/admin/permissao/views/copiar.modal.html',
                 controller: 'permissao.ModalCopiarCtrl',
                 size: 'md',
                 scope: $scope
-
             });
-
 
             modal.result.then(function (rec) {
                 $scope.reload();
             });
 
+        };
+
+        /**
+         * Abre a modal de copiar permissão
+         */
+        $scope.abreModalPerfil = function () {
+
+            var modal = $modal.open({
+                templateUrl: 'src/secure/admin/permissao/views/perfil.modal.html',
+                controller: 'permissao.ModalCreateCtrl',
+                size: 'md',
+                scope: $scope
+
+            });
+
+            modal.result.then(function (rec) {
+                $scope.PerfilStore.load();
+            });
+
+        };
+
+        /**
+         * Abre a modal de copiar permissão
+         */
+        $scope.editarPerfil = function () {
+
+            var modal = $modal.open({
+                templateUrl: 'src/secure/admin/permissao/views/perfil.modal.html',
+                controller: 'permissao.ModalEditCtrl',
+                size: 'md',
+                scope: $scope,
+                resolve: {
+                    record: function(){
+                        return angular.copy($scope.perfil);
+                    }
+                }
+            });
+
+            modal.result.then(function (rec) {
+                $scope.perfil = rec;
+                $scope.nomePerfil = rec.perfil;
+                $scope.PerfilStore.load();
+            });
+
+        };
+
+        $scope.removerPerfil = function(){
+                $scope.PerfilStore.remove($scope.perfil.id, function(response){
+                    $scope.PerfilStore.load();
+                    $scope.perfil = null;
+                }, {
+                    text: 'Deseja realmente excluir este perfil?'
+                });
         };
 
 
@@ -154,9 +208,9 @@
 
             $scope.alterado = true;
 
-            $scope.funcao.selecteds = $scope.vm.treeInstance.jstree(true).get_selected();
+            $scope.perfil.selecteds = $scope.vm.treeInstance.jstree(true).get_selected();
 
-            $scope.funcao.selecteds.push(selected.node.parent);
+            $scope.perfil.selecteds.push(selected.node.parent);
 
         };
 
@@ -164,16 +218,16 @@
 
             $scope.alterado = true;
 
-            $scope.funcao.selecteds = $scope.vm.treeInstance.jstree(true).get_selected();
+            $scope.perfil.selecteds = $scope.vm.treeInstance.jstree(true).get_selected();
 
-            $scope.funcao.selecteds.push(selected.node.parent);
+            $scope.perfil.selecteds.push(selected.node.parent);
 
         };
 
 
         $scope.savePermissoes = function () {
 
-            $scope.PermissaoStore.save($scope.funcao, function(response) {
+            $scope.PermissaoStore.save($scope.perfil, function(response) {
 
                 toaster.clear();
 

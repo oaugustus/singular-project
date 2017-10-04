@@ -36,6 +36,20 @@
             });
         };
 
+        /**
+         * Copia as permissoes de uma função para outra.
+         *
+         * @param {object} data
+         * @param {function} callback
+         */
+        me.copiaPermissoesPerfil = function(data, callback) {
+
+            me.call('copiaPermissoesPerfil', data, function(response) {
+                callback(response);
+            });
+
+        };
+
         return me;
     }
 
