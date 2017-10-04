@@ -5,10 +5,10 @@
             <!--Start:Toolbar -->
             <div class="wrapper-sm bg-light lter b-b clearfix">
                 <div class="font-normal h3 col-sm-6 m-t-xs">
-                    <i class="fa fa-list"></i> List
+                    <i class="fa fa-users"></i> Usuários
                 </div>
                 <div class="col-sm-6 pull-right">
-                    <button type="button" class="btn btn-danger btn-addon pull-right">
+                    <button type="button" class="btn btn-danger btn-addon pull-right" ui-sref="app.usuario-create">
                         <i class="fa fa-plus"></i> Novo
                     </button>
                     <button type="button" class="btn btn-addon pull-right m-r-sm" ng-class="DataStore.isActiveClass()" ng-click="Filter.open()">
@@ -17,6 +17,11 @@
                 </div>
 
             </div>
+            <!--<md-toolbar class="md-table-toolbar bg-light md-default b-b">
+                <div class="md-toolbar-tools">
+                    <span>Nutrition</span>
+                </div>
+            </md-toolbar>-->
             <!-- End:Toolbar -->
 
             <div class="row-row">
@@ -31,6 +36,7 @@
                                             <table md-table md-row-select="DataStore.enableRowSelection" ng-model="DataStore.selected">
                                                 <thead md-head md-order="DataStore.sort" md-on-reorder="reloadData">
                                                 <tr md-row>
+                                                    <th class="col-sm-1"></th>
                                                     <th md-column md-order-by="perfil"><span>Perfil</span></th>
                                                     <th md-column md-order-by="nome"><span>Nome</span></th>
                                                     <th md-column md-order-by="login"><span>Login</span></th>
@@ -40,21 +46,29 @@
                                                 </thead>
                                                 <tbody md-body>
                                                     <tr md-row md-select="record" md-select-id="id" ng-repeat="record in DataStore.results">
-                                                        <td md-cell>{{record.perfil}}</td>
+                                                        <td md-cell>
+                                                            <a herf="" class="pull-left thumb-sm avatar m-r">
+                                                                <img ng-if="record.avatar" ng-src="{{record.avatar}}" class="img-circle">
+                                                                <img ng-if="!record.avatar" holder data-src="holder.js/40x40?text= &size=10" class="img-circle">
+                                                            </a>
+                                                        </td>
+                                                        <td md-cell>
+                                                            {{record.perfil}}
+                                                        </td>
                                                         <td md-cell>{{record.nome}}</td>
                                                         <td md-cell>{{record.login}}</td>
                                                         <td md-cell>{{DataStore.renderAtivo(record.ativo)}}</td>
                                                         <td md-cell class="action">
-                                                            <md-icon>visibility</md-icon>
-                                                            <md-icon>edit</md-icon>
-                                                            <md-icon>delete</md-icon>
+                                                            <md-icon ui-sref="app.usuario-show({id: record.id})">visibility</md-icon>
+                                                            <md-icon ui-sref="app.usuario-edit({id: record.id})">edit</md-icon>
+                                                            <md-icon ng-click="remove(record.id)">delete</md-icon>
 
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                                 <tbody md-body ng-if="DataStore.results.length == 0">
                                                     <tr md-row>
-                                                        <td colspan="4" md-cell style="text-align: center;">
+                                                        <td colspan="6" md-cell style="text-align: center;">
                                                             <h2><i class="fa fa-frown-o"></i> Desculpe, nenhum registro foi encontrado.</h2>
                                                         </td>
                                                     </tr>

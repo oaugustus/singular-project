@@ -48,9 +48,10 @@
          *
          * @param {string} pack
          * @param {string} controller
+         * @param {string} storeId
          */
-        me.create = function(pack, controller) {
-            return createInstance(pack, controller);
+        me.create = function(pack, controller, storeId) {
+            return createInstance(pack, controller, storeId);
         };
 
         /**
@@ -73,13 +74,15 @@
 
             var direction = 'ASC';
 
-            if (field.charAt(0) == '-') {
-                direction = 'DESC';
-                field = field.substr(1);
-            }
+            try {
+                if (field.charAt(0) == '-') {
+                    direction = 'DESC';
+                    field = field.substr(1);
+                }
 
-            sort[field] = direction;
-            
+                sort[field] = direction;
+            } catch(e){}
+
             return sort;
         }
 
@@ -240,6 +243,10 @@
                  * @param {object}   config
                  */
                 remove : function(id, callback, config) {
+                    if (!config) {
+                        config = {}
+                    }
+                    
                     SweetAlert.swal({
                         title: config.title || "Atenção",
                         text: config.text || "Deseja realmente apagar este registro?",

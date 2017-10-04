@@ -25,14 +25,32 @@
     function configFn(
         $stateProvider
     ){
-        $stateProvider.state('app.usuario-form', {
-            url: '/admin/usuario/form',
-            controller: 'usuario.ListCtrl',
+        // state de criação de registro
+        $stateProvider.state('app.usuario-create', {
+            url: '/admin/usuario/create',
+            controller: 'usuario.CreateCtrl',
+            persistent: true,
             templateUrl: getView('usuario.form')
         })
+            // state de edição de usuário
+            .state('app.usuario-edit', {
+                url: '/admin/usuario/edit/:id',
+                controller: 'usuario.EditCtrl',
+                persistent: true,
+                templateUrl: getView('usuario.form')
+            })
+            // state de visualização de usuário
+            .state('app.usuario-show', {
+                url: '/admin/usuario/show/:id',
+                controller: 'usuario.ShowCtrl',
+                persistent: true,
+                templateUrl: getView('usuario.form')
+            })
+            // state de listagem de usuários
             .state('app.usuario-list', {
                 url: '/admin/usuario/list',
                 controller: 'usuario.ListCtrl',
+                persistent: true,
                 templateUrl: getView('usuario.list')
             })
         ;

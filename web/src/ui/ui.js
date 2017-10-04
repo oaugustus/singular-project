@@ -12,7 +12,11 @@
         [
             'toaster',
             'angular-loading-bar',
+            'localytics.directives',
             'ngSweetAlert',
+            'ngHolder',
+            'ngJsTree',
+            'ngMessages',
             'ui.router'
         ]
     )
@@ -43,6 +47,7 @@
                 '$stateProvider',
                 '$urlRouterProvider',
                 '$localStorageProvider',
+                'chosenProvider',
                 configFn
             ]
         )
@@ -69,7 +74,8 @@
         $httpProvider,
         $stateProvider,
         $urlRouterProvider,
-        $localStorageProvider
+        $localStorageProvider,
+        chosenProvider
     ) {
         var state = '/login';
 
@@ -84,6 +90,12 @@
             $localStorageProvider.$get('ngStorage').state != '/login') {
             state = $localStorageProvider.$get('ngStorage').state;
         }
+
+        chosenProvider.setOption({
+            placeholder_text: 'Escolha um registro',
+            no_results_text: 'Nenhum registro encontrado',
+            placeholder_text_multiple: 'Escolha um ou mais registros'
+        });
 
         $urlRouterProvider.otherwise(state);
     }

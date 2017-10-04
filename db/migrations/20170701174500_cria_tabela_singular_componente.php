@@ -13,6 +13,8 @@ class CriaTabelaSingularComponente extends AbstractMigration
         $componente = $this->table(
             'singular_componente',
             [
+                'id' => false,
+                'primary_key' => ['id'],
                 'comment' => 'Armazena os registros dos componentes de interface que terão restrição de permissão'
             ]
         );
@@ -20,7 +22,14 @@ class CriaTabelaSingularComponente extends AbstractMigration
         // define os campos da tabela
         $componente
             ->addColumn(
-                'componente',
+                'id',
+                'string',
+                [
+                    'limit' => 40
+                ]
+            )
+            ->addColumn(
+                'text',
                 'string',
                 [
                     'limit' => 60,
@@ -44,7 +53,7 @@ class CriaTabelaSingularComponente extends AbstractMigration
                 ]
             )
             ->addColumn(
-                'icon_cls',
+                'icon',
                 'string',
                 [
                     'limit' => 30,
@@ -55,7 +64,7 @@ class CriaTabelaSingularComponente extends AbstractMigration
                 'parent',
                 'string',
                 [
-                    'limit' => 4,
+                    'limit' => 40,
                     'comment' => 'Chave de vínculo com o componente pai para a árvore de permissões',
                     'null' => true
                 ]
@@ -70,12 +79,12 @@ class CriaTabelaSingularComponente extends AbstractMigration
                 ]
             )
             ->addColumn(
-                'tem_migration',
-                'integer',
+                'migration',
+                'string',
                 [
-                    'limit' => \Phinx\Db\Adapter\MysqlAdapter::INT_TINY,
-                    'comment' => 'Se o registro já possui uma entrada no mecanismo de migrations. [1 = Tem, 0 = Não tem]',
-                    'default' => 0
+                    'limit' => 25,
+                    'comment' => 'Se o registro já possui uma entrada no mecanismo de migrations. [timestamp]',
+                    'null' => true
                 ]
             );
 

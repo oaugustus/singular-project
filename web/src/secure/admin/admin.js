@@ -9,6 +9,8 @@
      */
     angular.module('singular.admin', [
         ,'admin.usuario'
+        ,'admin.permissao'
+        ,'admin.componente'
             /*@modules*/
     ])
         .config(

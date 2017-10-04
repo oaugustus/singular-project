@@ -20,3 +20,13 @@ td.action{
     text-align: right !important;
     width: 120px;
 }
+
+.form-group.required:after {
+    color: #f55753;
+    content: "Obrigatório";
+    font-family: arial;
+    font-size: 9px;
+    position: absolute;
+    right: 18px;
+    top: 4px;
+}

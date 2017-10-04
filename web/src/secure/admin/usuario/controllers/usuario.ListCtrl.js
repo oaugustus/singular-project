@@ -59,6 +59,17 @@
             $scope.DataStore.load();
         };
 
+        /**
+         * Remove o registro de um usuário.
+         */
+        $scope.remove = function(id){
+            $scope.DataStore.remove(id, function(response){
+                $scope.reloadData();
+            }, {
+                text: 'Deseja realmente excluir este usuário?'
+            });
+        };
+
         $scope.selected = [];
         
         // força o carregamento dos dados

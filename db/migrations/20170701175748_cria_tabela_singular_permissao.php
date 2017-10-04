@@ -21,8 +21,9 @@ class CriaTabelaSingularPermissao extends AbstractMigration
         $permissao
             ->addColumn(
                 'componente_id',
-                'integer',
+                'string',
                 [
+                    'limit' => 40,
                     'comment' => 'Relacionamento com o registro associado na tabela [singular_componente] 
                     através do campo [id]. Refere-se ao componente para o qual está sendo definida a permissão'
                 ]

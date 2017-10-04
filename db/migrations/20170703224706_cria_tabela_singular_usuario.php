@@ -81,6 +81,17 @@ class CriaTabelaSingularUsuario extends AbstractMigration
                 ]
             );
 
+        // adiciona os índices
+        $usuario
+            ->addIndex(
+                [
+                    'login'
+                ],
+                [
+                    'unique' => true,
+                    'name' => 'idx_usuario_login'
+                ]
+            );
 
         // cria a tabela
         $usuario->create();

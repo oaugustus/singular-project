@@ -9,7 +9,7 @@
             ,'ngCookies'
             ,'ngResource'
             ,'ngSanitize'
-            ,'ngTouch'
+            // ,'ngTouch'
             ,'ngStorage'
             ,'ui.router'
             ,'ui.bootstrap'
@@ -26,15 +26,16 @@
     )
         .config(
             [
-                '$stateProvider',
-                '$urlRouterProvider',
-                configFn
+                '$stateProvider'
+                ,'$urlRouterProvider'
+                ,'$localStorageProvider'
+                ,configFn
             ]
         )
         .run(
             [
-                'ui.Session',
-                runFn
+                'ui.Session'
+                ,runFn
             ]
         );
 
@@ -47,14 +48,21 @@
     function configFn(
         $stateProvider,
         $urlRouterProvider
+        ,$localStorageProvider
     ) {
-
-        $urlRouterProvider.otherwise('/app/dashboard');
+        var state = '/app/dashboard';
 
         $stateProvider.state('app.dashboard', {
             url: '/dashboard',
             menu: 'configuracao'
         });
+
+        if (typeof $localStorageProvider.$get('ngStorage').state != 'undefined' &&
+            $localStorageProvider.$get('ngStorage').state != '/login') {
+            state = $localStorageProvider.$get('ngStorage').state;
+        }
+
+        $urlRouterProvider.otherwise(state);
 
     }
 

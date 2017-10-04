@@ -13,7 +13,7 @@
 // for more details see readme.md
 //
 angular.module('upload.button', [])
-    .directive('uploadButton', ['$parse', '$compile', function($parse, $compile) {
+    .directive('uploadButtonA', ['$parse', '$compile', function($parse, $compile) {
         return {
             restrict: 'E',
             replace: true,

@@ -52,7 +52,7 @@
         };
 
         me.enableRowSelection = false;
-
+        
         /**
          * Renderiza a propriedade ativo de um usuário.
          *
