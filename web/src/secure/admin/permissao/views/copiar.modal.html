@@ -1,30 +1,21 @@
 <div>
-
     <div class="modal-header">
-
         <h3 class="modal-title">
             <span><i class="fa fa-clipboard"></i> Copiar permissões de outro perfil</span>
         </h3>
-
     </div>
-
-
     <div class="modal-body">
-
         <div class="row m-b-n m-t-xs">
-
             <form name="forms.copiar" novalidate autocomplete="off">
                 <div class="form-group col-sm-12">
                     <label class="control-label">Perfil </label>
-                    <select chosen class="form-control no-padder" id="perfil_id" name="perfil_id" ng-model="copiar.perfil_id" placeholder="Selecione" ng-options="perfil.id as perfil.perfil for perfil in PerfilStore.results"></select>
+                    <select chosen class="form-control no-padder" id="perfil_id" name="perfil_id" ng-model="copiar.perfil_id" placeholder="Selecione" ng-options="perfil.id as perfil.perfil for perfil in PerfilStore.results">
+                        <option disabled></option>
+                    </select>
                 </div>
-
             </form>
-
         </div>
-
     </div>
-
 
     <div class="modal-footer">
         <div class="row">
@@ -33,15 +24,12 @@
                     <i class="fa fa-copy"></i>
                     <span>Copiar</span>
                 </button>
-
                 <button class="btn btn-default btn-addon pull-right m-r-sm" ng-click="cancel()"> <i class="fa fa-times"></i>
                     Cancelar
                 </button>
-
             </div>
         </div>
     </div>
-
 </div>
 
 

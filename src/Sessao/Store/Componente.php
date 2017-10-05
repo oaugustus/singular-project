@@ -34,6 +34,16 @@ class Componente extends SingularStore
             'joins' => [],
             'filters' => [],
             'groupings' => []
+        ],
+        'permissao' => [
+            'select' => ['t.*'],
+            'joins' => [
+                ['singular_permissao','p','p.componente_id = t.id']
+            ],
+            'filters' => [],
+            'groupings' => [
+                ['t.id']
+            ]
         ]
     ];
 
@@ -52,8 +62,8 @@ class Componente extends SingularStore
 
         $ids = [];
 
-        foreach ($filhos['results'] as $filho){
-            $ids[] = $filho['id'];
+        foreach ($filhos as $filho){
+            $ids[] = '"'.$filho['id'].'"';
         }
 
         return $ids;

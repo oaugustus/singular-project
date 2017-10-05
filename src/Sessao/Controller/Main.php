@@ -45,12 +45,16 @@ class Main extends SingularController
         $sessao = $app['session']->get($app['session.name']);
 
         // recupera o menu liberado para o usuário autenticado
-        $menu = $app['sessao.service.menu']->getMenu($sessao['id']);
+        $menu = $app['sessao.service.menu']->getMenu($sessao['perfil_id']);
+
+        // recupera a string de permissao de usuário
+        $acl = $app['sessao.service.permissao']->getStringAcl($sessao['perfil_id']);
 
         // renderiza a página de acesso protegido do sistema
         return $app['twig']->render("secure.html", array(
             'menu' => json_encode($menu),
-            'session' => json_encode($sessao)
+            'session' => json_encode($sessao),
+            'acl' => $acl
         ));
     }
 

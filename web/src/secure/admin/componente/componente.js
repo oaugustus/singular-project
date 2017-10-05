@@ -29,7 +29,7 @@
         // defina aqui seus states
         $stateProvider.state('app.componente', {
             url: '/admin/componente',
-            // acl: 'f-componente-list',
+            acl: 'm-componentes',
             controller: 'componente.ComponenteCtrl',
             templateUrl: getView('componente.list')
         });

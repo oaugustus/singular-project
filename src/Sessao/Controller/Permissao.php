@@ -12,6 +12,7 @@ use Singular\Annotation\Assert;
 use Singular\Annotation\Convert;
 use Singular\Annotation\After;
 use Singular\Annotation\Before;
+use Singular\Response\JsonResponse;
 
 /**
  * Classe Permissao
@@ -32,7 +33,7 @@ class Permissao extends SingularController
     protected $store = 'permissao';
 
     /**
-     * Retorna a lista de permissoes do sistema.
+     * Retorna a lista de permissoes de um perfil de usuário pelo seu ID.
      *
      * @Route(method="post")
      *
@@ -45,12 +46,17 @@ class Permissao extends SingularController
         $app = $this->app;
 
         $dados = $request->request->all();
+        $sessao = $app['session']->get($app['session.name']);
 
         $permissoes = $app['sessao.store.permissao']->findBy([
             'perfil_id' => '=:' . $dados['id']
         ]);
 
-        $componentes = $app['sessao.store.componente']->findAll();
+        $componentes = $app['sessao.store.componente']
+            ->setProfile('permissao')
+            ->findBy([
+                'p.perfil_id' => '=:'.$sessao['perfil_id']
+            ]);
 
         if (count($permissoes) == 0) {
             return $app->json([

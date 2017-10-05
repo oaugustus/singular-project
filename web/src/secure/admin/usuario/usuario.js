@@ -28,6 +28,7 @@
         // state de criação de registro
         $stateProvider.state('app.usuario-create', {
             url: '/admin/usuario/create',
+            acl: 'f-usuarios-create',
             controller: 'usuario.CreateCtrl',
             persistent: true,
             templateUrl: getView('usuario.form')
@@ -36,6 +37,7 @@
             .state('app.usuario-edit', {
                 url: '/admin/usuario/edit/:id',
                 controller: 'usuario.EditCtrl',
+                acl: 'f-usuarios-edit',
                 persistent: true,
                 templateUrl: getView('usuario.form')
             })
@@ -43,6 +45,7 @@
             .state('app.usuario-show', {
                 url: '/admin/usuario/show/:id',
                 controller: 'usuario.ShowCtrl',
+                acl: 'f-usuarios-show',
                 persistent: true,
                 templateUrl: getView('usuario.form')
             })
@@ -50,6 +53,7 @@
             .state('app.usuario-list', {
                 url: '/admin/usuario/list',
                 controller: 'usuario.ListCtrl',
+                acl: 'f-usuarios-list',
                 persistent: true,
                 templateUrl: getView('usuario.list')
             })

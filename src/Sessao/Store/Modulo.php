@@ -21,13 +21,15 @@ class Modulo extends SingularStore
     /**
      * Recupera os módulos que um usuário possui privilégio de acesso.
      *
-     * @param int $usuarioId
+     * @param int $perfilId
      * @param int $aplicacaoId
      *
      * @return array
      */
     public function getModulosByAplicacao($perfilId, $aplicacaoId)
     {
+        $app = $this->app;
+
         $qb = $this->db->createQueryBuilder();
 
         $qb->select('t.*')
@@ -40,10 +42,14 @@ class Modulo extends SingularStore
         $rs = $this->db->fetchAll($qb->getSQL());
         $modulos = array();
 
-        foreach ($rs as $modulo){
-            $modulo['modulos'] = $this->getSubModulos($modulo['id']);
+        foreach ($rs as $modulo) {
+            $acesso = $app['sessao.store.permissao']->hasAcessoModulo($perfilId, $modulo['id']);
 
-            $modulos[] = $modulo;
+            if ($acesso){
+                $modulo['modulos'] = $this->getSubModulos($modulo['id']);
+
+                $modulos[] = $modulo;
+            }
         }
 
         return $modulos;

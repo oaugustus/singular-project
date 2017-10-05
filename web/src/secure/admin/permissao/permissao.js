@@ -27,10 +27,10 @@
     ){
         $stateProvider.state('app.permissao', {
             url: 'admin/permissao',
+            acl: 'm-permissoes',
             controller: 'permissao.PermissaoCtrl',
             templateUrl: getView('permissao.list')
-        })
-        ;
+        });
     }
 
     /**

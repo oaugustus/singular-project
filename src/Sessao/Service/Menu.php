@@ -19,11 +19,11 @@ class Menu extends SingularService
     /**
      * Recupera a relação de menus associada a um determinado usuário.
      *
-     * @param integer $usuarioID
+     * @param integer $perfilId
      *
      * @return array
      */
-    public function getMenu($usuarioId)
+    public function getMenu($perfilId)
     {
         $app = $this->app;
 
@@ -32,7 +32,7 @@ class Menu extends SingularService
         $aplicacoes = $app['sessao.store.aplicacao']->findAll();
 
         foreach ($aplicacoes as $aplicacao) {
-            $aplicacao['modules'] = $app['sessao.store.modulo']->getModulosByAplicacao($usuarioId, $aplicacao['id']);
+            $aplicacao['modules'] = $app['sessao.store.modulo']->getModulosByAplicacao($perfilId, $aplicacao['id']);
             $menu[] = $aplicacao;
         }
 

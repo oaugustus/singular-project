@@ -36,4 +36,36 @@ class Permissao extends SingularStore
             'groupings' => []
         ]
     ];
+
+    /**
+     * Verifica se uma função possui acesso há um módulo ou aos componentes deste módulo.
+     *
+     * @param integer $funcaoId
+     * @param integer $moduloId
+     *
+     * @return boolean
+     */
+    public function hasAcessoModulo($funcaoId, $moduloId)
+    {
+        $app = $this->app;
+
+        // localiza o componente associado ao módulo
+        $componente = $app['sessao.store.componente']->findOneBy([
+            'menu_id' => $moduloId
+        ]);
+
+        $ids = $app['sessao.store.componente']->getIdFilhosComponente($componente['id']);
+
+        /** @var QueryBuilder $qb */
+        $qb = $this->db->createQueryBuilder();
+
+        $qb->select('t.*')
+            ->from($this->table,'t')
+            ->where('t.perfil_id = '.$funcaoId)
+            ->andWhere('t.componente_id in ('.implode(',', $ids).')');
+
+        $results = $this->db->fetchAll($qb->getSQL());
+
+        return count($results) > 0 ? true : false;
+    }
 }
