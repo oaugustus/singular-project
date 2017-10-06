@@ -8,7 +8,7 @@
                     <span> Permissões de acesso</span>
                 </div>
                 <div class="col-sm-6">
-                    <button ng-click="savePermissoes()" class="btn btn-addon btn-success pull-right" ng-disabled="!alterado">
+                    <button ng-click="savePermissoes()" acl="f-permissoes-update" class="btn btn-addon btn-success pull-right" ng-disabled="!alterado">
                         <i class="fa fa-check" ></i>
                         Salvar
                     </button>
@@ -63,11 +63,11 @@
                                                 <div class="btn-group dropdown pull-right">
                                                     <button class="btn btn-default btn-xs" data-toggle="dropdown">Ações <span class="caret"></span></button>
                                                     <ul class="dropdown-menu">
-                                                        <li ng-if="showBtnCopiar"><a ng-click="abreModalCopiar()"><i class="fa fa-copy"></i>&nbsp;Copiar permissões de...</a></li>
-                                                        <li class=divider></li>
-                                                        <li><a ng-click="editarPerfil()"><i class="fa fa-edit"></i>&nbsp;Editar</a></li>
-                                                        <li class=divider></li>
-                                                        <li><a ng-click="removerPerfil()"><i class="fa fa-trash"></i>&nbsp;Excluir</a></li>
+                                                        <li ng-if="showBtnCopiar" acl="f-permissoes-copy"><a ng-click="abreModalCopiar()"><i class="fa fa-copy"></i>&nbsp;Copiar permissões de...</a></li>
+                                                        <li class=divider acl="f-permissoes-copy"></li>
+                                                        <li acl="f-permissoes-perfil_edit"><a ng-click="editarPerfil()"><i class="fa fa-edit"></i>&nbsp;Editar perfil</a></li>
+                                                        <li class=divider acl="f-permissoes-perfil_edit"></li>
+                                                        <li acl="f-permissoes-perfil_remove"><a ng-click="removerPerfil()"><i class="fa fa-trash"></i>&nbsp;Excluir perfil</a></li>
                                                     </ul>
                                                 </div>
 

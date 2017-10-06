@@ -60,7 +60,7 @@ class Componente extends SingularStore
             'parent' => $componenteId
         ]);
 
-        $ids = [];
+        $ids = [0];
 
         foreach ($filhos as $filho){
             $ids[] = '"'.$filho['id'].'"';
