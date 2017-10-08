@@ -14,7 +14,7 @@
       "psr-0": {"" : "src/"}
     },
     "require": {
-        "singular/singular": "2.0",
+        "singular/singular": "2.0.1",
         "singular/injector": "2.0",
         "singular/command": "2.0",
         "robmorgan/phinx": "^0.8.1",
