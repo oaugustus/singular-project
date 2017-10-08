@@ -1,5 +1,5 @@
 {
-  "inject.vendor": "assets/vendor",
+  "inject.lib": "assets/lib",
   "inject.css": "assets/css",
   "inject.ui": "src/ui",
   "inject.login": "src/login",
