@@ -8,10 +8,6 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
             'user'      => $app["db.user"],
             'password'  => $app["db.pass"],
             'charset'   => $app["db.charset"],
-        ),
-        'sqlite' => array(
-            'driver'   => 'pdo_sqlite',
-            'path'     => __DIR__.'/../../data/app.db'
         )
     ),
 ));
