@@ -1,5 +1,6 @@
 # Bootstrap
 app/bootstrap*
+app/config/local.json
 
 # Symfony directories
 vendor/*
