@@ -10,17 +10,18 @@
     angular.module(
         'app.login',
         [
-            'ngAnimate',
-            'ngCookies',
-            'ngResource',
-            'ngSanitize',
-            'ngTouch',
-            'ngStorage',
-            'ui.router',
-            'ui.bootstrap',
-            'singular.ui',
-            'ngMaterial',
-            'ngMessages'
+            ,'ngAnimate'
+            ,'ngCookies'
+            ,'ngResource'
+            ,'ngSanitize'
+            ,'ngTouch'
+            ,'ngStorage'
+            ,'ui.router'
+            ,'ui.bootstrap'
+            ,'singular.ui'
+            ,'ngMaterial'
+            ,'ngMessages'
+            /*@modules*/
         ]
     )
         .config(
