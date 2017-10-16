@@ -305,11 +305,26 @@
                  * @param {string} method
                  * @param {object} params
                  * @param {function} callback
+                 * @param {object} config
                  */
-                call : function(method, params, callback){
+                call : function(method, params, callback, config){
                     var url = getRemoteUrl(that);
 
-                    $http.post(url + '/' + method, params).success(callback);
+                    if (!config) {
+                        config = {
+                            method: 'post'
+                        }
+                    }
+
+                    switch(config.method) {
+                        case 'post':
+                            $http.post(url + '/' + method, params).success(callback);
+                            break;
+                        case 'get':
+                            $http.get(url + '/' + method + (config.urlParams || ''), params).success(callback);
+                            break;
+                    }
+
                 },
 
                 /**
