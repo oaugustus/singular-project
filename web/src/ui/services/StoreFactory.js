@@ -102,13 +102,19 @@
                 if (instance.filterMap[key]) {
                     // se o mapa é um objeto
                     if (typeof instance.filterMap[key] == 'object') {
-                        var property = instance.filterMap[key].property;
-
                         if (!instance.filterMap[key].convert) { // se não existe função de conversão para o valor
                             // cria o filtro para a
-                            filter[property] = instance.filterMap[key].operation + ':' + value;
+                            filter[key] = {
+                                property: instance.filterMap[key].property,
+                                clause: instance.filterMap[key].operation + ':' + value
+                            }
+
+
                         } else {
-                            filter[property] = instance.filterMap[key].operation + ':' + instance.filterMap[key].convert(value);
+                            filter[key] = {
+                                property: instance.filterMap[key].property,
+                                clause: instance.filterMap[key].operation + ':' + instance.filterMap[key].convert(value)
+                            }
                         }
 
                     } else { // se o mapa é uma string
@@ -331,8 +337,9 @@
                  * Função que carrega a relação de registros.
                  *
                  * @param {function} callback
+                 * @param {string} method
                  */
-                load : function(callback) {
+                load : function(callback, method) {
                     var storageKey = that.storeId + '_store',
                         cache = $localStorage[storageKey];
 
@@ -369,9 +376,10 @@
                             filter: getFilter(that),
                             sort: getSort(that.sort)
                         },
-                        url = getRemoteUrl(that);
+                        url = getRemoteUrl(that),
+                        findMethod = method || 'find';
 
-                    $http.post(url + '/find', params).success(function(response){
+                    $http.post(url + '/' + findMethod, params).success(function(response){
                         that.results = response.results;
                         that.total = response.total;
                         callback(that);
