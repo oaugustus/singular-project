@@ -66,22 +66,30 @@
         /**
          * Recupera os parâmetros de ordenação a serem passados para a API.
          *
-         * @param {array} field
+         * @param {string} strSort
          * @return {object}
          */
-        function getSort(field){
-            var sort = {};
+        function getSort(strSort){
+            var sort = {},
+                direction = 'ASC',
+                fields;
 
-            var direction = 'ASC';
+            if (typeof strSort == 'string') {
+                fields = strSort.split(",");
 
-            try {
-                if (field.charAt(0) == '-') {
-                    direction = 'DESC';
-                    field = field.substr(1);
-                }
+                angular.forEach(fields, function(field){
+                    try {
+                        if (field.charAt(0) == '-') {
+                            direction = 'DESC';
+                            field = field.substr(1);
+                        }
 
-                sort[field] = direction;
-            } catch(e){}
+                        sort[field] = direction;
+                    } catch(e){}
+                });
+            } else {
+                sort = strSort;
+            }
 
             return sort;
         }
@@ -144,7 +152,7 @@
                 storeCache = angular.copy($localStorage[stId] || {paging: {
                         currentPage: 1,
                         pageSize: 50
-                    }, filter: {}, sort: []});
+                    }, filter: {}, sort: ''});
 
             var that = {
                 results: [],
