@@ -81,7 +81,7 @@
                     try {
                         if (field.charAt(0) == '-') {
                             direction = 'DESC';
-                            field = field.substr(1);
+                            field = field.substr(1).trim();
                         }
 
                         sort[field] = direction;
