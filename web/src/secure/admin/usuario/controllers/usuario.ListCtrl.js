@@ -12,10 +12,14 @@
         [
             '$scope'
             ,'$state'
-            ,'$modal'
+            ,'$uibModal'
             ,'$localStorage'
             ,'SweetAlert'
             ,'toaster'
+            ,'$aside'
+            ,'$sngFilter'
+            ,'$sngApi'
+            ,'usuario.UsuarioService'
             ,'usuario.UsuarioStore'
             ,Controller
         ]
@@ -26,7 +30,7 @@
      *
      * @param $scope
      * @param $state
-     * @param $modal
+     * @param $uibModal
      * @param $localStorage
      * @param SweetAlert
      * @param toaster
@@ -36,12 +40,20 @@
     function Controller(
         $scope
         ,$state
-        ,$modal
+        ,$uibModal
         ,$localStorage
         ,SweetAlert
         ,toaster
+        ,$aside
+        ,$sngFilter
+        ,$sngApi
+        ,usuarioService
         ,UsuarioStore
     ) {
+        $scope.usuario = usuarioService;
+        // $scope.filtro = usuarioService.filter;
+        // $scope.paging = usuarioService.paging;
+
         /**
          * UsuarioStore
          *
@@ -49,8 +61,17 @@
          */
         $scope.DataStore = UsuarioStore;
 
-        // seta o template a ser utilizado no filtro para este módulo
-        $scope.Filter.templateUrl = 'src/secure/admin/usuario/views/usuario.filter.html';
+        $scope.usuario.filter.$on('apply', function() {
+            $scope.usuario.api.filter($scope.usuario.filter).paging().call('find').then(function(response){
+                console.log(response);
+            });
+        });
+
+        $scope.usuario.filter.$on('clear', $scope.usuario.filter.close);
+
+        $scope.usuario.filter.$on('open', function(){
+            // $scope.filtro.addFilter('nome', 'Otávio');
+        });
 
         /**
          * Função de recarregamento dos dados do DataStore.

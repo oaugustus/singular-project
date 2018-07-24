@@ -11,7 +11,7 @@
                     <button type="button" class="btn btn-danger btn-addon pull-right" ui-sref="app.usuario-create" acl="f-usuarios-create">
                         <i class="fa fa-plus"></i> Novo
                     </button>
-                    <button type="button" class="btn btn-addon pull-right m-r-sm" ng-class="DataStore.isActiveClass()" ng-click="Filter.open()">
+                    <button type="button" class="btn btn-addon pull-right m-r-sm" ng-class="{'btn-info': usuario.filter.hasFilter(),'btn-default': !usuario.filter.hasFilter()}" ng-click="usuario.filter.open()">
                         <i class="fa fa-filter"></i> Filtrar
                     </button>
                 </div>
@@ -76,7 +76,8 @@
                                             </table>
                                         </md-table-container>
 
-                                        <md-table-pagination md-limit="DataStore.paging.pageSize" md-limit-options="[10, 30, 50, 100]" md-page="DataStore.paging.currentPage" md-total="{{DataStore.total}}" md-on-paginate="reloadData" md-page-select></md-table-pagination>
+                                        <sng-pagination paging="paging"></sng-pagination>
+                                        <!--<md-table-pagination md-limit="DataStore.paging.pageSize" md-limit-options="[10, 30, 50, 100]" md-page="DataStore.paging.currentPage" md-total="{{DataStore.total}}" md-on-paginate="reloadData" md-page-select></md-table-pagination>-->
                                     </div>
                                 </div>
                             </div>

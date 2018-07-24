@@ -38,4 +38,9 @@ class Usuario extends SingularService
 
         return ['code' => 403];
     }
+
+    public function teste(Request $request)
+    {
+        die('oi');
+    }
 }
