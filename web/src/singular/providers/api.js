@@ -34,9 +34,10 @@
         };
 
         this.$get = ['$http','$sngFilter','$sngPaging', function($http, $sngFilter, $sngPaging) {
-            function apiFactory(resource) {
+            function apiFactory(resource, $Filter, $Paging) {
                 var _filter = null,
-                    _paging = null;
+                    _paging = null,
+                    _sort = null;
 
                 var Api = {
                     /**
@@ -50,10 +51,18 @@
                     /**
                      * Injeta o serviço de paginação na chamada do método.
                      *
-                     * @param {}
+                     * @param {object}
                      * @type {function}
                      */
-                    paging: applyPaging,
+                    paginate: applyPaging,
+
+                    /**
+                     * Injeta a ordenação na chamada do método.
+                     *
+                     * @param {string}
+                     * @type {function}
+                     */
+                    sort: applySort,
 
                     /**
                      * Chama o método remoto.
@@ -83,16 +92,30 @@
                     if (_filter) {
                         params.filter = _filter.getFilter();
                     }
-                    // angular.extend(params, );
-                    // injectPagingParams(params);
+
+                    if (_paging) {
+                        params.paging = _paging.getPaging();
+                    }
+
+                    if (_sort) {
+                        params.sort = getSort(_sort);
+                    }
 
                     var request = $http({
                         method: method.toUpperCase(),
                         url: getURL(action),
                         data: params
                     }).then(function(response){
-                        _filter = null;
-                        return response.data;
+                        if (response.status == 200) {
+                            _filter = null;
+                            _sort = null;
+
+                            if (_paging) {
+                                _paging.total = response.data.total;
+                            }
+
+                            return response.data;
+                        }
                     });
 
                     return request;
@@ -101,10 +124,15 @@
                 /**
                  * Aplica o filtro na chamada da api.
                  *
-                 * @param f
+                 * @param filter
                  * @return {Api}
                  */
-                function applyFilter(f) {
+                function applyFilter(filter) {
+                    var f = filter || $Filter;
+
+                    if (!f) {
+                        f = {};
+                    }
 
                     if (!f.hasOwnProperty('isFilterProvider')) {
                         _filter = $sngFilter(f);
@@ -118,13 +146,68 @@
                 /**
                  * Aplica a paginação na chamada da api.
                  *
-                 * @param p
+                 * @param paging
                  * @return {Api}
                  */
-                function applyPaging(p) {
-                    _paging = p;
+                function applyPaging(paging) {
+                    var p = paging|| $Paging;
+
+                    if (!p) {
+                        p = {};
+                    }
+
+                    if (!p.hasOwnProperty('isPagingProvider')) {
+                        _paging = $sngPaging(p);
+                    } else {
+                        _paging = p;
+                    }
+
                     return Api;
                 }
+
+                /**
+                 * Aplica a ordenação na chamada da api.
+                 *
+                 * @param strSort
+                 * @return {Api}
+                 */
+                function applySort(strSort) {
+                    _sort = strSort;
+
+                    return Api;
+                }
+
+                /**
+                 * Recupera a estrutura de ordenação da consulta.
+                 *
+                 * @param strSort
+                 * @return {{}}
+                 */
+                function getSort(strSort){
+                    var sort = {},
+                        direction = 'ASC',
+                        fields;
+
+                    if (typeof strSort === 'string') {
+                        fields = strSort.split(",");
+
+                        angular.forEach(fields, function(field){
+                            try {
+                                if (field.charAt(0) == '-') {
+                                    direction = 'DESC';
+                                    field = field.substr(1).trim();
+                                }
+
+                                sort[field] = direction;
+                            } catch(e){}
+                        });
+                    } else {
+                        sort = strSort;
+                    }
+
+                    return sort;
+                }
+
 
                 /**
                  * Recupera a URL completa de um endpoint para chamada remota.
