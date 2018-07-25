@@ -1,13 +1,15 @@
 <?php
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'dbs.options' => array (
-        'mysql' => array(
+        'database' => array(
             'driver'    => 'pdo_mysql',
-            'host'      => $app["db.host"],
-            'dbname'    => $app["db.name"],
-            'user'      => $app["db.user"],
-            'password'  => $app["db.pass"],
-            'charset'   => $app["db.charset"],
-        )
+            'port'      => getenv('DB_PORT') ?:3306,
+            'host'      => getenv('DB_HOST') ?:$app["db.host"],
+            'dbname'    => getenv('DB_NAME') ?:$app["db.name"],
+            'user'      => getenv('DB_USER') ?:$app["db.user"],
+            'password'  => getenv('DB_PASS') ?:$app["db.pass"],
+            'charset'   => getenv('DB_CHARSET') ?:$app["db.charset"],
+        ),
     ),
+    'dbms' => 'mysql'
 ));

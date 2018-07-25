@@ -14,10 +14,8 @@
       "psr-0": {"" : "src/"}
     },
     "require": {
-        "singular/singular": "dev-master",
-        "singular/injector": "dev-master",
-        "singular/command": "dev-master",
-        "robmorgan/phinx": "^0.8.1",
+        "singular/singular": "1.4.0",
+        "singular/injector": "1.0",
         "oyejorge/less.php": "v1.7.0.14",
         "claviska/simpleimage": "^3.3"
     },

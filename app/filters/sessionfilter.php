@@ -1,6 +1,5 @@
 <?php
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\ParameterBag;
 
 $app->before(function (Request $request) use ($app) {
     $session = $app['session']->get($app['session.name']);

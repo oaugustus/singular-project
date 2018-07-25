@@ -1,2 +1,2 @@
 <?php
-//$app->register(new \Silex\Provider\RoutingServiceProvider());
+$app->register(new \Silex\Provider\UrlGeneratorServiceProvider());
