@@ -84,7 +84,10 @@
                             field = field.substr(1).trim();
                         }
 
-                        sort[field] = direction;
+                        if (field != ""){
+                            sort[field] = direction;
+                        }
+
                     } catch(e){}
                 });
             } else {

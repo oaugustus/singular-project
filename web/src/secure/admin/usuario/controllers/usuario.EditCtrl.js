@@ -13,7 +13,7 @@
             '$scope',
             '$state',
             '$stateParams',
-            '$modal',
+            '$uibModal',
             '$localStorage',
             'SweetAlert',
             'toaster',
@@ -29,7 +29,7 @@
      * @param $scope
      * @param $state
      * @param $stateParams
-     * @param $modal
+     * @param $uibModal
      * @param $localStorage
      * @param SweetAlert
      * @param toaster
@@ -41,7 +41,7 @@
         $scope,
         $state,
         $stateParams,
-        $modal,
+        $uibModal,
         $localStorage,
         SweetAlert,
         toaster,

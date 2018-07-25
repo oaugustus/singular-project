@@ -33,9 +33,8 @@
 
                 <div class="form-group col-sm-4 required">
                     <label class="control-label label-sm" for="perfil">Perfil</label>
-                    <select class="form-control no-padder" required ng-disabled="isShow" id="perfil" name="perfil" ng-model="usuario.perfil_id" data-placeholder-text-single="'Selecione um perfil'" chosen ng-options="perfil.id as perfil.perfil for perfil in PerfilStore.results">
-                        <option disabled></option>
-                    </select>
+                    <select2 class="form-control no-padder no-border"  required ng-disabled="isShow" id="perfil" name="perfil" ng-model="usuario.perfil_id" data-placeholder-text-single="'Selecione um perfil'" s2-options="perfil.id as perfil.perfil for perfil in PerfilStore.results">
+                    </select2>
                     <ng-messages for="forms.cadastro.perfil.$error" role="alert" ng-if="UsuarioStore.checkField(forms.cadastro.perfil)">
                         <ng-message when="required" class="label label-danger">Perfil é obrigatório</ng-message>
                     </ng-messages>

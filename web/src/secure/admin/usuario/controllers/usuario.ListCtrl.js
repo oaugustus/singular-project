@@ -50,9 +50,10 @@
         ,usuarioService
         ,UsuarioStore
     ) {
-        $scope.usuario = usuarioService;
-        // $scope.filtro = usuarioService.filter;
-        // $scope.paging = usuarioService.paging;
+        $scope.usuario = usuarioService.api;
+        $scope.filtro = usuarioService.filter;
+        $scope.paging = usuarioService.paging;
+        $scope.sort = usuarioService.sort;
 
         /**
          * UsuarioStore
@@ -61,15 +62,13 @@
          */
         $scope.DataStore = UsuarioStore;
 
-        $scope.usuario.filter.$on('apply', function() {
-            $scope.usuario.api.filter($scope.usuario.filter).paging().call('find').then(function(response){
-                console.log(response);
-            });
+        $scope.filtro.$on('apply', function(){
+            $scope.reloadData();
         });
 
-        $scope.usuario.filter.$on('clear', $scope.usuario.filter.close);
+        $scope.filtro.$on('clear', $scope.filtro.close);
 
-        $scope.usuario.filter.$on('open', function(){
+        $scope.filtro.$on('open', function(){
             // $scope.filtro.addFilter('nome', 'Otávio');
         });
 
@@ -77,7 +76,10 @@
          * Função de recarregamento dos dados do DataStore.
          */
         $scope.reloadData = function() {
-            $scope.DataStore.load();
+
+            $scope.usuario.filter().paginate().sort($scope.sort.field).call('find').then(function(response){
+                $scope.usuario.records = response.results;
+            });
         };
 
         /**

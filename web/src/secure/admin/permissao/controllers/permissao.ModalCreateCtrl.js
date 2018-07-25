@@ -11,8 +11,8 @@
         'permissao.ModalCreateCtrl',
         [
             '$scope',
-            '$modal',
-            '$modalInstance',
+            '$uibModal',
+            '$uibModalInstance',
             'SweetAlert',
             'toaster',
             Controller
@@ -23,7 +23,7 @@
      * Função de definição do controlador.
      *
      * @param $scope
-     * @param $modal
+     * @param $uibModal
      * @param $modalInstance
      * @param SweetAlert
      * @param toaster
@@ -31,7 +31,7 @@
      */
     function Controller(
         $scope,
-        $modal,
+        $uibModal,
         $modalInstance,
         SweetAlert,
         toaster

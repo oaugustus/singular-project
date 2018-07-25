@@ -12,7 +12,7 @@
         [
             '$scope',
             '$state',
-            '$modal',
+            '$uibModal',
             '$localStorage',
             'SweetAlert',
             'toaster',
@@ -28,7 +28,7 @@
      *
      * @param $scope
      * @param $state
-     * @param $modal
+     * @param $uibModal
      * @param $localStorage
      * @param SweetAlert
      * @param toaster
@@ -40,7 +40,7 @@
     function Controller(
         $scope,
         $state,
-        $modal,
+        $uibModal,
         $localStorage,
         SweetAlert,
         toaster,
@@ -49,16 +49,16 @@
         ParenteStore
     ) {
         $scope.ComponenteStore = ComponenteStore;
-        $scope.ComponenteStore.sort = ['t.text'];
+        $scope.ComponenteStore.sort = 't.text';
         $scope.ComponenteStore.load();
 
         $scope.ParenteStore = ParenteStore;
         $scope.ParenteStore.filter.tipo = 'M';
-        $scope.ParenteStore.sort = ['t.text'];
+        $scope.ParenteStore.sort = 't.text';
         $scope.ParenteStore.load();
 
         $scope.MenuStore = MenuStore;
-        $scope.MenuStore.sort = ['t.modulo'];
+        $scope.MenuStore.sort = 't.modulo';
         $scope.MenuStore.load();
 
         $scope.query = null;

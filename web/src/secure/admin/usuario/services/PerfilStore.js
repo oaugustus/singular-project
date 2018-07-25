@@ -23,7 +23,7 @@
     function Service(
         StoreFactory
     ) {
-        var me = StoreFactory.create('sessao', 'perfil');
+        var me = StoreFactory.create('sessao', 'perfil_acesso');
 
         /**
          * Mapa do filtro de consultas.

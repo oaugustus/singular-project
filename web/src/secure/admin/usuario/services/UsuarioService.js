@@ -30,10 +30,15 @@
         $sngFilter,
         $sngPaging
     ) {
+        var filter = $sngFilter('src/secure/admin/usuario/views/usuario.filter.html'),
+            paging = $sngPaging(),
+            api = $sngApi('sessao/usuario', filter, paging);
+
         return {
-            api: $sngApi('sessao/usuario'),
-            filter: $sngFilter('src/secure/admin/usuario/views/usuario.filter.html'),
-            paging: $sngPaging(),
+            api: api,
+            filter: filter,
+            paging: paging,
+            sort: {field: null},
             records: []
         }
     }

@@ -12,7 +12,7 @@
         [
             '$scope',
             '$state',
-            '$modal',
+            '$uibModal',
             '$localStorage',
             'SweetAlert',
             'toaster',
@@ -30,7 +30,7 @@
     function Controller(
         $scope,
         $state,
-        $modal,
+        $uibModal,
         $localStorage,
         SweetAlert,
         toaster,
@@ -83,7 +83,7 @@
          */
         $scope.abreModalCopiar = function () {
 
-            var modal = $modal.open({
+            var modal = $uibModal.open({
                 templateUrl: 'src/secure/admin/permissao/views/copiar.modal.html',
                 controller: 'permissao.ModalCopiarCtrl',
                 size: 'md',
@@ -101,7 +101,7 @@
          */
         $scope.abreModalPerfil = function () {
 
-            var modal = $modal.open({
+            var modal = $uibModal.open({
                 templateUrl: 'src/secure/admin/permissao/views/perfil.modal.html',
                 controller: 'permissao.ModalCreateCtrl',
                 size: 'md',
@@ -120,7 +120,7 @@
          */
         $scope.editarPerfil = function () {
 
-            var modal = $modal.open({
+            var modal = $uibModal.open({
                 templateUrl: 'src/secure/admin/permissao/views/perfil.modal.html',
                 controller: 'permissao.ModalEditCtrl',
                 size: 'md',

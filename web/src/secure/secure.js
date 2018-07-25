@@ -19,6 +19,7 @@
             ,'singular.ui'
             ,'upload.button'
             ,'lr.upload'
+            ,'rt.select2'
             ,'angularMoment'
             ,'ui.utils.masks'
             ,'ngMaterial'

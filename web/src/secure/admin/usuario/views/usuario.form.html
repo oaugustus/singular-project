@@ -1,64 +1,48 @@
-<div class="hbox hbox-auto-xs" >
-    <div class="col lter b-l">
+<sng-page>
+    <sng-header>
+        <div class="font-normal h3 pull-left m-t-xs col-sm-6">
+            <i class="fa fa-users"></i>
+            <span ng-if="isCreate"> Novo usuário</span>
+            <span ng-if="isEdit"> Editando usuário</span>
+            <span ng-if="isShow"> Visualizando usuário</span>
+        </div>
 
-        <div class="vbox">
-            <!-- Start:Toolbar -->
-            <div class="wrapper-sm bg-light lter b-b clearfix">
-                <div class="font-normal h3 pull-left m-t-xs col-sm-6">
-                    <i class="fa fa-users"></i>
-                    <span ng-if="isCreate"> Novo usuário</span>
-                    <span ng-if="isEdit"> Editando usuário</span>
-                    <span ng-if="isShow"> Visualizando usuário</span>
-                </div>
+        <div class="col-sm-6 pull-right">
+            <button type="button" class="btn btn-success btn-addon pull-right" ng-click="save()" ng-if="!isShow" ng-disabled="isSaving">
+                <i class="fa fa-check" ></i>
+                <span ng-if="!isSaving">Salvar</span>
+                <span ng-if="isSaving">Salvando...</span>
+            </button>
 
-                <div class="col-sm-6 pull-right">
-                    <button type="button" class="btn btn-success btn-addon pull-right" ng-click="save()" ng-if="!isShow" ng-disabled="isSaving">
-                        <i class="fa fa-check" ></i>
-                        <span ng-if="!isSaving">Salvar</span>
-                        <span ng-if="isSaving">Salvando...</span>
-                    </button>
+            <button type="button" class="btn btn-info btn-addon pull-right m-r-xs" ng-if="isShow" ui-sref="app.usuario-edit({id: usuario.id})">
+                <i class="fa fa-edit"></i> Editar
+            </button>
 
-                    <button type="button" class="btn btn-info btn-addon pull-right m-r-xs" ng-if="isShow" ui-sref="app.usuario-edit({id: usuario.id})">
-                        <i class="fa fa-edit"></i> Editar
-                    </button>
-
-                    <button type="button" class="btn btn-default btn-addon pull-right m-r-xs" ui-sref="app.usuario-list">
-                        <i class="fa fa-times"></i> Cancelar
-                    </button>
-                </div>
-            </div>
-            <!-- End:Toolbar -->
-
-
-            <div class="row-row">
-                <div class="cell">
-                    <div class="cell-inner">
-                        <!-- Start:Content-->
-                        <div class="wrapper-md">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <tabset justified="true" class="tab-container" ng-if="hasRecord">
-                                        <tab heading="">
-                                            <div ng-include="'src/secure/admin/usuario/views/usuario.cadastro.tab.html'"></div>
-                                        </tab>
-                                    </tabset>
-                                    <div class="panel panel-default clearfix ng-scope" ng-if="!hasRecord" style="">
-                                        <div class="wrapper-md row"></div>
-                                        <div class="col-sm-12 text-center m-b-lg">
-                                            <h3><i class="fa fa-frown-o"></i> Ops, usuário não localizado!</h3>
-                                            <button type="button" class="btn btn-default btn-addon" ui-sref="app.usuario-list">
-                                                <i class="fa fa-undo"></i> Voltar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            <button type="button" class="btn btn-default btn-addon pull-right m-r-xs" ui-sref="app.usuario-list">
+                <i class="fa fa-times"></i> Cancelar
+            </button>
+        </div>
+    </sng-header>
+    <sng-content>
+        <div class="wrapper-md">
+            <div class="row">
+                <div class="col-sm-12">
+                    <uib-tabset justified="true" class="tab-container" ng-if="hasRecord">
+                        <uib-tab heading="">
+                            <div ng-include="'src/secure/admin/usuario/views/usuario.cadastro.tab.html'"></div>
+                        </uib-tab>
+                    </uib-tabset>
+                    <div class="panel panel-default clearfix ng-scope" ng-if="!hasRecord" style="">
+                        <div class="wrapper-md row"></div>
+                        <div class="col-sm-12 text-center m-b-lg">
+                            <h3><i class="fa fa-frown-o"></i> Ops, usuário não localizado!</h3>
+                            <button type="button" class="btn btn-default btn-addon" ui-sref="app.usuario-list">
+                                <i class="fa fa-undo"></i> Voltar
+                            </button>
                         </div>
-                        <!-- End:Content-->
                     </div>
-
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </sng-content>
+</sng-page>
