@@ -12,6 +12,7 @@ use Singular\Annotation\Assert;
 use Singular\Annotation\Convert;
 use Singular\Annotation\After;
 use Singular\Annotation\Before;
+use Singular\Response\JsonResponse;
 
 /**
  * Classe Componente
