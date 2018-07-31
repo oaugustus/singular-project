@@ -4,7 +4,7 @@
         <span>{{app.aplicacao}}</span>
     </li>
 
-    <li ng-class="{'active': mod.menu == selectedModule}" ng-repeat="mod in app.modules | filter:queryModulo as results">
+    <li ng-class="{'active': mod.menu == selectedModule}" ng-repeat="mod in app.modules | filter:ui.queryModulo as results">
         <a class="auto" ng-if="mod.modulos.length > 0">
             <span class="pull-right text-muted">
                 <i class="fa fa-fw fa-angle-right text"></i>

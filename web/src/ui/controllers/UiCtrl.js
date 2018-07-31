@@ -57,7 +57,14 @@
          *
          * @type {Notification}
          */
-        $scope.notification = Notification
+        $scope.notification = Notification;
+
+        /**
+         * Objeto de referência à interface do usuário nas views.
+         *
+         * @type {Object}
+         */
+        $scope.ui = {};
 
         /**
          * Confirma e efetua o encerramento da sessão do usuário logado.
