@@ -145,7 +145,7 @@
                 if (toState.acl) {
                     if (acl.indexOf('|' + toState.acl + '|') == -1) {
                         toastr.clear();
-                        toastr.pop('error','ACESSO NEGADO','Seu usuário não tem permissão para executar esta ação!');
+                        toastr.error('ACESSO NEGADO','Seu usuário não tem permissão para executar esta ação!');
                         event.preventDefault();
                     }
                 }
