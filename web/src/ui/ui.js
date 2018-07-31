@@ -128,11 +128,12 @@
             Session.setMenu(window.APP.menu);
 
             $rootScope.$on("$locationChangeStart",function(event, next, current){
-                var url = next.substring(next.indexOf('#')+1),
-                    state = $state.fromUrl(url);
-
+                var url = next.substring(next.indexOf('#!/app')+6),
+                    state = $state.get().filter(function(state){
+                        return state.url == url;
+                    }).pop();
                 if (state){
-                    if (state.self.acl) {
+                    if (state.acl) {
                         if (acl.indexOf('|' + state.self.acl + '|') == -1) {
                             event.preventDefault();
                         }
@@ -156,15 +157,17 @@
                 event,
                 next
             ){
-                var url = next.substring(next.indexOf('#')+1),
-                    state = $state.fromUrl(url),
+                var url = next.substring(next.indexOf('#!/app')+6),
+                    state = $state.get().filter(function(state){
+                        return state.url == url;
+                    }).pop(),
                     address = window.location.hash;
 
                 if (!state) {
                     return false;
                 }
                 
-                if (state.self.persistent) {
+                if (state.persistent) {
                     address = address.substring(1);
                     $localStorage.state = address;
                 }
