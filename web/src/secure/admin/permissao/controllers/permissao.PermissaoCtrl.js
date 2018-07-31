@@ -10,12 +10,10 @@
     angular.module('admin.permissao').controller(
         'permissao.PermissaoCtrl',
         [
-            '$scope'
+             '$scope'
             ,'$uibModal'
-            ,'SweetAlert'
             ,'toastr'
             ,'$sngApi'
-            ,'permissao.PermissaoStore'
             ,Controller
         ]
     );
@@ -25,19 +23,15 @@
      *
      * @param $scope
      * @param $uibModal
-     * @param SweetAlert
      * @param toastr
      * @param $sngApi
-     * @param PermissaoStore
      * @constructor
      */
     function Controller(
          $scope
         ,$uibModal
-        ,SweetAlert
         ,toastr
         ,$sngApi
-        ,PermissaoStore
     ) {
         /**
          * Api de comunicação com o controlador de perfil de acesso.
@@ -53,13 +47,17 @@
          */
         $scope.permissaoApi = $sngApi('sessao/permissao');
 
-        $scope.alterado = false;
-        $scope.forms = {};
-        $scope.permissao = {};
-
-        $scope.vm = {};
-        $scope.vm.ignoreChanges = false;
-        $scope.vm.newNode = {};
+        /**
+         * Definição das configurações da árvore de permissões.
+         *
+         * @type {Object}
+         */
+        $scope.vm = {
+            ignoreChanges: false,
+            newNode: {},
+            treeVersion: 1,
+            alterado: false
+        };
 
         /**
          * Inicialização do controlador.
@@ -69,18 +67,19 @@
         };
 
         /**
-         * Função que possibilita recarregar a lista de permissao
+         * Função que possibilita recarregar a lista de permissões.
          */
         $scope.reload = function() {
             $scope.permissaoApi.call('listarPermissoes', $scope.perfil).then(function(response){
                 $scope.permissoes = response.results;
+                reloadTree();
             });
         };
 
         /**
          * Função que seleciona o grupo de acesso apara ser caregada as permissões...
          */
-        $scope.onSelectPerfil = function(perfil){
+        $scope.onSelectPerfil = function(perfil) {
 
             $scope.showBtnCopiar = true;
 
@@ -92,7 +91,7 @@
 
 
         /**
-         * Abre a modal de copiar permissão
+         * Abre a modal de copiar permissão.
          */
         $scope.abreModalCopiar = function () {
 
@@ -110,7 +109,7 @@
         };
 
         /**
-         * Abre a modal de copiar permissão
+         * Abre a modal de criação do perfil.
          */
         $scope.abreModalPerfil = function () {
 
@@ -129,7 +128,7 @@
         };
 
         /**
-         * Abre a modal de copiar permissão
+         * Abre a modal de editar o perfil.
          */
         $scope.editarPerfil = function () {
 
@@ -153,6 +152,9 @@
 
         };
 
+        /**
+         * Remove o perfil selecionado.
+         */
         $scope.removerPerfil = function() {
             $scope.perfilApi.remove($scope.perfil.id, function(response){
                 reloadPerfis();
@@ -160,82 +162,9 @@
             }, 'Atenção','Deseja realmente excluir este perfil?');
         };
 
-
-
-        var i = 1;
-        $scope.$watch('permissoes', function(results){
-
-            if (!results) {
-                return;
-            }
-            
-            if ($scope.permissoes.length > 0 ) {
-                $scope.vm.originalData = $scope.permissoes;
-
-                $scope.vm.treeData = [];
-                angular.copy($scope.vm.originalData,$scope.vm.treeData);
-
-                $scope.vm.treeConfig = {
-                    core : {
-                        multiple : true,
-                        animation: true,
-                        error : function(error) {
-                            $log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
-                        },
-                        check_callback : true,
-                        worker : true
-                    },
-                    version : i++,
-                    // plugins : ['type']
-                    plugins : ['type','checkbox','changed','json_data','ui']
-                };
-            } else {
-                $scope.vm.originalData =[];
-
-                $scope.vm.treeData = [];
-                angular.copy($scope.vm.originalData,$scope.vm.treeData);
-
-                $scope.vm.treeConfig = {
-                    core : {
-                        multiple : true,
-                        animation: true,
-                        error : function(error) {
-                            $log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
-                        },
-                        check_callback : true,
-                        worker : true
-                    },
-                    version : i++,
-                    // plugins : ['type']
-                    plugins : ['type','checkbox','changed','json_data','ui']
-                };
-            }
-
-        });
-
-
-
-        $scope.vm.selectNode = function(node,selected) {
-
-            $scope.alterado = true;
-
-            $scope.perfil.selecteds = $scope.vm.treeInstance.jstree(true).get_selected();
-
-            $scope.perfil.selecteds.push(selected.node.parent);
-
-        };
-
-        $scope.vm.deselectNode = function(node,selected) {
-
-            $scope.alterado = true;
-
-            $scope.perfil.selecteds = $scope.vm.treeInstance.jstree(true).get_selected();
-
-            $scope.perfil.selecteds.push(selected.node.parent);
-
-        };
-
-
+        /**
+         * Chama função para salvar as alterações na permissão.
+         */
         $scope.savePermissoes = function () {
 
             $scope.permissaoApi.save($scope.perfil).then(function(response) {
@@ -243,82 +172,52 @@
                 toastr.clear();
 
                 if (response.success) {
-                    $scope.alterado = false;
-                    toastr.success('Permissao alterada com sucesso!');
+                    $scope.vm.alterado = false;
+                    toastr.success('Permissões definidas com sucesso!');
                     return ;
                 }
 
-                toastr.error('Falhou ao tentar alterar o registro!');
+                toastr.error('Falhou ao tentar definir permissões!');
             });
 
         };
-        
 
-        /* Remove o registro de um permissao
+        /**
+         * Acionado ao selecionar um nó na árvore.
+         *
+         * @param node
+         * @param selected
          */
-        $scope.removePermissao = function() {
+        $scope.vm.selectNode = function(node,selected) {
 
-            if ($scope.permissao.tipo == 'M'){
-                SweetAlert.swal({
-                        title: "Remover",
-                        text: "Deseja realmente remover este módulo? Os permissaos dependentes serão removidos juntos com ele!",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Sim",
-                        cancelButtonText: 'Não',
-                        closeOnConfirm: true
-                    },
-                    function (confirm) {
-                        if (confirm) {
-                            $scope.permissaoApi.removePermissao($scope.permissao, function(success){
-                                if (success) {
-                                    $scope.permissaoApi.load({});
-                                    $scope.ParenteStore.load();
+            // define que a árvore de seleção foi alterada
+            $scope.vm.alterado = true;
 
-                                    $scope.permissaoApi.isSubmited = false;
-                                    $scope.forms.permissao.$setPristine();
+            // registra os nós selecionados
+            $scope.perfil.selecteds = $scope.vm.treeInstance.jstree(true).get_selected();
 
-                                    $scope.permissao = {};
-                                    $scope.permissao.tipo  = 'M';
-                                } else {
-                                    toastr.pop('error','Não é possível excluir o registro informado!');
-                                }
-                            });
-                        }
-                    });
-
-            } else {
-                SweetAlert.swal({
-                        title: "Remover",
-                        text: "Deseja realmente remover este permissao?",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Sim",
-                        cancelButtonText: 'Não',
-                        closeOnConfirm: true
-                    },
-                    function (confirm) {
-                        if (confirm) {
-                            $scope.permissaoApi.removePermissao($scope.permissao, function(success){
-                                if (success) {
-                                    $scope.permissaoApi.load({});
-                                    $scope.ParenteStore.load();
-
-                                    $scope.permissaoApi.isSubmited = false;
-                                    $scope.forms.permissao.$setPristine();
-
-                                    $scope.permissao = {};
-                                    $scope.permissao.tipo  = 'M';
-                                } else {
-                                    toastr.pop('error','Não é possível excluir o registro informado!');
-                                }
-                            });
-                        }
-                    });
-            }
+            // registra o pai do nó selecionado
+            $scope.perfil.selecteds.push(selected.node.parent);
         };
+
+        /**
+         * Acionado ao deselecionar um nó na árvore.
+         *
+         * @param node
+         * @param selected
+         */
+        $scope.vm.deselectNode = function(node,selected) {
+
+            // define que a árvore de seleção foi alterada
+            $scope.vm.alterado = true;
+
+            // registra os nós selecionados
+            $scope.perfil.selecteds = $scope.vm.treeInstance.jstree(true).get_selected();
+
+            // registra o pai do nó deselecionado
+            $scope.perfil.selecteds.push(selected.node.parent);
+        };
+
 
         /**
          * Função que recarrega a lista de perfis.
@@ -327,6 +226,36 @@
             $scope.perfilApi.find().then(function(results) {
                 $scope.listaPerfil = results;
             });
+        }
+
+        /**
+         * Atualiza a lista de permissões da árvore.
+         */
+        function reloadTree() {
+
+            if ($scope.permissoes.length > 0 ) {
+                $scope.vm.originalData = $scope.permissoes;
+            } else {
+                $scope.vm.originalData =[];
+            }
+
+            $scope.vm.treeData = [];
+            angular.copy($scope.vm.originalData,$scope.vm.treeData);
+
+            $scope.vm.treeConfig = {
+                core : {
+                    multiple : true,
+                    animation: true,
+                    error : function(error) {
+                        $log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
+                    },
+                    check_callback : true,
+                    worker : true
+                },
+                version : $scope.vm.treeVersion++,
+                plugins : ['type','checkbox','changed','json_data','ui']
+            };
+
         }
 
         $scope.onInit();

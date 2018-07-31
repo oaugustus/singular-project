@@ -3,19 +3,20 @@
     'use strict';
 
     /**
-     * Controlador responsável pela modal de copia de permissões.
+     * Controlador responsável pela modal de cópia de permissões.
      *
      * @author Otávio Fernandes <otavio@netonsolucoes.com.br>
      */
     angular.module('admin.permissao').controller(
         'permissao.ModalCopiarCtrl',
         [
-            '$scope',
-            '$uibModal',
-            '$uibModalInstance',
-            'SweetAlert',
-            'toastr',
-            Controller
+            '$scope'
+            ,'$uibModal'
+            ,'$uibModalInstance'
+            ,'SweetAlert'
+            ,'toastr'
+            ,'$sngApi'
+            ,Controller
         ]
     );
 
@@ -27,18 +28,48 @@
      * @param $modalInstance
      * @param SweetAlert
      * @param toastr
+     * @param $sngApi
      * @constructor
      */
     function Controller(
-        $scope,
-        $uibModal,
-        $modalInstance,
-        SweetAlert,
-        toastr
+         $scope
+        ,$uibModal
+        ,$modalInstance
+        ,SweetAlert
+        ,toastr
+        ,$sngApi
     ) {
+        /**
+         * Api de comunicação com o controlador de permissão.
+         *
+         * @type {$sngApi}
+         */
+        $scope.permissaoApi = $sngApi('sessao/permissao');
 
+        /**
+         * Api de comunicação com o controlador de perfil de acesso.
+         *
+         * @type {$sngApi}
+         */
+        $scope.perfilApi = $sngApi('sessao/perfil_acesso');
+
+        /**
+         * Objeto da cópia.
+         *
+         * @type {object}
+         */
         $scope.copiar = {};
 
+        /**
+         * Inicialização do controlador.
+         */
+        $scope.onInit = function(){
+            loadPerfil();
+        };
+
+        /**
+         * Copia as permissões de um perfil para o outro.
+         */
         $scope.copiaPermissoes = function () {
 
             var data = {
@@ -46,38 +77,27 @@
                 destino_perfil_id: $scope.perfil.id
             };
 
-            if (data.origem_perfil_id != data.destino_perfil_id) {
-                $scope.PermissaoStore.copiaPermissoesPerfil(data, function(response) {
+            // se o perfil de origem é diferente do perfil de destino
+            if (data.origem_perfil_id !== data.destino_perfil_id) {
 
+                // chama função remota para copiar o perfil
+                $scope.permissaoApi.call('copiaPermissoesPerfil',data).then(function(response) {
                     toastr.clear();
 
                     if (response.success) {
 
                         $scope.close();
-
-                        $scope.$parent.alterado = false;
-
-                        toastr.pop('success', 'Permissões copiadas com sucesso!');
-                        return ;
-
+                        $scope.$parent.vm.alterado = false;
+                        toastr.success('Permissões copiadas com sucesso!');
+                    } else {
+                        toastr.error('Falhou ao tentar copiar as permissões!');
                     }
-
-                    toastr.pop('error', 'Falhou ao tentar copiar as permissões!');
 
                 });
             } else {
                 $scope.close();
             }
         };
-
-
-        $scope.loadPerfil = function() {
-
-            $scope.FuncaoCopiarStore.filter.funcao_id = $scope.copiar.funcao_id;
-            $scope.FuncaoCopiarStore.load();
-
-        };
-
 
         /*
          Fecha o modal em modo de cancelamento
@@ -90,6 +110,17 @@
             $modalInstance.close();
         };
 
+        /**
+         * Função de carregamento do perfil.
+         */
+        function loadPerfil() {
+            $scope.perfilApi.find().then(function(results){
+                $scope.listaPerfil = results;
+            });
+        }
+
+        // chama função de inicialização do controlador
+        $scope.onInit();
     }
 
 }());

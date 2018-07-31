@@ -9,7 +9,7 @@
             <form name="forms.copiar" novalidate autocomplete="off">
                 <div class="form-group col-sm-12">
                     <label class="control-label">Perfil </label>
-                    <select chosen class="form-control no-padder" id="perfil_id" name="perfil_id" ng-model="copiar.perfil_id" placeholder="Selecione" ng-options="perfil.id as perfil.perfil for perfil in PerfilStore.results">
+                    <select chosen class="form-control no-padder" id="perfil_id" name="perfil_id" ng-model="copiar.perfil_id" placeholder="Selecione" ng-options="perfil.id as perfil.perfil for perfil in listaPerfil">
                         <option disabled></option>
                     </select>
                 </div>

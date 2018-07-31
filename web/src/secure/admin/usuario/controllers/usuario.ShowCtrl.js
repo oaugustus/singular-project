@@ -10,11 +10,10 @@
     angular.module('admin.usuario').controller(
         'usuario.ShowCtrl',
         [
-            '$scope',
-            '$state',
-            '$stateParams',
-            'usuario.UsuarioService',
-            Controller
+            '$scope'
+            ,'$stateParams'
+            ,'usuario.UsuarioService'
+            ,Controller
         ]
     );
 
@@ -22,14 +21,12 @@
      * Função de definição do controlador.
      *
      * @param $scope
-     * @param $state
      * @param $stateParams
      * @param UsuarioService
      * @constructor
      */
     function Controller(
          $scope
-        ,$state
         ,$stateParams
         ,UsuarioService
     ) {

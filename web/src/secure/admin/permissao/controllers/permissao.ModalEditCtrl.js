@@ -11,12 +11,11 @@
         'permissao.ModalEditCtrl',
         [
              '$scope'
-            ,'$uibModal'
             ,'$uibModalInstance'
-            ,'SweetAlert'
             ,'toastr'
-            ,'record'
             ,'$sngApi'
+            ,'permissao.PerfilService'
+            ,'record'
             ,Controller
         ]
     );
@@ -25,20 +24,20 @@
      * Função de definição do controlador.
      *
      * @param $scope
-     * @param $uibModal
      * @param $modalInstance
-     * @param SweetAlert
      * @param toastr
+     * @param $sngApi
+     * @param PerfilService
+     * @param record
      * @constructor
      */
     function Controller(
          $scope
-        ,$uibModal
         ,$modalInstance
-        ,SweetAlert
         ,toastr
-        ,record
         ,$sngApi
+        ,PerfilService
+        ,record
     ) {
         /**
          * Api de comunicação com o controlador perfil acesso.
@@ -47,6 +46,11 @@
          */
         $scope.perfilApi = $sngApi('sessao/perfil_acesso');
 
+        /**
+         * Vincula o registro ao escopo local.
+         *
+         * @type {object}
+         */
         $scope.perfil = record;
 
         /**
@@ -54,8 +58,9 @@
          */
         $scope.save = function() {
             // marca que o formulário já foi submetido
-            $scope.isSubmited = true;
+            PerfilService.isSubmited = true;
 
+            // se o formulário é valido
             if (!$scope.forms.perfil.$invalid) {
                 $scope.isSaving = true;
 
@@ -69,8 +74,18 @@
                         $scope.close();
                     }
                 });
+            } else {
+                toastr.error('Verifique o preenchimento dos campos destacados');
             }
         };
+
+        /**
+         * Verifica se um campo foi acionado.
+         *
+         * @param field
+         * @return {boolean}
+         */
+        $scope.isDirty = PerfilService.isDirty;
 
         /*
          Fecha o modal em modo de cancelamento

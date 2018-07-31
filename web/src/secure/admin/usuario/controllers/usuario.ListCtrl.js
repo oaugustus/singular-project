@@ -24,7 +24,7 @@
      * @constructor
      */
     function Controller(
-        $scope
+         $scope
         ,UsuarioService
     ) {
         /**
@@ -40,20 +40,6 @@
          * @type {$sngFilter}
          */
         $scope.filtro = UsuarioService.filter;
-
-        /**
-         * Função de recarregamento dos dados.
-         *
-         * @type {function}
-         */
-        $scope.reloadData = reloadDataFn;
-
-        /**
-         * Função de remoção dos registros.
-         *
-         * @type {function}
-         */
-        $scope.remove = removeFn;
 
         /**
          * Registros de usuários.
@@ -80,28 +66,34 @@
         };
 
         /**
-         * Recarrega a lista de usuários.
+         * Função de recarregamento dos dados.
          */
-        function reloadDataFn() {
+        $scope.reloadData = function(){
             $scope.usuario.api.find($scope.usuario.sort).then(function(results) {
                 if (results) {
                     $scope.records = results;
                 }
             });
-        }
+        };
+
+        /**
+         * Função de remoção dos registros.
+         *
+         * @param {int} id
+         */
+        $scope.remove = function (id) {
+            $scope.usuario.api.remove(id, function(response) {
+                if (response) {
+                    $scope.reloadData();
+                }
+            });
+        };
 
         /**
          * Remove o registro de um usuário pelo seu id.
          *
          * @param {int} id
          */
-        function removeFn(id) {
-            $scope.usuario.api.remove(id, function(response) {
-                if (response) {
-                    $scope.reloadData();
-                }
-            });
-        }
 
         // inicializa o controlador
         $scope.onInit();
