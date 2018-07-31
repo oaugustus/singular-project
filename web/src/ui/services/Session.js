@@ -3,15 +3,31 @@
    'use strict';
 
     /**
-     * Serviço que fornece a api para conexão.
+     * Serviço responsável por controlar as funcionalidades da sessão do usuário.
+     *
+     * @author Otávio Fernandes <otavio@netonsolucoes.com.br>
+     */
+    angular.module('singular.ui').factory(
+        'ui.Session',
+        [
+            '$http',
+            'UI',
+            SessionService
+        ]
+    );
+
+    /**
+     * Função de definição do serviço.
      *
      * @param $http
      * @param UI
-     *
+     * @return {SessionService}
      * @constructor
      */
-    var SessionService = function($http, UI)
-    {
+    function SessionService(
+        $http,
+        UI
+    ) {
         var me = this;
         me.session  = null;
         me.menu = null;
@@ -50,8 +66,8 @@
          * @param {Function} callback
          */
         me.logout = function(callback){
-            $http.post(UI.url + 'sessao/sessao/logout', {}).success(function(response){
-                if (response.success) {
+            $http.post(UI.url + 'sessao/sessao/logout', {}).then(function(response){
+                if (response.data.success) {
                     callback();
                 }
             })
@@ -60,5 +76,4 @@
         return me;
     }
 
-    angular.module('singular.ui').factory('ui.Session', ['$http','UI', SessionService]);
 }());

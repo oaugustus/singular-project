@@ -37,11 +37,13 @@
          * @param {Function} callback
          */
         me.requestLogin = function(data, callback){
-            $http.post('sessao/sessao/login', data).success(callback)
+            $http.post('sessao/sessao/login', data).then(function(response){
+                callback(response.data);
+            })
         };
 
         return me;
-    };
+    }
 
 
 }());
