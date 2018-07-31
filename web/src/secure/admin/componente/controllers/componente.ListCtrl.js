@@ -3,23 +3,18 @@
     'use strict';
 
     /**
-     * Controlador responsável pelo gerenciamento de componentes.
+     * Controlador responsável pelo gerenciamento de componentes de interface.
      *
      * @author Otávio Fernandes <otavio@netonsolucoes.com.br>
      */
     angular.module('admin.componente').controller(
         'componente.ComponenteCtrl',
         [
-            '$scope',
-            '$state',
-            '$uibModal',
-            '$localStorage',
-            'SweetAlert',
-            'toastr',
-            'componente.ComponenteStore',
-            'componente.MenuStore',
-            'componente.ParenteStore',
-            Controller
+            '$scope'
+            ,'SweetAlert'
+            ,'toastr'
+            ,'$sngApi'
+            ,Controller
         ]
     );
 
@@ -27,223 +22,219 @@
      * Função de definição do controlador.
      *
      * @param $scope
-     * @param $state
-     * @param $uibModal
-     * @param $localStorage
      * @param SweetAlert
      * @param toastr
-     * @param ComponenteStore
-     * @param MenuStore
-     * @param ParenteStore
+     * @param $sngApi
      * @constructor
      */
     function Controller(
-        $scope,
-        $state,
-        $uibModal,
-        $localStorage,
-        SweetAlert,
-        toastr,
-        ComponenteStore,
-        MenuStore,
-        ParenteStore
+        $scope
+        ,SweetAlert
+        ,toastr
+        ,$sngApi
     ) {
-        $scope.ComponenteStore = ComponenteStore;
-        $scope.ComponenteStore.sort = 't.text';
-        $scope.ComponenteStore.load();
+        /**
+         * Api de comunicação com o controlador de componente no backend.
+         *
+         * @type {$sngApi}
+         */
+        $scope.componenteApi = $sngApi('sessao/componente');
 
-        $scope.ParenteStore = ParenteStore;
-        $scope.ParenteStore.filter.tipo = 'M';
-        $scope.ParenteStore.sort = 't.text';
-        $scope.ParenteStore.load();
+        /**
+         * Api de comunicação com o controlador de menu no backend.
+         *
+         * @type {$sngApi}
+         */
+        $scope.menuApi = $sngApi('sessao/menu');
 
-        $scope.MenuStore = MenuStore;
-        $scope.MenuStore.sort = 't.modulo';
-        $scope.MenuStore.load();
+        /**
+         * Objeto de definição do registro do componente em edição/criação.
+         *
+         * @type {object}
+         */
+        $scope.componente = {
+            tipo: 'M'
+        };
 
-        $scope.query = null;
+        /**
+         * Objeto de definição da árvore de permissões.
+         *
+         * @type {Object}
+         */
+        $scope.vm = {
+            version: 1,
+            ignoreChange: false,
+            newNode: {}
+        };
+
+        /**
+         * Representação do formulário.
+         *
+         * @type {Object}
+         */
         $scope.forms = {};
-        $scope.componente = {};
-        $scope.componente.tipo  = 'M';
 
-        $scope.$watch('componente.tipo', function(val) {
-            if (val == 'M') {
-                $scope.componente.parent_id  = null;
-            } else {
-                $scope.componente.menu_id  = null;
-            }
-        });
+        /**
+         * Função de inicialização do controlador.
+         */
+        $scope.onInit = function(){
+            loadParents();
+            loadMenu();
 
-
-        $scope.vm = {};
-        $scope.vm.ignoreChanges = false;
-        $scope.vm.newNode = {};
-
-
-        var i = 1;
-        $scope.$watch('ComponenteStore.results', function(){
-
-            if($scope.ComponenteStore.results.length > 0 ){
-                $scope.vm.originalData =$scope.ComponenteStore.results;
-
-                $scope.vm.treeData = [];
-                angular.copy($scope.vm.originalData,$scope.vm.treeData);
-
-                $scope.vm.treeConfig = {
-                    core : {
-                        multiple : true,
-                        animation: true,
-                        error : function(error) {
-                            $log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
-                        },
-                        check_callback : true,
-                        worker : true
-                    },
-                    version : i++,
-                    // plugins : ['type']
-                    plugins : ['type','changed','json_data','ui']
-                };
-            }else{
-                $scope.vm.originalData =[];
-
-                $scope.vm.treeData = [];
-                angular.copy($scope.vm.originalData,$scope.vm.treeData);
-
-                $scope.vm.treeConfig = {
-                    core : {
-                        multiple : true,
-                        animation: true,
-                        error : function(error) {
-                            $log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
-                        },
-                        check_callback : true,
-                        worker : true
-                    },
-                    version : i++,
-                    // plugins : ['type']
-                    plugins : ['type','changed','json_data','ui']
-                };
-            }
-
-        });
-
+            $scope.$watch('componente.tipo', function(val) {
+                if (val === 'M') {
+                    $scope.componente.parent_id  = null;
+                } else {
+                    $scope.componente.menu_id  = null;
+                }
+            });
+        };
 
         /**
          * Salva o registro de um componente.
          */
         $scope.saveComponente = function(){
-            toastr.clear();
-            $scope.ComponenteStore.isSubmited = true;
-
-            // if ($scope.forms.componente.$invalid) {
-            //     toastr.pop('error','Verifique o preenchimento do formulário!');
-            //     return;
-            // }
-
             var componente = angular.copy($scope.componente);
 
-            $scope.ComponenteStore.save(componente, function(response){
-                toastr.clear();
-                if (response.success) {
-                    toastr.pop('success', 'Componente incluído com sucesso!');
+            toastr.clear();
+            $scope.isSubmited = true;
 
-                    $scope.ComponenteStore.load();
-                    $scope.ParenteStore.load();
+            if (!$scope.forms.componente.$invalid) {
+                $scope.componenteApi.save(componente).then(function(response){
+                    console.log(response);
+                    toastr.clear();
+                    if (response.success) {
+                        toastr.success('Componente definido com sucesso!');
 
-                    $scope.ComponenteStore.isSubmited = false;
-                    $scope.forms.componente.$setPristine();
+                        // carrega a lista de
+                        loadParents();
 
-                    $scope.componente = {};
-                    $scope.componente.tipo = "M";
+                        $scope.isSubmited = false;
+                        $scope.forms.componente.$setUntouched();
 
-                    return ;
-                }
+                        $scope.componente = {};
+                        $scope.componente.tipo = "M";
 
-                toastr.pop('error', 'Falhou ao tentar incluir o registro!');
-            });
+                    } else {
+                        toastr.error('Falhou ao tentar definir o registro!');
+                    }
+                });
+            } else {
+                toastr.error('Verifique o preenchimento dos campos destacados!');
+            }
         };
 
-        $scope.vm.selectNode = function(node,selected) {
+        /**
+         * Seleciona um nó na árvore.
+         *
+         * @param node
+         * @param selected
+         */
+        $scope.vm.selectNode = function(node, selected) {
             $scope.componente = angular.copy(selected.node.original);
         };
 
-
         /**
-         * reseta o formulario de componentes
+         * Reseta o formulario de componentes.
          */
         $scope.novoComponente = function(){
+            $scope.isSubmited = false;
             $scope.componente = {};
             $scope.componente.tipo = "M";
 
         };
 
-        /* Remove o registro de um componente
+        /**
+         * Remove o registro de um componente.
          */
         $scope.removeComponente = function() {
+            var msg = 'Deseja realmente remover este componente?';
 
-            if($scope.componente.tipo == 'M'){
-                SweetAlert.swal({
-                        title: "Remover",
-                        text: "Deseja realmente remover este módulo? Os componentes dependentes serão removidos juntos com ele!",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Sim",
-                        cancelButtonText: 'Não',
-                        closeOnConfirm: true
-                    },
-                    function (confirm) {
-                        if (confirm) {
-                            $scope.ComponenteStore.removeComponente($scope.componente, function(success){
-                                if (success) {
-                                    $scope.ComponenteStore.load({});
-                                    $scope.ParenteStore.load();
-
-                                    $scope.ComponenteStore.isSubmited = false;
-                                    $scope.forms.componente.$setPristine();
-
-                                    $scope.componente = {};
-                                    $scope.componente.tipo  = 'M';
-                                } else {
-                                    toastr.pop('error','Não é possível excluir o registro informado!');
-                                }
-                            });
-                        }
-                    });
-
-            }else{
-                SweetAlert.swal({
-                        title: "Remover",
-                        text: "Deseja realmente remover este componente?",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "Sim",
-                        cancelButtonText: 'Não',
-                        closeOnConfirm: true
-                    },
-                    function (confirm) {
-                        if (confirm) {
-                            $scope.ComponenteStore.removeComponente($scope.componente, function(success){
-                                if (success) {
-                                    $scope.ComponenteStore.load({});
-                                    $scope.ParenteStore.load();
-
-                                    $scope.ComponenteStore.isSubmited = false;
-                                    $scope.forms.componente.$setPristine();
-
-                                    $scope.componente = {};
-                                    $scope.componente.tipo  = 'M';
-                                } else {
-                                    toastr.pop('error','Não é possível excluir o registro informado!');
-                                }
-                            });
-                        }
-                    });
+            if ($scope.componente.tipo === 'M') {
+                msg = 'Deseja realmente remover este módulo? Os componentes dependentes serão removidos juntos com ele!';
             }
 
+            SweetAlert.swal({
+                    title: "Remover",
+                    text: msg,
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Sim",
+                    cancelButtonText: 'Não',
+                    closeOnConfirm: true
+                },
+                function (confirm) {
+                    if (confirm) {
+                        $scope.componenteApi.call('removeComponente',$scope.componente).then(function(response){
+                            if (response.success) {
+                                loadParents();
 
+                                $scope.componente = {};
+                                $scope.componente.tipo  = 'M';
+                            } else {
+                                toastr.error('Não é possível excluir o registro informado!');
+                            }
+                        });
+                    }
+                });
         };
+
+        /**
+         * Carrega a lista de componentes.
+         */
+        function loadComponentes(){
+            $scope.componenteApi.find('t.text').then(function(results){
+                $scope.componentes = results;
+
+                if (results.length > 0 ) {
+                    $scope.vm.originalData = results;
+
+                } else {
+                    $scope.vm.originalData =[];
+                }
+
+                $scope.vm.treeData = [];
+                angular.copy($scope.vm.originalData,$scope.vm.treeData);
+
+                $scope.vm.treeConfig = {
+                    core : {
+                        multiple : true,
+                        animation: true,
+                        error : function(error) {
+                            $log.error('treeCtrl: error from js tree - ' + angular.toJson(error));
+                        },
+                        check_callback : true,
+                        worker : true
+                    },
+                    version : $scope.vm.version++,
+                    plugins : ['type','changed','json_data','ui']
+                };
+
+            });
+        }
+
+        /**
+         * Carrega a lista de componentes pais.
+         */
+        function loadParents() {
+            $scope.componenteApi.filter({tipo: 'M'}).find('t.text').then(function(results){
+                $scope.parents = results;
+                loadComponentes();
+            });
+        }
+
+        /**
+         * Carrega a lista de menus.
+         */
+        function loadMenu(){
+            $scope.menuApi.find('t.modulo').then(function(results){
+                $scope.menus = results;
+            });
+        }
+
+        // inicializa o controlador
+        $scope.onInit();
     }
 
 }());

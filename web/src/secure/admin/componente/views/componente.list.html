@@ -14,7 +14,7 @@
                         <div>
                             <div class="panel-body">
                                 <div js-tree="vm.treeConfig" should-apply="vm.applyModelChanges()" ng-model="vm.treeData" tree="vm.treeInstance" tree-events="select_node:vm.selectNode"></div>
-                                <div class="wrapper-md text-center" ng-if="ComponenteStore.results.length == 0">
+                                <div class="wrapper-md text-center" ng-if="componentes.length == 0">
                                     <h3><i class="fa fa-search-minus"></i> Nenhum registro encontrado</h3>
                                 </div>
                             </div>
@@ -42,8 +42,7 @@
                                         <div class=" form-group col-sm-12 required">
                                             <label class="control-label label-sm" >Rótulo</label>
                                             <input type="text" required id="rotulo" name="rotulo" class="form-control" ng-model="componente.text" ng-maxlength="60">
-
-                                            <ng-messages for="forms.componente.rotulo.$error" role="alert" ng-if="ComponenteStore.checkField(forms.componente.rotulo)">
+                                            <ng-messages for="forms.componente.rotulo.$error" role="alert" ng-if="isSubmited || forms.componente.rotulo.$touched">
                                                 <ng-message when="required" class="label label-danger">Rótulo é obrigatório</ng-message>
                                                 <ng-message when="maxlength" class="label label-danger">Tamanho máximo é 60</ng-message>
                                             </ng-messages>
@@ -100,15 +99,12 @@
                                 <div class="form-group" ng-if="componente.tipo != 'M'">
                                     <div class="form-group pull-in clearfix">
                                         <div class="form-group col-sm-12 required">
-                                            <label>Parente</label>
-                                            <select chosen class="form-control no-padder" required id="parente" name="parente" ng-model="componente.parent" placeholder="Selecione" ng-options="modulo.id as modulo.text for modulo in ParenteStore.results">
-                                                <option disabled></option>
-                                            </select>
-
-                                            <ng-messages for="forms.componente.parente.$error" role="alert" ng-if="ComponenteStore.checkField(forms.componente.parente)">
-                                                <ng-message when="required" class="label label-danger">Parente é obrigatório</ng-message>
+                                            <label>Módulo</label>
+                                            <select2 class="form-control no-padder no-border" required id="parente" name="parente" ng-model="componente.parent" placeholder="Selecione" s2-options="modulo.id as modulo.text for modulo in parents">
+                                            </select2>
+                                            <ng-messages for="forms.componente.parente.$error" role="alert" ng-if="isSubmited || forms.componente.parente.$touched">
+                                                <ng-message when="required" class="label label-danger">Módulo é obrigatório</ng-message>
                                             </ng-messages>
-
                                         </div>
                                     </div>
                                 </div>
@@ -117,11 +113,9 @@
                                     <div class="form-group pull-in clearfix">
                                         <div class="form-group col-sm-12 required">
                                             <label>Menu</label>
-                                            <select chosen class="form-control no-padder" required id="menu" name="menu" ng-model="componente.menu_id" placeholder="Selecione" ng-options="menu.id as menu.modulo for menu in MenuStore.results">
-                                                <option disabled></option>
-                                            </select>
-
-                                            <ng-messages for="forms.componente.menu.$error" role="alert" ng-if="ComponenteStore.checkField(forms.componente.menu)">
+                                            <select2 class="form-control no-padder no-border" required id="menu" name="menu" ng-model="componente.menu_id" placeholder="Selecione" s2-options="menu.id as menu.modulo for menu in menus">
+                                            </select2>
+                                            <ng-messages for="forms.componente.menu.$error" role="alert" ng-if="isSubmited || forms.componente.menu.$touched">
                                                 <ng-message when="required" class="label label-danger">Menu é obrigatório</ng-message>
                                             </ng-messages>
                                         </div>
@@ -133,7 +127,7 @@
                                         <div class=" form-group col-sm-6 required">
                                             <label>Chave</label>
                                             <input type="text" required id="key" name="key" class="form-control" ng-model="componente.chave" ng-maxlength="30">
-                                            <ng-messages for="forms.componente.key.$error" role="alert" ng-if="ComponenteStore.checkField(forms.componente.key)">
+                                            <ng-messages for="forms.componente.key.$error" role="alert" ng-if="isSubmited || forms.componente.key.$touched">
                                                 <ng-message when="required" class="label label-danger">Key é obrigatório</ng-message>
                                                 <ng-message when="maxlength" class="label label-danger">Tamanho máximo é 30</ng-message>
                                             </ng-messages>
@@ -141,7 +135,7 @@
                                         <div class=" form-group col-sm-6 required">
                                             <label>Ícone</label>
                                             <input type="text" required id="icone" name="icone" class="form-control" ng-model="componente.icon" ng-maxlength="30">
-                                            <ng-messages for="forms.componente.icone.$error" role="alert" ng-if="ComponenteStore.checkField(forms.componente.icone)">
+                                            <ng-messages for="forms.componente.icone.$error" role="alert" ng-if="isSubmited || forms.componente.icone.$touched">
                                                 <ng-message when="required" class="label label-danger">Icon é obrigatório</ng-message>
                                                 <ng-message when="maxlength" class="label label-danger">Tamanho máximo é 30</ng-message>
                                             </ng-messages>

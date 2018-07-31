@@ -82,14 +82,13 @@ class Componente extends SingularController
         $app = $this->app;
 
         $data = $request->request->all();
-        $data = $data['data'];
 
         try {
 
-            if($data['tipo'] == 'M'){
-                $subcomponentes = $app['sessao.store.componente']->findBy(array('parent' =>$data['id']));
+            if ($data['tipo'] == 'M'){
+                $subcomponentes = $app['sessao.store.componente']->findBy(array('parent' => $data['id']));
 
-                if($subcomponentes['total']>0){
+                if($subcomponentes['total'] > 0){
                     foreach ($subcomponentes['results'] as $subcomponente) {
                         $subcomponenteId = $app['sessao.store.componente']->remove($subcomponente['id']);
                     }

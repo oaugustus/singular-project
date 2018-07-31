@@ -283,9 +283,10 @@
                         if (!f) {
                             f = {};
                         }
-
                         if (!f.hasOwnProperty('isFilterProvider')) {
-                            _filter = $sngFilter(f);
+                            if (!_filter) {
+                                _filter = $sngFilter(f);
+                            }
                         } else {
                             _filter = angular.copy(f);
                         }
