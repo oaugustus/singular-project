@@ -11,7 +11,7 @@
         'login.LoginCtrl',
         [
             '$scope',
-            'toaster',
+            'toastr',
             'login.Login',
             '$mdToast',
             'UI',
@@ -23,14 +23,14 @@
      * Função de definição do controlador.
      *
      * @param $scope
-     * @param toaster
+     * @param toastr
      * @param Login
      * @param $mdToast
      * @constructor
      */
     function LoginCtrl(
         $scope,
-        toaster,
+        toastr,
         Login,
         $mdToast,
         UI

@@ -19,7 +19,7 @@
                 <div class="panel panel-default">
                     <md-table-container>
                         <table md-table>
-                            <thead md-head md-order="sort.field" md-on-reorder="reloadData">
+                            <thead md-head md-order="usuario.sort" md-on-reorder="reloadData">
                             <tr md-row>
                                 <th class="col-sm-1"></th>
                                 <th md-column md-order-by="perfil"><span>Perfil</span></th>
@@ -30,7 +30,7 @@
                             </tr>
                             </thead>
                             <tbody md-body>
-                                <tr md-row ng-repeat="record in usuario.records">
+                                <tr md-row ng-repeat="record in records">
                                     <td md-cell>
                                         <a herf="" class="pull-left thumb-sm avatar m-r">
                                             <img ng-if="record.avatar" ng-src="{{record.avatar}}" class="img-circle">
@@ -42,7 +42,7 @@
                                     </td>
                                     <td md-cell>{{record.nome}}</td>
                                     <td md-cell>{{record.login}}</td>
-                                    <td md-cell>{{DataStore.renderAtivo(record.ativo)}}</td>
+                                    <td md-cell>{{usuario.renderAtivo(record.ativo)}}</td>
                                     <td md-cell class="action">
                                         <md-icon ui-sref="app.usuario-show({id: record.id})">visibility</md-icon>
                                         <md-icon ui-sref="app.usuario-edit({id: record.id})">edit</md-icon>
@@ -51,7 +51,7 @@
                                     </td>
                                 </tr>
                             </tbody>
-                            <tbody md-body ng-if="usuario.records.length == 0">
+                            <tbody md-body ng-if="records.length == 0">
                                 <tr md-row>
                                     <td colspan="6" md-cell style="text-align: center;">
                                         <h2><i class="fa fa-frown-o"></i> Desculpe, nenhum registro foi encontrado.</h2>
@@ -60,7 +60,7 @@
                             </tbody>
                         </table>
                     </md-table-container>
-                    <sng-paging paging="paging" on-paginate="reloadData"></sng-paging>
+                    <sng-paging paging="usuario.paging" on-paginate="reloadData"></sng-paging>
                 </div>
             </div>
         </div>

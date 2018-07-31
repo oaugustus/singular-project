@@ -14,7 +14,7 @@
                 <span ng-if="isSaving">Salvando...</span>
             </button>
 
-            <button type="button" class="btn btn-info btn-addon pull-right m-r-xs" ng-if="isShow" ui-sref="app.usuario-edit({id: usuario.id})">
+            <button type="button" class="btn btn-info btn-addon pull-right m-r-xs" ng-if="isShow" ui-sref="app.usuario-edit({id: record.id})">
                 <i class="fa fa-edit"></i> Editar
             </button>
 
@@ -32,15 +32,12 @@
                             <div ng-include="'src/secure/admin/usuario/views/usuario.cadastro.tab.html'"></div>
                         </uib-tab>
                     </uib-tabset>
-                    <div class="panel panel-default clearfix ng-scope" ng-if="!hasRecord" style="">
-                        <div class="wrapper-md row"></div>
-                        <div class="col-sm-12 text-center m-b-lg">
-                            <h3><i class="fa fa-frown-o"></i> Ops, usuário não localizado!</h3>
-                            <button type="button" class="btn btn-default btn-addon" ui-sref="app.usuario-list">
-                                <i class="fa fa-undo"></i> Voltar
-                            </button>
-                        </div>
-                    </div>
+                    <sng-empty-state ng-if="!hasRecord">
+                        <h3><i class="fa fa-frown-o"></i> Ops, usuário não localizado!</h3>
+                        <button type="button" class="btn btn-default btn-addon" ui-sref="app.usuario-list">
+                            <i class="fa fa-undo"></i> Voltar
+                        </button>
+                    </sng-empty-state>
                 </div>
             </div>
         </div>

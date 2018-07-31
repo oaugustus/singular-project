@@ -14,7 +14,7 @@
             '$uibModal',
             '$uibModalInstance',
             'SweetAlert',
-            'toaster',
+            'toastr',
             Controller
         ]
     );
@@ -26,7 +26,7 @@
      * @param $uibModal
      * @param $modalInstance
      * @param SweetAlert
-     * @param toaster
+     * @param toastr
      * @constructor
      */
     function Controller(
@@ -34,7 +34,7 @@
         $uibModal,
         $modalInstance,
         SweetAlert,
-        toaster
+        toastr
     ) {
 
         $scope.copiar = {};
@@ -49,7 +49,7 @@
             if (data.origem_perfil_id != data.destino_perfil_id) {
                 $scope.PermissaoStore.copiaPermissoesPerfil(data, function(response) {
 
-                    toaster.clear();
+                    toastr.clear();
 
                     if (response.success) {
 
@@ -57,12 +57,12 @@
 
                         $scope.$parent.alterado = false;
 
-                        toaster.pop('success', 'Permissões copiadas com sucesso!');
+                        toastr.pop('success', 'Permissões copiadas com sucesso!');
                         return ;
 
                     }
 
-                    toaster.pop('error', 'Falhou ao tentar copiar as permissões!');
+                    toastr.pop('error', 'Falhou ao tentar copiar as permissões!');
 
                 });
             } else {

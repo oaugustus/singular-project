@@ -13,12 +13,8 @@
             '$scope',
             '$state',
             '$stateParams',
-            '$uibModal',
-            '$localStorage',
-            'SweetAlert',
-            'toaster',
-            'usuario.PerfilStore',
-            'usuario.UsuarioStore',
+            'toastr',
+            'usuario.UsuarioService',
             Controller
         ]
     );
@@ -29,27 +25,19 @@
      * @param $scope
      * @param $state
      * @param $stateParams
-     * @param $uibModal
-     * @param $localStorage
-     * @param SweetAlert
-     * @param toaster
-     * @param PerfilStore
-     * @param UsuarioStore
+     * @param toastr
+     * @param UsuarioService
      * @constructor
      */
     function Controller(
         $scope,
         $state,
         $stateParams,
-        $uibModal,
-        $localStorage,
-        SweetAlert,
-        toaster,
-        PerfilStore,
-        UsuarioStore
+        toastr,
+        UsuarioService
     ) {
         /**
-         * Define que o formulário está em processo de criação.
+         * Define que o formulário está em processo de edição.
          *
          * @type {boolean}
          */
@@ -71,31 +59,29 @@
             cadastro: {}
         };
 
+        /**
+         * Referência ao serviço de usuário.
+         *
+         * @type {usuario.UsuarioService}
+         */
+        $scope.usuario = UsuarioService;
 
         /**
-         * Referência ao store de perfil.
-         *
-         * @type {usuario.PerfilStore}
+         * Função que inicializa o controlador.
          */
-        $scope.PerfilStore = PerfilStore;
+        $scope.onInit = function() {
+            // carrega o registro do usuário para ser editado
+            $scope.usuario.api.get($stateParams.id).then(function(record) {
 
-        /**
-         * Referência ao store de usuário.
-         *
-         * @type {usuario.UsuarioStore}
-         */
-        $scope.UsuarioStore = UsuarioStore;
+                if (record) {
+                    $scope.hasRecord = true;
+                }
+                $scope.record = record;
+            });
 
-        // carrega o registro do usuário para ser editado
-        $scope.UsuarioStore.get($stateParams.id, function(record) {
-            if (record) {
-                $scope.hasRecord = true;
-            }
-            $scope.usuario = record;
-        });
+            loadPerfil();
+        };
 
-        // faz o carregamento do store
-        $scope.PerfilStore.load();
 
         /**
          * Função executada após o upload do avatar ter sido realizado.
@@ -103,7 +89,7 @@
          * @param {object} response
          */
         $scope.onAvatarUpload = function(response) {
-            $scope.usuario.avatar = response.data;
+            $scope.record.avatar = response.data;
         };
 
         /**
@@ -111,23 +97,33 @@
          */
         $scope.save = function() {
             // marca que o formulário já foi submetido
-            $scope.UsuarioStore.isSubmited = true;
+            $scope.usuario.isSubmited = true;
 
             if (!$scope.forms.cadastro.$invalid) {
                 $scope.isSaving = true;
-                $scope.UsuarioStore.save($scope.usuario, function(response){
+                $scope.usuario.api.save($scope.record).then(function(response){
                     $scope.isSaving = false;
 
                     if (!response.success) {
-                        toaster.pop('error','O login informado já está cadastrado');
-                        return;
+                        toastr.error('O login informado já está cadastrado');
                     } else {
-                        toaster.pop('success','Usuário alterado com sucesso!');
+                        toastr.success('Usuário alterado com sucesso!');
                         $state.go('app.usuario-list');
                     }
                 });
             }
         };
+
+        /**
+         * Carrega a lista de perfis de usuário.
+         */
+        function loadPerfil(){
+            $scope.usuario.perfil.find().then(function(results){
+                $scope.listaPerfil = results;
+            })
+        }
+
+        $scope.onInit();
 
     }
 

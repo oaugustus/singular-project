@@ -157,14 +157,12 @@
                             $scope.clear = function(field){
                                 if (!field) {
                                     $scope.filter = {};
+                                    rawFilter = $scope.filter;
                                     fire('clear');
                                 } else {
                                     delete $scope.filter[field];
+                                    rawFilter = $scope.filter;
                                 }
-
-
-                                rawFilter = $scope.filter;
-
 
                             };
 
@@ -230,7 +228,7 @@
 
                     });
 
-                    return filter;
+                    return angular.equals(filter, {}) ? null : filter;
                 }
             }
 

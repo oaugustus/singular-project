@@ -125,7 +125,7 @@ sweetAlert = swal = function () {
   // Modal interactions
   var modal = _sweetAlertInitialize$getModal$getOverlay$getInput$setFocusStyle$openModal$resetInput$fixVerticalPosition.getModal();
 
-  /* 
+  /*
    * Make sure all modal buttons respond to all events
    */
   var $buttons = modal.querySelectorAll('button');
@@ -1180,7 +1180,7 @@ var logStr = function logStr(string) {
 };
 
 /*
- * Set hover, active and focus-states for buttons 
+ * Set hover, active and focus-states for buttons
  * (source: http://www.sitepoint.com/javascript-generate-lighter-darker-color)
  */
 var colorLuminance = function colorLuminance(hex, lum) {

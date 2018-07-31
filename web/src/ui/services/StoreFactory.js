@@ -14,7 +14,7 @@
             ,'$localStorage'
             ,'UI'
             ,'SweetAlert'
-            ,'toaster'
+            ,'toastr'
             ,'ui.Session'
             ,StoreFactory
         ]
@@ -27,7 +27,7 @@
      * @param $localStorage
      * @param UI
      * @param SweetAlert
-     * @param toaster
+     * @param toastr
      * @param Session
      * @returns {StoreFactory}
      * @constructor
@@ -37,7 +37,7 @@
         ,$localStorage
         ,UI
         ,SweetAlert
-        ,toaster
+        ,toastr
         ,Session
     ) {
         var me = this,
@@ -277,7 +277,7 @@
                         if (confirm) {
                             that.call('remove', {id: id}, function(response){
                                 if (response.success) {
-                                    toaster.pop('success', config.success || 'Exclusão realizada com sucesso!');
+                                    toastr.pop('success', config.success || 'Exclusão realizada com sucesso!');
                                     callback(true);
                                 } else {
                                     callback(false);

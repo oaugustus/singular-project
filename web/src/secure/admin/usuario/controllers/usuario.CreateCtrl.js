@@ -3,7 +3,7 @@
     'use strict';
 
     /**
-     * Controlador responsável por funcionalidade da aplicação.
+     * Controlador responsável pela tela de criação de usuários.
      *
      * @author Otávio Fernandes <otavio@netonsolucoes.com.br>
      */
@@ -12,12 +12,8 @@
         [
             '$scope',
             '$state',
-            '$uibModal',
-            '$localStorage',
-            'SweetAlert',
-            'toaster',
-            'usuario.PerfilStore',
-            'usuario.UsuarioStore',
+            'toastr',
+            'usuario.UsuarioService',
             Controller
         ]
     );
@@ -27,23 +23,15 @@
      *
      * @param $scope
      * @param $state
-     * @param $uibModal
-     * @param $localStorage
-     * @param SweetAlert
-     * @param toaster
-     * @param PerfilStore
-     * @param UsuarioStore
+     * @param toastr
+     * @param UsuarioService
      * @constructor
      */
     function Controller(
-        $scope,
-        $state,
-        $uibModal,
-        $localStorage,
-        SweetAlert,
-        toaster,
-        PerfilStore,
-        UsuarioStore
+         $scope
+        ,$state
+        ,toastr
+        ,UsuarioService
     ) {
         /**
          * Define que o formulário está em processo de criação.
@@ -60,6 +48,13 @@
         $scope.hasRecord = true;
 
         /**
+         * Referência ao serviço de usuário.
+         *
+         * @type {usuario.UsuarioService}
+         */
+        $scope.usuario = UsuarioService;
+
+        /**
          * Formulários da view de usuário.
          *
          * @type {object}
@@ -73,26 +68,17 @@
          *
          * @type {object}
          */
-        $scope.usuario = {
+        $scope.record = {
             ativo: '1'
         };
 
         /**
-         * Referência ao store de perfil.
-         *
-         * @type {usuario.PerfilStore}
+         * Inicialização do controlador.
          */
-        $scope.PerfilStore = PerfilStore;
+        $scope.onInit = function(){
+            loadPerfil();
+        };
 
-        /**
-         * Referência ao store de usuário.
-         *
-         * @type {usuario.UsuarioStore}
-         */
-        $scope.UsuarioStore = UsuarioStore;
-
-        // faz o carregamento do store
-        $scope.PerfilStore.load();
 
         /**
          * Função executada após o upload do avatar ter sido realizado.
@@ -100,7 +86,7 @@
          * @param {object} response
          */
         $scope.onAvatarUpload = function(response) {
-            $scope.usuario.avatar = response.data;
+            $scope.record.avatar = response.data;
         };
 
         /**
@@ -108,24 +94,36 @@
          */
         $scope.save = function() {
             // marca que o formulário já foi submetido
-            $scope.UsuarioStore.isSubmited = true;
+            $scope.usuario.isSubmited = true;
 
             if (!$scope.forms.cadastro.$invalid) {
                 $scope.isSaving = true;
-                $scope.UsuarioStore.save($scope.usuario, function(response){
+                $scope.usuario.api.save($scope.record).then(function(response) {
                     $scope.isSaving = false;
+                    $scope.usuario.isSubmited = false;
 
                     if (!response.success) {
-                        toaster.pop('error','O login informado já está cadastrado');
-                        return;
+                        toastr.error('O login informado já está cadastrado');
                     } else {
-                        toaster.pop('success','Usuário criado com sucesso!');
+                        toastr.success('Usuário criado com sucesso!');
                         $state.go('app.usuario-edit',{id: response.record});
                     }
                 });
+            } else {
+                toastr.error('Verifique o preenchimento dos campos destacados!');
             }
         };
 
+        /**
+         * Carrega a lista de perfis de usuário.
+         */
+        function loadPerfil(){
+            $scope.usuario.perfil.find().then(function(results){
+                $scope.listaPerfil = results;
+            })
+        }
+
+        $scope.onInit();
     }
 
 }());

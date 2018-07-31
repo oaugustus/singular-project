@@ -15,7 +15,7 @@
             '$uibModal',
             '$localStorage',
             'SweetAlert',
-            'toaster',
+            'toastr',
             'componente.ComponenteStore',
             'componente.MenuStore',
             'componente.ParenteStore',
@@ -31,7 +31,7 @@
      * @param $uibModal
      * @param $localStorage
      * @param SweetAlert
-     * @param toaster
+     * @param toastr
      * @param ComponenteStore
      * @param MenuStore
      * @param ParenteStore
@@ -43,7 +43,7 @@
         $uibModal,
         $localStorage,
         SweetAlert,
-        toaster,
+        toastr,
         ComponenteStore,
         MenuStore,
         ParenteStore
@@ -132,20 +132,20 @@
          * Salva o registro de um componente.
          */
         $scope.saveComponente = function(){
-            toaster.clear();
+            toastr.clear();
             $scope.ComponenteStore.isSubmited = true;
 
             // if ($scope.forms.componente.$invalid) {
-            //     toaster.pop('error','Verifique o preenchimento do formulário!');
+            //     toastr.pop('error','Verifique o preenchimento do formulário!');
             //     return;
             // }
 
             var componente = angular.copy($scope.componente);
 
             $scope.ComponenteStore.save(componente, function(response){
-                toaster.clear();
+                toastr.clear();
                 if (response.success) {
-                    toaster.pop('success', 'Componente incluído com sucesso!');
+                    toastr.pop('success', 'Componente incluído com sucesso!');
 
                     $scope.ComponenteStore.load();
                     $scope.ParenteStore.load();
@@ -159,7 +159,7 @@
                     return ;
                 }
 
-                toaster.pop('error', 'Falhou ao tentar incluir o registro!');
+                toastr.pop('error', 'Falhou ao tentar incluir o registro!');
             });
         };
 
@@ -205,7 +205,7 @@
                                     $scope.componente = {};
                                     $scope.componente.tipo  = 'M';
                                 } else {
-                                    toaster.pop('error','Não é possível excluir o registro informado!');
+                                    toastr.pop('error','Não é possível excluir o registro informado!');
                                 }
                             });
                         }
@@ -235,7 +235,7 @@
                                     $scope.componente = {};
                                     $scope.componente.tipo  = 'M';
                                 } else {
-                                    toaster.pop('error','Não é possível excluir o registro informado!');
+                                    toastr.pop('error','Não é possível excluir o registro informado!');
                                 }
                             });
                         }

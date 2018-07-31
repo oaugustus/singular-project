@@ -10,55 +10,70 @@
     angular.module('admin.permissao').controller(
         'permissao.PermissaoCtrl',
         [
-            '$scope',
-            '$state',
-            '$uibModal',
-            '$localStorage',
-            'SweetAlert',
-            'toaster',
-            'permissao.PermissaoStore',
-            'usuario.PerfilStore',
-            Controller
+            '$scope'
+            ,'$uibModal'
+            ,'SweetAlert'
+            ,'toastr'
+            ,'$sngApi'
+            ,'permissao.PermissaoStore'
+            ,Controller
         ]
     );
 
     /**
-     * Define um novo controlador.
+     * Função de definição do controlador.
      *
-     * @author nome <email>
+     * @param $scope
+     * @param $uibModal
+     * @param SweetAlert
+     * @param toastr
+     * @param $sngApi
+     * @param PermissaoStore
+     * @constructor
      */
     function Controller(
-        $scope,
-        $state,
-        $uibModal,
-        $localStorage,
-        SweetAlert,
-        toaster,
-        PermissaoStore,
-        PerfilStore
+         $scope
+        ,$uibModal
+        ,SweetAlert
+        ,toastr
+        ,$sngApi
+        ,PermissaoStore
     ) {
+        /**
+         * Api de comunicação com o controlador de perfil de acesso.
+         *
+         * @type {$sngApi}
+         */
+        $scope.perfilApi = $sngApi('sessao/perfil_acesso');
+
+        /**
+         * Api de comunicação com o controlador de permissão.
+         *
+         * @type {$sngApi}
+         */
+        $scope.permissaoApi = $sngApi('sessao/permissao');
 
         $scope.alterado = false;
         $scope.forms = {};
         $scope.permissao = {};
-        $scope.perfil = {};
 
         $scope.vm = {};
         $scope.vm.ignoreChanges = false;
         $scope.vm.newNode = {};
 
-        $scope.PermissaoStore = PermissaoStore;
-
-        $scope.PerfilStore = PerfilStore;
-        $scope.PerfilStore.load();
-
+        /**
+         * Inicialização do controlador.
+         */
+        $scope.onInit = function() {
+            reloadPerfis();
+        };
 
         /**
          * Função que possibilita recarregar a lista de permissao
          */
-        $scope.reload = function(){
-            $scope.PermissaoStore.listarPermissoes($scope.perfil, function(response){
-                $scope.PermissaoStore.results = response.results;
+        $scope.reload = function() {
+            $scope.permissaoApi.call('listarPermissoes', $scope.perfil).then(function(response){
+                $scope.permissoes = response.results;
             });
         };
 
@@ -73,8 +88,6 @@
             $scope.nomePerfil = perfil.perfil;
             $scope.showPanel = true;
             $scope.reload();
-            // $scope.vm.loadNodes();
-
         };
 
 
@@ -110,7 +123,7 @@
             });
 
             modal.result.then(function (rec) {
-                $scope.PerfilStore.load();
+                reloadPerfis();
             });
 
         };
@@ -135,31 +148,29 @@
             modal.result.then(function (rec) {
                 $scope.perfil = rec;
                 $scope.nomePerfil = rec.perfil;
-                $scope.PerfilStore.load();
+                reloadPerfis();
             });
 
         };
 
-        $scope.removerPerfil = function(){
-                $scope.PerfilStore.remove($scope.perfil.id, function(response){
-                    $scope.PerfilStore.load();
-                    $scope.perfil = null;
-                }, {
-                    text: 'Deseja realmente excluir este perfil?'
-                });
+        $scope.removerPerfil = function() {
+            $scope.perfilApi.remove($scope.perfil.id, function(response){
+                reloadPerfis();
+                $scope.perfil = null;
+            }, 'Atenção','Deseja realmente excluir este perfil?');
         };
 
 
 
         var i = 1;
-        $scope.$watch('PermissaoStore.results', function(results){
+        $scope.$watch('permissoes', function(results){
 
             if (!results) {
                 return;
             }
             
-            if($scope.PermissaoStore.results.length > 0 ){
-                $scope.vm.originalData =$scope.PermissaoStore.results;
+            if ($scope.permissoes.length > 0 ) {
+                $scope.vm.originalData = $scope.permissoes;
 
                 $scope.vm.treeData = [];
                 angular.copy($scope.vm.originalData,$scope.vm.treeData);
@@ -178,7 +189,7 @@
                     // plugins : ['type']
                     plugins : ['type','checkbox','changed','json_data','ui']
                 };
-            }else{
+            } else {
                 $scope.vm.originalData =[];
 
                 $scope.vm.treeData = [];
@@ -227,18 +238,17 @@
 
         $scope.savePermissoes = function () {
 
-            $scope.PermissaoStore.save($scope.perfil, function(response) {
+            $scope.permissaoApi.save($scope.perfil).then(function(response) {
 
-                toaster.clear();
+                toastr.clear();
 
                 if (response.success) {
                     $scope.alterado = false;
-                    toaster.pop('success', 'Permissao incluída com sucesso!');
+                    toastr.success('Permissao alterada com sucesso!');
                     return ;
                 }
 
-                toaster.pop('error', 'Falhou ao tentar incluir o registro!');
-
+                toastr.error('Falhou ao tentar alterar o registro!');
             });
 
         };
@@ -248,7 +258,7 @@
          */
         $scope.removePermissao = function() {
 
-            if($scope.permissao.tipo == 'M'){
+            if ($scope.permissao.tipo == 'M'){
                 SweetAlert.swal({
                         title: "Remover",
                         text: "Deseja realmente remover este módulo? Os permissaos dependentes serão removidos juntos com ele!",
@@ -261,24 +271,24 @@
                     },
                     function (confirm) {
                         if (confirm) {
-                            $scope.PermissaoStore.removePermissao($scope.permissao, function(success){
+                            $scope.permissaoApi.removePermissao($scope.permissao, function(success){
                                 if (success) {
-                                    $scope.PermissaoStore.load({});
+                                    $scope.permissaoApi.load({});
                                     $scope.ParenteStore.load();
 
-                                    $scope.PermissaoStore.isSubmited = false;
+                                    $scope.permissaoApi.isSubmited = false;
                                     $scope.forms.permissao.$setPristine();
 
                                     $scope.permissao = {};
                                     $scope.permissao.tipo  = 'M';
                                 } else {
-                                    toaster.pop('error','Não é possível excluir o registro informado!');
+                                    toastr.pop('error','Não é possível excluir o registro informado!');
                                 }
                             });
                         }
                     });
 
-            }else{
+            } else {
                 SweetAlert.swal({
                         title: "Remover",
                         text: "Deseja realmente remover este permissao?",
@@ -291,18 +301,18 @@
                     },
                     function (confirm) {
                         if (confirm) {
-                            $scope.PermissaoStore.removePermissao($scope.permissao, function(success){
+                            $scope.permissaoApi.removePermissao($scope.permissao, function(success){
                                 if (success) {
-                                    $scope.PermissaoStore.load({});
+                                    $scope.permissaoApi.load({});
                                     $scope.ParenteStore.load();
 
-                                    $scope.PermissaoStore.isSubmited = false;
+                                    $scope.permissaoApi.isSubmited = false;
                                     $scope.forms.permissao.$setPristine();
 
                                     $scope.permissao = {};
                                     $scope.permissao.tipo  = 'M';
                                 } else {
-                                    toaster.pop('error','Não é possível excluir o registro informado!');
+                                    toastr.pop('error','Não é possível excluir o registro informado!');
                                 }
                             });
                         }
@@ -310,7 +320,16 @@
             }
         };
 
+        /**
+         * Função que recarrega a lista de perfis.
+         */
+        function reloadPerfis() {
+            $scope.perfilApi.find().then(function(results) {
+                $scope.listaPerfil = results;
+            });
+        }
 
+        $scope.onInit();
     }
 
 }());

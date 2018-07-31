@@ -32,15 +32,79 @@
     ) {
         var filter = $sngFilter('src/secure/admin/usuario/views/usuario.filter.html'),
             paging = $sngPaging(),
-            api = $sngApi('sessao/usuario', filter, paging);
+            api = $sngApi('sessao/usuario', filter, paging),
+            perfil = $sngApi('sessao/perfil_acesso'),
 
-        return {
+        me = {
+            /**
+             * Api de comunicação com o controlador de usuários no backend.
+             *
+             * @type {$sngApi}
+             */
             api: api,
+
+            /**
+             * Api de comunicação com o controlador de perfil de acesso no backend.
+             *
+             * @type {$sngApi}
+             */
+            perfil: perfil,
+
+            /**
+             * Filtro de resultados para a listagem de usuários no backend.
+             *
+             * @type {$sngApi}
+             */
             filter: filter,
+
+            /**
+             * Paginador de resultados para a listagem de usuários no backend.
+             *
+             * @type {$sngApi}
+             */
             paging: paging,
-            sort: {field: null},
-            records: []
-        }
+
+            /**
+             * Campo de ordenação da lista de usuários.
+             *
+             * @type {string}
+             */
+            sort: null,
+
+            /**
+             * Renderiza o status do usuário.
+             *
+             * @param {string} status
+             *
+             * @return {string}
+             */
+            renderAtivo: function(status) {
+                switch (status) {
+                    case '1':
+                        return 'Sim';
+                        break;
+                    case '0':
+                        return 'Não';
+                        break;
+                }
+            },
+
+            /**
+             * Verifica de um campo foi acionado.
+             *
+             * @param field
+             * @return {boolean}
+             */
+            isDirty: function(field) {
+                if (field) {
+                    return me.isSubmited || field.$dirty;
+                }
+
+                return false;
+            }
+        };
+
+        return me;
     }
 
 }());

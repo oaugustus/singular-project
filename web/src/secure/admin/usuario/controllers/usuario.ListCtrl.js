@@ -11,16 +11,7 @@
         'usuario.ListCtrl',
         [
             '$scope'
-            ,'$state'
-            ,'$uibModal'
-            ,'$localStorage'
-            ,'SweetAlert'
-            ,'toaster'
-            ,'$aside'
-            ,'$sngFilter'
-            ,'$sngApi'
             ,'usuario.UsuarioService'
-            ,'usuario.UsuarioStore'
             ,Controller
         ]
     );
@@ -29,75 +20,91 @@
      * Função de definição do controlador.
      *
      * @param $scope
-     * @param $state
-     * @param $uibModal
-     * @param $localStorage
-     * @param SweetAlert
-     * @param toaster
-     * @param UsuarioStore
+     * @param UsuarioService
      * @constructor
      */
     function Controller(
         $scope
-        ,$state
-        ,$uibModal
-        ,$localStorage
-        ,SweetAlert
-        ,toaster
-        ,$aside
-        ,$sngFilter
-        ,$sngApi
-        ,usuarioService
-        ,UsuarioStore
+        ,UsuarioService
     ) {
-        $scope.usuario = usuarioService.api;
-        $scope.filtro = usuarioService.filter;
-        $scope.paging = usuarioService.paging;
-        $scope.sort = usuarioService.sort;
-
         /**
-         * UsuarioStore
+         * Atalho para o serviço de usuário.
          *
-         * @type {UsuarioStore}
+         * @type {usuario.UsuarioService}
          */
-        $scope.DataStore = UsuarioStore;
+        $scope.usuario = UsuarioService;
 
-        $scope.filtro.$on('apply', function(){
+        /**
+         * Atalho para a propriedade filter do serviço de usuário.
+         *
+         * @type {$sngFilter}
+         */
+        $scope.filtro = UsuarioService.filter;
+
+        /**
+         * Função de recarregamento dos dados.
+         *
+         * @type {function}
+         */
+        $scope.reloadData = reloadDataFn;
+
+        /**
+         * Função de remoção dos registros.
+         *
+         * @type {function}
+         */
+        $scope.remove = removeFn;
+
+        /**
+         * Registros de usuários.
+         *
+         * @type {Array}
+         */
+        $scope.records = [];
+
+        /**
+         * Inicialização do controlador.
+         */
+        $scope.onInit = function() {
             $scope.reloadData();
-        });
 
-        $scope.filtro.$on('clear', $scope.filtro.close);
+            // evento acionado ao clicar no botão "Aplicar filtro"
+            $scope.filtro.$on('apply', $scope.reloadData);
 
-        $scope.filtro.$on('open', function(){
-            // $scope.filtro.addFilter('nome', 'Otávio');
-        });
-
-        /**
-         * Função de recarregamento dos dados do DataStore.
-         */
-        $scope.reloadData = function() {
-
-            $scope.usuario.filter().paginate().sort($scope.sort.field).call('find').then(function(response){
-                $scope.usuario.records = response.results;
-            });
-        };
-
-        /**
-         * Remove o registro de um usuário.
-         */
-        $scope.remove = function(id){
-            $scope.DataStore.remove(id, function(response){
+            // evento acionado ao clicar no botão "Limpar filtro"
+            $scope.filtro.$on('clear', function(){
                 $scope.reloadData();
-            }, {
-                text: 'Deseja realmente excluir este usuário?'
+                $scope.filtro.close();
             });
+
         };
 
-        $scope.selected = [];
-        
-        // força o carregamento dos dados
-        $scope.reloadData();
+        /**
+         * Recarrega a lista de usuários.
+         */
+        function reloadDataFn() {
+            $scope.usuario.api.find($scope.usuario.sort).then(function(results) {
+                if (results) {
+                    $scope.records = results;
+                }
+            });
+        }
 
+        /**
+         * Remove o registro de um usuário pelo seu id.
+         *
+         * @param {int} id
+         */
+        function removeFn(id) {
+            $scope.usuario.api.remove(id, function(response) {
+                if (response) {
+                    $scope.reloadData();
+                }
+            });
+        }
+
+        // inicializa o controlador
+        $scope.onInit();
     }
 
 }());

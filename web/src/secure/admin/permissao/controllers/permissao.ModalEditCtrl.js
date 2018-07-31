@@ -10,13 +10,14 @@
     angular.module('admin.permissao').controller(
         'permissao.ModalEditCtrl',
         [
-            '$scope',
-            '$uibModal',
-            '$uibModalInstance',
-            'SweetAlert',
-            'toaster',
-            'record',
-            Controller
+             '$scope'
+            ,'$uibModal'
+            ,'$uibModalInstance'
+            ,'SweetAlert'
+            ,'toastr'
+            ,'record'
+            ,'$sngApi'
+            ,Controller
         ]
     );
 
@@ -27,35 +28,44 @@
      * @param $uibModal
      * @param $modalInstance
      * @param SweetAlert
-     * @param toaster
+     * @param toastr
      * @constructor
      */
     function Controller(
-        $scope,
-        $uibModal,
-        $modalInstance,
-        SweetAlert,
-        toaster,
-        record
+         $scope
+        ,$uibModal
+        ,$modalInstance
+        ,SweetAlert
+        ,toastr
+        ,record
+        ,$sngApi
     ) {
+        /**
+         * Api de comunicação com o controlador perfil acesso.
+         *
+         * @type {$sngApi}
+         */
+        $scope.perfilApi = $sngApi('sessao/perfil_acesso');
+
         $scope.perfil = record;
+
         /**
          * Salva o registro do novo usuário.
          */
         $scope.save = function() {
             // marca que o formulário já foi submetido
-            $scope.PerfilStore.isSubmited = true;
+            $scope.isSubmited = true;
 
             if (!$scope.forms.perfil.$invalid) {
                 $scope.isSaving = true;
-                $scope.PerfilStore.save($scope.perfil, function(response){
+
+                $scope.perfilApi.save($scope.perfil).then(function(response) {
                     $scope.isSaving = false;
 
                     if (!response.success) {
-                        toaster.pop('error','O perfil informado já está cadastrado');
-                        return;
+                        toastr.error('O perfil informado já está cadastrado');
                     } else {
-                        toaster.pop('success','Perfil criado com sucesso!');
+                        toastr.success('Perfil alterado com sucesso!');
                         $scope.close();
                     }
                 });

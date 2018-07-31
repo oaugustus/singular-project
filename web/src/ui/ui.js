@@ -10,7 +10,7 @@
     angular.module(
         'singular.ui',
         [
-            'toaster',
+            'toastr',
             'angular-loading-bar',
             'localytics.directives',
             'ngSweetAlert',
@@ -58,7 +58,7 @@
                 '$localStorage',
                 '$urlRouter',
                 '$location',
-                'toaster',
+                'toastr',
                 'ui.Session',
                 runFn
             ]
@@ -108,7 +108,7 @@
      * @param $localStorage
      * @param $urlRouter
      * @param $location
-     * @param toaster
+     * @param toastr
      * @param Session
      */
     function runFn(
@@ -117,7 +117,7 @@
         $localStorage,
         $urlRouter,
         $location,
-        toaster,
+        toastr,
         Session
     ) {
 
@@ -144,8 +144,8 @@
             $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
                 if (toState.acl) {
                     if (acl.indexOf('|' + toState.acl + '|') == -1) {
-                        toaster.clear();
-                        toaster.pop('error','ACESSO NEGADO','Seu usuário não tem permissão para executar esta ação!');
+                        toastr.clear();
+                        toastr.pop('error','ACESSO NEGADO','Seu usuário não tem permissão para executar esta ação!');
                         event.preventDefault();
                     }
                 }

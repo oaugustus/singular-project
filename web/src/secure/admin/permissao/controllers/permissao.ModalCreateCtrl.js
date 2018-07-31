@@ -10,12 +10,12 @@
     angular.module('admin.permissao').controller(
         'permissao.ModalCreateCtrl',
         [
-            '$scope',
-            '$uibModal',
-            '$uibModalInstance',
-            'SweetAlert',
-            'toaster',
-            Controller
+             '$scope'
+            ,'$uibModal'
+            ,'$uibModalInstance'
+            ,'toastr'
+            ,'$sngApi'
+            ,Controller
         ]
     );
 
@@ -24,18 +24,24 @@
      *
      * @param $scope
      * @param $uibModal
-     * @param $modalInstance
-     * @param SweetAlert
-     * @param toaster
+     * @param $uibModalInstance
+     * @param toastr
      * @constructor
      */
     function Controller(
-        $scope,
-        $uibModal,
-        $modalInstance,
-        SweetAlert,
-        toaster
+         $scope
+        ,$uibModal
+        ,$uibModalInstance
+        ,toastr
+        ,$sngApi
     ) {
+
+        /**
+         * Api de comunicação com o controlador de perfil de acesso no backend.
+         *
+         * @type {$sngApi}
+         */
+        $scope.perfilApi = $sngApi('sessao/perfil_acesso');
 
         /**
          * Objeto do perfil do usuário.
@@ -49,18 +55,17 @@
          */
         $scope.save = function() {
             // marca que o formulário já foi submetido
-            $scope.PerfilStore.isSubmited = true;
+            $scope.isSubmited = true;
 
             if (!$scope.forms.perfil.$invalid) {
                 $scope.isSaving = true;
-                $scope.PerfilStore.save($scope.perfil, function(response){
+                $scope.perfilApi.save($scope.perfil).then(function(response){
                     $scope.isSaving = false;
 
                     if (!response.success) {
-                        toaster.pop('error','O perfil informado já está cadastrado');
-                        return;
+                        toastr.error('O perfil informado já está cadastrado');
                     } else {
-                        toaster.pop('success','Perfil criado com sucesso!');
+                        toastr.success('Perfil criado com sucesso!');
                         $scope.close();
                     }
                 });
@@ -71,11 +76,11 @@
          Fecha o modal em modo de cancelamento
          */
         $scope.cancel = function(){
-            $modalInstance.dismiss();
+            $uibModalInstance.dismiss();
         };
 
         $scope.close = function(){
-            $modalInstance.close();
+            $uibModalInstance.close();
         };
 
     }

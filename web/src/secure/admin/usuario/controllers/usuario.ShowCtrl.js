@@ -3,7 +3,7 @@
     'use strict';
 
     /**
-     * Controlador responsável por funcionalidade da aplicação.
+     * Controlador responsável pela visualização do registro de usuário.
      *
      * @author Otávio Fernandes <otavio@netonsolucoes.com.br>
      */
@@ -13,12 +13,7 @@
             '$scope',
             '$state',
             '$stateParams',
-            '$uibModal',
-            '$localStorage',
-            'SweetAlert',
-            'toaster',
-            'usuario.PerfilStore',
-            'usuario.UsuarioStore',
+            'usuario.UsuarioService',
             Controller
         ]
     );
@@ -29,24 +24,14 @@
      * @param $scope
      * @param $state
      * @param $stateParams
-     * @param $uibModal
-     * @param $localStorage
-     * @param SweetAlert
-     * @param toaster
-     * @param PerfilStore
-     * @param UsuarioStore
+     * @param UsuarioService
      * @constructor
      */
     function Controller(
-        $scope,
-        $state,
-        $stateParams,
-        $uibModal,
-        $localStorage,
-        SweetAlert,
-        toaster,
-        PerfilStore,
-        UsuarioStore
+         $scope
+        ,$state
+        ,$stateParams
+        ,UsuarioService
     ) {
         /**
          * Define que o formulário está em processo de criação.
@@ -63,30 +48,37 @@
         $scope.hasRecord = false;
 
         /**
-         * Referência ao store de perfil.
+         * Referência ao serviço de usuário.
          *
-         * @type {usuario.PerfilStore}
+         * @type {usuario.UsuarioService}
          */
-        $scope.PerfilStore = PerfilStore;
+        $scope.usuario = UsuarioService;
 
         /**
-         * Referência ao store de usuário.
-         *
-         * @type {usuario.UsuarioStore}
+         * Inicialização do controlador.
          */
-        $scope.UsuarioStore = UsuarioStore;
+        $scope.onInit = function(){
+            $scope.usuario.api.get($stateParams.id).then(function(record) {
 
-        // carrega o registro do usuário para ser editado
-        $scope.UsuarioStore.get($stateParams.id, function(record) {
-            if (record) {
-                $scope.hasRecord = true;
-            }
-            $scope.usuario = record;
-        });
+                if (record) {
+                    $scope.hasRecord = true;
+                }
+                $scope.record = record;
+            });
 
-        // faz o carregamento do store
-        $scope.PerfilStore.load();
-        
+            loadPerfil();
+        };
+
+        /**
+         * Carrega a lista de perfis de usuário.
+         */
+        function loadPerfil(){
+            $scope.usuario.perfil.find().then(function(results){
+                $scope.listaPerfil = results;
+            })
+        }
+
+        $scope.onInit();
     }
 
 }());

@@ -9,7 +9,7 @@
         'acl',
         [
             '$state',
-            'toaster',
+            'toastr',
             Directive
         ]
     );
@@ -18,13 +18,13 @@
      * Função de definição da diretiva.
      *
      * @param $state
-     * @param toaster
+     * @param toastr
      * @returns {{priority: number, terminal: boolean, restrict: string, link: link}}
      * @constructor
      */
     function Directive(
         $state,
-        toaster
+        toastr
     ) {
         return {
             priority: 1000,

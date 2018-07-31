@@ -8,7 +8,7 @@
 'use strict';
 
 angular.module('ngSweetAlert', [])
-    .factory('SweetAlert', [ '$rootScope', function ( $rootScope ) {
+    .factory('SweetAlert', [ '$rootScope','$q', function ( $rootScope, $q ) {
 
         var swal = window.swal;
 
