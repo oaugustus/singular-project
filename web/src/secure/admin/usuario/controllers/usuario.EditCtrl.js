@@ -97,7 +97,7 @@
          */
         $scope.save = function() {
             // marca que o formulário já foi submetido
-            $scope.usuario.isSubmited = true;
+            $scope.isSubmited = true;
 
             if (!$scope.forms.cadastro.$invalid) {
                 $scope.isSaving = true;

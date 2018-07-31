@@ -14,7 +14,6 @@
             ,'$uibModalInstance'
             ,'toastr'
             ,'$sngApi'
-            ,'permissao.PerfilService'
             ,'record'
             ,Controller
         ]
@@ -27,7 +26,6 @@
      * @param $modalInstance
      * @param toastr
      * @param $sngApi
-     * @param PerfilService
      * @param record
      * @constructor
      */
@@ -36,7 +34,6 @@
         ,$modalInstance
         ,toastr
         ,$sngApi
-        ,PerfilService
         ,record
     ) {
         /**
@@ -58,7 +55,7 @@
          */
         $scope.save = function() {
             // marca que o formulário já foi submetido
-            PerfilService.isSubmited = true;
+            $scope.isSubmited = true;
 
             // se o formulário é valido
             if (!$scope.forms.perfil.$invalid) {
@@ -78,14 +75,6 @@
                 toastr.error('Verifique o preenchimento dos campos destacados');
             }
         };
-
-        /**
-         * Verifica se um campo foi acionado.
-         *
-         * @param field
-         * @return {boolean}
-         */
-        $scope.isDirty = PerfilService.isDirty;
 
         /*
          Fecha o modal em modo de cancelamento

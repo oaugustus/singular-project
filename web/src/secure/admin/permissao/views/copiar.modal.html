@@ -8,10 +8,12 @@
         <div class="row m-b-n m-t-xs">
             <form name="forms.copiar" novalidate autocomplete="off">
                 <div class="form-group col-sm-12">
-                    <label class="control-label">Perfil </label>
-                    <select chosen class="form-control no-padder" id="perfil_id" name="perfil_id" ng-model="copiar.perfil_id" placeholder="Selecione" ng-options="perfil.id as perfil.perfil for perfil in listaPerfil">
-                        <option disabled></option>
-                    </select>
+                    <label class="control-label">Perfil de origem</label>
+                    <select2 class="form-control no-border no-padder" autofocus id="perfil" name="perfil" ng-model="copiar.perfil_id" required placeholder="Selecione" s2-options="perfil.id as perfil.perfil for perfil in listaPerfil">
+                    </select2>
+                    <ng-messages for="forms.copiar.perfil.$error" role="alert" ng-if="isSubmited || forms.copiar.perfil.$touched">
+                        <ng-message when="required" class="label label-danger">Perfil de origem é obrigatório</ng-message>
+                    </ng-messages>
                 </div>
             </form>
         </div>

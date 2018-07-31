@@ -94,13 +94,12 @@
          */
         $scope.save = function() {
             // marca que o formulário já foi submetido
-            $scope.usuario.isSubmited = true;
+            $scope.isSubmited = true;
 
             if (!$scope.forms.cadastro.$invalid) {
                 $scope.isSaving = true;
                 $scope.usuario.api.save($scope.record).then(function(response) {
                     $scope.isSaving = false;
-                    $scope.usuario.isSubmited = false;
 
                     if (!response.success) {
                         toastr.error('O login informado já está cadastrado');

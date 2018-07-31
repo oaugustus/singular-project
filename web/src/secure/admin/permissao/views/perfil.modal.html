@@ -10,7 +10,7 @@
                 <div class="form-group col-sm-12">
                     <label class="control-label" for="perfil">Perfil </label>
                     <input class="form-control" type="text" autofocus placeholder="Nome do perfil" id="perfil" name="perfil" ng-model="perfil.perfil" ng-maxlength="255" required>
-                    <ng-messages for="forms.perfil.perfil.$error" role="alert" ng-if="isDirty(forms.perfil.perfil)">
+                    <ng-messages for="forms.perfil.perfil.$error" role="alert" ng-if="isSubmited || forms.perfil.perfil.$touched">
                         <ng-message when="required" class="label label-danger">Perfil é obrigatório</ng-message>
                         <ng-message when="maxlength" class="label label-danger">O tamanho é 255</ng-message>
                     </ng-messages>

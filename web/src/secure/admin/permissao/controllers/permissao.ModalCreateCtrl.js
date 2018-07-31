@@ -14,7 +14,6 @@
             ,'$uibModalInstance'
             ,'toastr'
             ,'$sngApi'
-            ,'permissao.PerfilService'
             ,Controller
         ]
     );
@@ -34,7 +33,6 @@
         ,$uibModalInstance
         ,toastr
         ,$sngApi
-        ,PerfilService
     ) {
 
         /**
@@ -56,7 +54,7 @@
          */
         $scope.save = function() {
             // marca que o formulário já foi submetido
-            PerfilService.isSubmited = true;
+            $scope.isSubmited = true;
 
             if (!$scope.forms.perfil.$invalid) {
                 $scope.isSaving = true;
@@ -72,14 +70,6 @@
                 });
             }
         };
-
-        /**
-         * Verifica se um campo foi acionado.
-         *
-         * @param field
-         * @return {boolean}
-         */
-        $scope.isDirty = PerfilService.isDirty;
 
         /*
          Fecha o modal em modo de cancelamento

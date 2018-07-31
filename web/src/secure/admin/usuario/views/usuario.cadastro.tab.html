@@ -34,7 +34,7 @@
                 <div class="form-group col-sm-10 required">
                     <label class="control-label label-sm" for="nome">Nome</label>
                     <input class="form-control" type="text" autofocus placeholder="Nome" ng-disabled="isShow" id="nome" name="nome" ng-model="record.nome" ng-maxlength="255" required>
-                    <ng-messages for="forms.cadastro.nome.$error" role="alert" ng-if="usuario.isDirty(forms.cadastro.nome)">
+                    <ng-messages for="forms.cadastro.nome.$error" role="alert" ng-if="isSubmited || forms.cadastro.nome.$touched">
                         <ng-message when="required" class="label label-danger">Nome é obrigatório</ng-message>
                         <ng-message when="maxlength" class="label label-danger">O tamanho é 255</ng-message>
                     </ng-messages>
@@ -44,7 +44,7 @@
                     <label class="control-label label-sm" for="perfil">Perfil</label>
                     <select2 class="form-control no-padder no-border"  required ng-disabled="isShow" id="perfil" name="perfil" ng-model="record.perfil_id" data-placeholder-text-single="'Selecione um perfil'" s2-options="perfil.id as perfil.perfil for perfil in listaPerfil">
                     </select2>
-                    <ng-messages for="forms.cadastro.perfil.$error" role="alert" ng-if="usuario.isDirty(forms.cadastro.perfil)">
+                    <ng-messages for="forms.cadastro.perfil.$error" role="alert" ng-if="isSubmited || forms.cadastro.perfil.$touched">
                         <ng-message when="required" class="label label-danger">Perfil é obrigatório</ng-message>
                     </ng-messages>
                 </div>
@@ -52,7 +52,7 @@
                 <div class="form-group col-sm-4 required">
                     <label class="control-label label-sm" for="login" >Login</label>
                     <input class="form-control" type="text" placeholder="Longin de acesso" ng-disabled="isShow" id="login" name="login" ng-model="record.login" ng-maxlength="255" required>
-                    <ng-messages for="forms.cadastro.login.$error" role="alert" ng-if="usuario.isDirty(forms.cadastro.login)">
+                    <ng-messages for="forms.cadastro.login.$error" role="alert" ng-if="isSubmited || forms.cadastro.login.$touched">
                         <ng-message when="required" class="label label-danger">Login é obrigatório</ng-message>
                     </ng-messages>
                 </div>
@@ -60,7 +60,7 @@
                 <div class="form-group col-sm-4 required">
                     <label class="control-label label-sm" for="login" >Senha</label>
                     <input class="form-control" type="password" placeholder="Senha de acesso" ng-disabled="isShow" id="senha" name="senha" ng-model="record.senha" required>
-                    <ng-messages for="forms.cadastro.senha.$error" role="alert" ng-if="usuario.isDirty(forms.cadastro.senha)">
+                    <ng-messages for="forms.cadastro.senha.$error" role="alert" ng-if="isSubmited || forms.cadastro.senha.$touched">
                         <ng-message when="required" class="label label-danger">Senha é obrigatório</ng-message>
                     </ng-messages>
                 </div>
