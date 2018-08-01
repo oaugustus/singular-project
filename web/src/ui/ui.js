@@ -74,8 +74,7 @@
         $httpProvider,
         $stateProvider,
         $urlRouterProvider,
-        $localStorageProvider,
-        chosenProvider
+        $localStorageProvider
     ) {
         var state = '/login';
 
@@ -86,16 +85,16 @@
             templateUrl: 'src/ui/views/app.html'
         });
 
-        if (typeof $localStorageProvider.$get('ngStorage').state != 'undefined' &&
-            $localStorageProvider.$get('ngStorage').state != '/login') {
-            state = $localStorageProvider.$get('ngStorage').state;
-        }
-
-        chosenProvider.setOption({
-            placeholder_text: 'Escolha um registro',
-            no_results_text: 'Nenhum registro encontrado',
-            placeholder_text_multiple: 'Escolha um ou mais registros'
-        });
+        // if (typeof $localStorageProvider.$get('ngStorage').state != 'undefined' &&
+        //     $localStorageProvider.$get('ngStorage').state != '/login') {
+        //     var acl = window.APP.acl;
+        //
+        //     if (acl.indexOf('|' + $attr.acl + '|') == -1) {
+        //         $element.remove();
+        //     }
+        //
+        //     state = $localStorageProvider.$get('ngStorage').state;
+        // }
 
         $urlRouterProvider.otherwise(state);
     }
@@ -168,7 +167,7 @@
                 }
                 
                 if (state.persistent) {
-                    address = address.substring(1);
+                    address = address.substring(2);
                     $localStorage.state = address;
                 }
 
