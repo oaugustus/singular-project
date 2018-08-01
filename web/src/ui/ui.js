@@ -133,7 +133,7 @@
                     }).pop();
                 if (state){
                     if (state.acl) {
-                        if (acl.indexOf('|' + state.self.acl + '|') == -1) {
+                        if (acl.indexOf('|' + state.acl + '|') == -1) {
                             event.preventDefault();
                         }
                     }
