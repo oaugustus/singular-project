@@ -33,7 +33,10 @@ class Menu extends SingularService
 
         foreach ($aplicacoes as $aplicacao) {
             $aplicacao['modules'] = $app['sessao.store.modulo']->getModulosByAplicacao($perfilId, $aplicacao['id']);
-            $menu[] = $aplicacao;
+
+            if (count($aplicacao['modules']) > 0) {
+                $menu[] = $aplicacao;
+            }
         }
 
         return $menu;
