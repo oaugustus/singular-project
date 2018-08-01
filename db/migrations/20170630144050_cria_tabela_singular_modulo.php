@@ -13,6 +13,8 @@ class CriaTabelaSingularModulo extends AbstractMigration
         $modulo = $this->table(
             'singular_modulo',
             [
+                'id' => false,
+                'primary_key' => ['id'],
                 'comment' => 'Armazena os registros dos módulos de uma aplicação no menu principal da aplicação'
             ]
         );
@@ -20,17 +22,26 @@ class CriaTabelaSingularModulo extends AbstractMigration
         // define as colunas da tabela
         $modulo
             ->addColumn(
-                'aplicacao_id',
-                'integer',
+                'id',
+                'string',
                 [
+                    'limit' => 40
+                ]
+            )
+            ->addColumn(
+                'aplicacao_id',
+                'string',
+                [
+                    'limit' => 40,
                     'comment' => 'Relacionamento com o registro associado na tabela [singular_aplicacao] 
                     através do campo [id]'
                 ]
             )
             ->addColumn(
                 'modulo_id',
-                'integer',
+                'string',
                 [
+                    'limit' => 40,
                     'null' => true,
                     'comment' => 'Relacionamento com o registro associado na tabela [singular_modulo] 
                     através do campo [id]. Refere-se ao módulo pai, quando aplicável'
@@ -77,12 +88,12 @@ class CriaTabelaSingularModulo extends AbstractMigration
                 ]
             )
             ->addColumn(
-                'tem_migration',
-                'integer',
+                'migration',
+                'string',
                 [
-                    'limit' => \Phinx\Db\Adapter\MysqlAdapter::INT_TINY,
-                    'comment' => 'Se o registro já possui uma entrada no mecanismo de migrations. [1 = Tem, 0 = Não tem]',
-                    'default' => 0
+                    'limit' => 25,
+                    'comment' => 'Se o registro já possui uma entrada no mecanismo de migrations. [timestamp]',
+                    'null' => true
                 ]
             );
 

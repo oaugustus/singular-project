@@ -34,12 +34,12 @@ class Modulo extends SingularStore
 
         $qb->select('t.*')
             ->from($this->table,'t')
-            ->where('t.aplicacao_id = '.$aplicacaoId)
+            ->where('t.aplicacao_id = :aplicacao')
             ->andWhere('t.ativo = "1"')
             ->andWhere('t.modulo_id IS NULL')
             ->orderBy('t.ordem','ASC');
 
-        $rs = $this->db->fetchAll($qb->getSQL());
+        $rs = $this->db->fetchAll($qb->getSQL(),['aplicacao' => $aplicacaoId]);
         $modulos = array();
 
         foreach ($rs as $modulo) {
@@ -68,11 +68,11 @@ class Modulo extends SingularStore
 
         $qb->select('m.*')
             ->from($this->table,'m')
-            ->where('m.modulo_id = '.$moduloId)
+            ->where('m.modulo_id = :modulo')
             ->andWhere('m.ativo = "1"')
             ->orderBy('m.ordem','ASC');
 
-        $rs = $this->db->fetchAll($qb->getSQL());
+        $rs = $this->db->fetchAll($qb->getSQL(), ['modulo' => $moduloId]);
 
         $modulos = array();
 

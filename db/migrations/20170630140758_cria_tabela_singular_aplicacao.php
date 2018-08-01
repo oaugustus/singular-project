@@ -13,12 +13,21 @@ class CriaTabelaSingularAplicacao extends AbstractMigration
         $aplicacao = $this->table(
             'singular_aplicacao',
             [
+                'id' => false,
+                'primary_key' => ['id'],
                 'comment' => 'Armazena os registros das aplicações do menu principal da aplicação'
             ]
         );
 
         // define as colunas da tabela
         $aplicacao
+            ->addColumn(
+                'id',
+                'string',
+                [
+                    'limit' => 40
+                ]
+            )
             ->addColumn(
                 'aplicacao',
                 'string',
@@ -44,12 +53,12 @@ class CriaTabelaSingularAplicacao extends AbstractMigration
                 ]
             )
             ->addColumn(
-                'tem_migration',
-                'integer',
+                'migration',
+                'string',
                 [
-                    'limit' => \Phinx\Db\Adapter\MysqlAdapter::INT_TINY,
-                    'comment' => 'Se o registro já possui uma entrada no mecanismo de migrations. [1 = Tem, 0 = Não tem]',
-                    'default' => 0
+                    'limit' => 25,
+                    'comment' => 'Se o registro já possui uma entrada no mecanismo de migrations. [timestamp]',
+                    'null' => true
                 ]
             );
 

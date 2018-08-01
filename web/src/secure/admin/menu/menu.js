@@ -3,16 +3,12 @@
     'use strict';
 
     /**
-     * Módulo de frontend.
+     * Módulo de frontend responsável pelo gerenciamento de menus.
      *
      * @author Otávio Fernandes <otavio@netonsolucoes.com.br>
      */
-    angular.module('singular.admin', [
-        ,'admin.usuario'
-        ,'admin.permissao'
-        ,'admin.componente'
-            ,'admin.menu'
-            /*@modules*/
+    angular.module('admin.menu', [
+        /*@modules*/
     ])
         .config(
             [
@@ -29,6 +25,13 @@
     function configFn(
         $stateProvider
     ){
+        $stateProvider.state('app.menu', {
+            url: '/admin/menu',
+            acl: 'f-menus-alterar',
+            controller: 'menu.MenuCtrl',
+            templateUrl: getView('menu.list')
+        })
+        ;
     }
 
     /**
@@ -38,7 +41,7 @@
      * @returns {string}
      */
     function getView(view) {
-        return 'src/secure/admin/views/' + view + '.html';
+        return 'src/secure/admin/menu/views/' + view + '.html';
     }
 
 }());

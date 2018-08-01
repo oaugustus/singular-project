@@ -71,8 +71,9 @@ class CriaTabelaSingularComponente extends AbstractMigration
             )
             ->addColumn(
                 'menu_id',
-                'integer',
+                'string',
                 [
+                    'limit' => 40,
                     'comment' => 'Relacionamento com o registro associado na tabela [singular_modulo] 
                     através do campo [id]. Refere-se ao módulo de menu, caso o componente seja do tipo M',
                     'null' => true

@@ -29,7 +29,7 @@ class Menu extends SingularService
 
         $menu = array();
 
-        $aplicacoes = $app['sessao.store.aplicacao']->findAll();
+        $aplicacoes = $app['sessao.store.aplicacao']->setProfile('ativo')->findAll();
 
         foreach ($aplicacoes as $aplicacao) {
             $aplicacao['modules'] = $app['sessao.store.modulo']->getModulosByAplicacao($perfilId, $aplicacao['id']);

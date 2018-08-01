@@ -14,7 +14,8 @@ class InsereRegistrosIniciaisSingular extends AbstractMigration
                 'id' => 1,
                 'aplicacao' => 'Administração',
                 'ordem' => 100,
-                'ativo' => 1
+                'ativo' => 1,
+                'migration' => time()
             ]
         ];
 
@@ -28,7 +29,8 @@ class InsereRegistrosIniciaisSingular extends AbstractMigration
                 'ui_sref' => 'app.permissao',
                 'aplicacao_id' => 1,
                 'ordem' => 100,
-                'ativo' => 1
+                'ativo' => 1,
+                'migration' => time()
             ]
         ];
         

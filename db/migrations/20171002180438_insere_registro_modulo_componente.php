@@ -17,7 +17,8 @@ class InsereRegistroModuloComponente extends AbstractMigration
                 'ui_sref' => 'app.componente',
                 'aplicacao_id' => 1,
                 'ordem' => 101,
-                'ativo' => 1
+                'ativo' => 1,
+                'migration' => time()
             ]
         ];
 

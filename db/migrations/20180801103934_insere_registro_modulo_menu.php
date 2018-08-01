@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class InsereRegistroModuloUsuario extends AbstractMigration
+class InsereRegistroModuloMenu extends AbstractMigration
 {
     /**
      * Insere os registros no banco.
@@ -11,12 +11,12 @@ class InsereRegistroModuloUsuario extends AbstractMigration
     {
         $modulos = [
             [
-                'id' => 2,
-                'modulo' => 'Usuários',
-                'icon_cls' => 'fa fa-users',
-                'ui_sref' => 'app.usuario-list',
+                'id' => 4,
+                'modulo' => 'Menus',
+                'icon_cls' => 'fa fa-list-ul',
+                'ui_sref' => 'app.menu',
                 'aplicacao_id' => 1,
-                'ordem' => 100,
+                'ordem' => 101,
                 'ativo' => 1,
                 'migration' => time()
             ]
@@ -30,6 +30,6 @@ class InsereRegistroModuloUsuario extends AbstractMigration
      */
     public function down()
     {
-        $this->execute('DELETE FROM singular_modulo WHERE id = 2');
+        $this->execute('DELETE FROM singular_modulo WHERE id = 4');
     }
 }

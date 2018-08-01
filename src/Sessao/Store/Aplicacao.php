@@ -31,7 +31,8 @@ class Aplicacao extends SingularStore
      * @var array
      */
     protected $profiles = [
-        'default' => [
+        'default' => [],
+        'ativo' => [
             'filters' => ['t.ativo' => 1]
         ]
     ];
