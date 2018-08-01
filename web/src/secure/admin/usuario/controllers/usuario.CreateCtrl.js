@@ -38,7 +38,7 @@
          *
          * @type {boolean}
          */
-        $scope.isCreate = true;
+        $scope.viewState = 'create';
 
         /**
          * Variável de validação da exibição do formulário.

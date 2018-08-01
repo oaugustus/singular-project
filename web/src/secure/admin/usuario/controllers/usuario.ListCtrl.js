@@ -89,12 +89,6 @@
             });
         };
 
-        /**
-         * Remove o registro de um usuário pelo seu id.
-         *
-         * @param {int} id
-         */
-
         // inicializa o controlador
         $scope.onInit();
     }

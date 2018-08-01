@@ -87,20 +87,6 @@
                         return 'Não';
                         break;
                 }
-            },
-
-            /**
-             * Verifica de um campo foi acionado.
-             *
-             * @param field
-             * @return {boolean}
-             */
-            isDirty: function(field) {
-                if (field) {
-                    return me.isSubmited || field.$dirty;
-                }
-
-                return false;
             }
         };
 

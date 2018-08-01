@@ -35,7 +35,7 @@
          *
          * @type {boolean}
          */
-        $scope.isShow = true;
+        $scope.viewState = 'show';
 
         /**
          * Ainda não possui o registro ao abrir a tela.

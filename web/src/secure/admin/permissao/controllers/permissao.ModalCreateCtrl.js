@@ -25,7 +25,6 @@
      * @param $uibModalInstance
      * @param toastr
      * @param $sngApi
-     * @param PerfilService
      * @constructor
      */
     function Controller(

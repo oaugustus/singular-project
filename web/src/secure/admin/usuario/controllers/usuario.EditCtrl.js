@@ -39,9 +39,9 @@
         /**
          * Define que o formulário está em processo de edição.
          *
-         * @type {boolean}
+         * @type {string}
          */
-        $scope.isEdit = true;
+        $scope.viewState = 'edit';
 
         /**
          * Ainda não possui o registro ao abrir a tela.
