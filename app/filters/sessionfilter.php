@@ -10,4 +10,4 @@ $app->before(function (Request $request) use ($app) {
             $request->request->set("session.".$key, $value);
         }
     }
-});
+},500);

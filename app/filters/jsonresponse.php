@@ -11,4 +11,4 @@ $app->after(function (Request $request, Response $response) use ($app) {
         $content['monitor.time'] = microtime(true) - $app['monitor.start_time'];
         $response->setContent(json_encode($content));
     }
-});
+},\Silex\Application::LATE_EVENT);
