@@ -16,9 +16,7 @@ use Singular\Annotation\Before;
 /**
  * Classe Aplicacao
  *
- * @Controller(
- *     @Before({"sessao.service.aplicacao:injectId"})
- * )
+ * @Controller
  *
  * @author Otávio Fernandes <otavio@netonsolucoes.com.br>
  */
@@ -32,4 +30,15 @@ class Aplicacao extends SingularController
      * @var $store
      */
     protected $store = 'aplicacao';
+
+    /**
+     * Adiciona o ID da aplicação antes de salvar o registro no banco, caso ele não exista.
+     *
+     * @param Request $request
+     */
+    public function beforeSave(Request $request)
+    {
+        $id = $request->request->get('id', uniqid());
+        $request->request->set('id', $id);
+    }
 }
