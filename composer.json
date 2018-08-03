@@ -19,7 +19,8 @@
         "singular/command": "dev-master",
         "robmorgan/phinx": "^0.8.1",
         "oyejorge/less.php": "v1.7.0.14",
-        "claviska/simpleimage": "^3.3"
+        "claviska/simpleimage": "^3.3",
+        "cocur/slugify": "^3.1"
     },
     "repositories": [
       {
