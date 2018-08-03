@@ -10,14 +10,15 @@
     angular.module(
         'singular.ui',
         [
-            'toastr',
-            'angular-loading-bar',
-            'localytics.directives',
-            'ngSweetAlert',
-            'ngHolder',
-            'ngJsTree',
-            'ngMessages',
-            'ui.router'
+             'toastr'
+            ,'angular-loading-bar'
+            ,'localytics.directives'
+            ,'ngSweetAlert'
+            ,'ngHolder'
+            ,'ngJsTree'
+            ,'ngMessages'
+            ,'ui.router'
+            ,'ui.select'
         ]
     )
         // definição de constantes de interface
@@ -166,10 +167,10 @@
                     return false;
                 }
                 
-                if (state.persistent) {
-                    address = address.substring(2);
-                    $localStorage.state = address;
-                }
+                // if (state.persistent) {
+                //     address = address.substring(2);
+                //     $localStorage.state = address;
+                // }
 
             });
 

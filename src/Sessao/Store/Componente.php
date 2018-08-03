@@ -30,8 +30,11 @@ class Componente extends SingularStore
      */
     protected $profiles = [
         'default' => [
-            'select' => ['t.*'],
-            'joins' => [],
+            'select' => ['t.*','a.aplicacao'],
+            'joins' => [
+                ['singular_modulo','m','m.id = t.menu_id','left'],
+                ['singular_aplicacao','a','a.id = m.aplicacao_id','left']
+            ],
             'filters' => [],
             'groupings' => []
         ],

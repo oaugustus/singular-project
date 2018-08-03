@@ -16,7 +16,26 @@ use Singular\Annotation\Parameter;
  */
 class Modulo extends SingularStore
 {
+    /**
+     * Referência à tabela no banco de dados.
+     *
+     * @var string
+     */
     protected $table = 'singular_modulo';
+
+    /**
+     * Definição dos perfis de consulta.
+     *
+     * @var array
+     */
+    protected $profiles = [
+        'default' => [
+            'select' => ['t.*','a.aplicacao'],
+            'joins' => [
+                ['singular_aplicacao','a','a.id = t.aplicacao_id']
+            ]
+        ]
+    ];
     
     /**
      * Recupera os módulos que um usuário possui privilégio de acesso.

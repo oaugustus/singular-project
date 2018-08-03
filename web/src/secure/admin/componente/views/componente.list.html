@@ -100,8 +100,17 @@
                                     <div class="form-group pull-in clearfix">
                                         <div class="form-group col-sm-12 required">
                                             <label>Módulo</label>
-                                            <select2 class="form-control no-padder no-border" required id="parente" name="parente" ng-model="componente.parent" placeholder="Selecione" s2-options="modulo.id as modulo.text for modulo in parents">
-                                            </select2>
+                                            <!--<ui-select ng-model="componente.parent" class="no-padder no-border">
+                                                <ui-select-match placeholder="Selecione">
+                                                    {{$select.selected.aplicacao}} \ {{$select.selected.text}}
+                                                </ui-select-match>
+                                                <ui-select-choices group-by="'aplicacao'" repeat="modulo in (parents | filter: $select.search) track by modulo.id">
+                                                    <span ng-bind="modulo.text"></span>
+                                                </ui-select-choices>
+                                            </ui-select>-->
+                                            <select class="form-control" required id="parente" name="parente" ng-model="componente.parent" placeholder="Selecione" ng-options="modulo.id as modulo.text group by modulo.aplicacao for modulo in parents">-->
+                                            </select>
+
                                             <ng-messages for="forms.componente.parente.$error" role="alert" ng-if="isSubmited || forms.componente.parente.$touched">
                                                 <ng-message when="required" class="label label-danger">Módulo é obrigatório</ng-message>
                                             </ng-messages>
@@ -113,8 +122,9 @@
                                     <div class="form-group pull-in clearfix">
                                         <div class="form-group col-sm-12 required">
                                             <label>Menu</label>
-                                            <select2 class="form-control no-padder no-border" required id="menu" name="menu" ng-model="componente.menu_id" placeholder="Selecione" s2-options="menu.id as menu.modulo for menu in menus">
-                                            </select2>
+                                            <select class="form-control" required id="menu" name="menu" ng-model="componente.menu_id" placeholder="Selecione" ng-options="menu.id as menu.modulo group by menu.aplicacao for menu in menus">-->
+                                            </select>
+
                                             <ng-messages for="forms.componente.menu.$error" role="alert" ng-if="isSubmited || forms.componente.menu.$touched">
                                                 <ng-message when="required" class="label label-danger">Menu é obrigatório</ng-message>
                                             </ng-messages>
