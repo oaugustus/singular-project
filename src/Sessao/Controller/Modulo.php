@@ -14,13 +14,11 @@ use Singular\Annotation\After;
 use Singular\Annotation\Before;
 
 /**
- * Classe Modulo
+ * Classe Modulo.
  *
- * @Controller(
- *     @Before({"sessao.service.modulo:injectId"})
- * )
+ * @Controller
  *
- * @author Author <author@email.com>
+ * @author Otávio Fernandes <otavio@netonsolucoes.com.br>
  */
 class Modulo extends SingularController
 {
@@ -32,4 +30,34 @@ class Modulo extends SingularController
      * @var $store
      */
     protected $store = 'modulo';
+
+    /**
+     * Altera a requisição antes de salvar o registro do módulo.
+     *
+     * @param Request $request
+     */
+    protected function beforeSave(Request $request)
+    {
+        $id = $request->request->get('id', uniqid());
+        $request->request->set('id', $id);
+    }
+
+    /**
+     * Acionado após salvar o módulo
+     *
+     * @param Request $request
+     * @param array   $response
+     *
+     * @return array
+     */
+    public function afterSave(Request $request, $response)
+    {
+        $app = $this->app;
+
+        // cria o componente vinculado a este menu
+        $app['sessao.service.componente']->createFromModulo($request->get('id'), $request->request->all());
+
+        return $response;
+    }
+
 }
