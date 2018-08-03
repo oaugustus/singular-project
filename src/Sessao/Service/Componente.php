@@ -1,6 +1,7 @@
 <?php
 namespace Sessao\Service;
 
+use Cocur\Slugify\Slugify;
 use Singular\SingularService;
 use Singular\Annotation\Service;
 use Singular\Annotation\Parameter;
@@ -15,6 +16,37 @@ use Singular\Annotation\Parameter;
  */
 class Componente extends SingularService
 {
+    /**
+     * Cria um novo componente a partir de um módulo recém criado.
+     *
+     * @param string $moduloId
+     * @param array  $moduloData
+     */
+    public function createFromModulo($moduloId, $moduloData)
+    {
+        $app = $this->app;
+
+        $componentExists = $app['sessao.store.componente']->findOneBy([
+            'menu_id' => $moduloId
+        ]);
+
+        if (!$componentExists) {
+            $slugfy = new Slugify();
+
+            $data = [
+                'tipo' => 'M',
+                'icon' => $moduloData['icon_cls'],
+                'menu_id' => $moduloId,
+                'text' => $moduloData['modulo'],
+                'chave' => 'm-'.$slugfy->slugify($moduloData['modulo'],'_'),
+                'parent_id' => null,
+                'parent' => '#'
+            ];
+
+            $this->saveComponente($data);
+        }
+    }
+
     /**
      * Salva o registro de um componente no banco de dados.
      *
@@ -35,7 +67,7 @@ class Componente extends SingularService
         if (!$hasId) {
             $data['id'] = uniqid();
         }
-        
+
         $componenteId = $app['sessao.store.componente']->save($data);
 
         if (!$hasId && $data['tipo'] == 'M') {
@@ -117,11 +149,9 @@ class Componente extends SingularService
      */
     private function getNomeModulo($text)
     {
-        $nomemodulo = preg_replace( '/[`^~\'"]/', null, iconv( 'UTF-8', 'ASCII//TRANSLIT', $text ) );
-        $nomemodulo = strtolower($nomemodulo);
-        $nomemodulo = trim($nomemodulo);
+        $slugfy = new Slugify();
 
-        return $nomemodulo;
+        return $slugfy->slugify($text,'_');
     }
 
     /**
