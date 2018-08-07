@@ -1,0 +1,37 @@
+<header class="panel-heading">
+    <span class="h4">
+        <i class="fa fa-cloud"></i>&nbsp;Controladores
+    </span>
+</header>
+<div class="panel-body">
+    <div class="panel panel-default">
+        <md-table-container>
+            <table md-table>
+                <thead md-head>
+                <tr md-row>
+                    <th md-column class="col-md-4"><span>Pacote</span></th>
+                    <th md-column class="col-md-8"><span>Controlador</span></th>
+                </tr>
+                </thead>
+                <tbody md-body>
+                <tr md-row ng-repeat="pacote in pacotes">
+                    <td md-cell>
+                        {{pacote.name}}
+                    </td>
+                    <td md-cell>
+                        <button class="btn btn-xs btn-default" ng-if="!pacote.active">Ativar</button>
+                        <button class="btn btn-xs btn-default" ng-if="pacote.active">Desativar</button>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody md-body ng-if="records.length == 0">
+                <tr md-row>
+                    <td colspan="6" md-cell style="text-align: center;">
+                        <h2><i class="fa fa-folder-open"></i><br> Desculpe, nenhum pacote foi encontrado.</h2>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+    </div>
+</div>

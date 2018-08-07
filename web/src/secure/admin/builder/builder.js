@@ -7,13 +7,8 @@
      *
      * @author Otávio Fernandes <otavio@netonsolucoes.com.br>
      */
-    angular.module('singular.admin', [
-        ,'admin.usuario'
-        ,'admin.permissao'
-        ,'admin.componente'
-            ,'admin.menu'
-            ,'admin.builder'
-            /*@modules*/
+    angular.module('admin.builder', [
+        /*@modules*/
     ])
         .config(
             [
@@ -30,6 +25,12 @@
     function configFn(
         $stateProvider
     ){
+        $stateProvider.state('app.builder', {
+            url: '/builder',
+            controller: 'builder.BuilderCtrl',
+            templateUrl: getView('builder')
+        })
+        ;
     }
 
     /**
@@ -39,7 +40,7 @@
      * @returns {string}
      */
     function getView(view) {
-        return 'src/secure/admin/views/' + view + '.html';
+        return 'src/secure/admin/builder/views/' + view + '.html';
     }
 
 }());

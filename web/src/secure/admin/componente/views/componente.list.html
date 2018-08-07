@@ -100,14 +100,6 @@
                                     <div class="form-group pull-in clearfix">
                                         <div class="form-group col-sm-12 required">
                                             <label>Módulo</label>
-                                            <!--<ui-select ng-model="componente.parent" class="no-padder no-border">
-                                                <ui-select-match placeholder="Selecione">
-                                                    {{$select.selected.aplicacao}} \ {{$select.selected.text}}
-                                                </ui-select-match>
-                                                <ui-select-choices group-by="'aplicacao'" repeat="modulo in (parents | filter: $select.search) track by modulo.id">
-                                                    <span ng-bind="modulo.text"></span>
-                                                </ui-select-choices>
-                                            </ui-select>-->
                                             <select class="form-control" required id="parente" name="parente" ng-model="componente.parent" placeholder="Selecione" ng-options="modulo.id as modulo.text group by modulo.aplicacao for modulo in parents">-->
                                             </select>
 
