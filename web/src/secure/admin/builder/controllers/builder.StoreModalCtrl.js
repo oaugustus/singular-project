@@ -3,12 +3,12 @@
     'use strict';
 
     /**
-     * Controlador responsável pela modal criação de um novo pacote.
+     * Controlador responsável pela modal criação de um novo store.
      *
      * @author Otávio Fernandes <otavio@netonsolucoes.com.br>
      */
     angular.module('admin.builder').controller(
-        'builder.PacoteModalCtrl',
+        'builder.StoreModalCtrl',
         [
              '$scope'
             ,'$uibModalInstance'
@@ -42,28 +42,44 @@
         $scope.pacoteApi = $sngApi('builder/pacote');
 
         /**
-         * Objeto do pacote.
+         * Api de comunicação com o controlador de store no backend.
+         *
+         * @type {$sngApi}
+         */
+        $scope.storeApi = $sngApi('builder/store');
+
+        /**
+         * Objeto do store.
          *
          * @type {object}
          */
-        $scope.pacote = {};
+        $scope.store = {};
 
         /**
-         * Salva o registro do novo pacote.
+         * Inicializa o controlador.
          */
-        $scope.createPacote = function() {
+        $scope.onInit = function(){
+            $scope.pacoteApi.find().then(function(results){
+                $scope.listaPacotes = results;
+            });
+        };
+
+        /**
+         * Salva o registro do novo store.
+         */
+        $scope.createStore = function() {
             // marca que o formulário já foi submetido
             $scope.isSubmited = true;
 
-            if (!$scope.forms.pacote.$invalid) {
+            if (!$scope.forms.store.$invalid) {
                 $scope.isSaving = true;
-                $scope.pacoteApi.call('create',$scope.pacote).then(function(response){
+                $scope.storeApi.call('create',$scope.store).then(function(response){
                     $scope.isSaving = false;
 
                     if (!response.success) {
-                        toastr.error('Já existe um pacote registrado com este nome!');
+                        toastr.error('Já existe um store registrado com este nome!');
                     } else {
-                        toastr.success('Pacote criado com sucesso!');
+                        toastr.success('Store criado com sucesso!');
                         $scope.close();
                     }
                 });
@@ -83,6 +99,7 @@
             $uibModalInstance.close();
         };
 
+        $scope.onInit();
     }
 
 }());

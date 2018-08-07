@@ -31,7 +31,6 @@ class Pacote extends SingularService
             ->directories()
             ->in($app['singular.directory.src'])
             ->depth('== 0')
-            ->exclude(['Builder','Sessao'])
             ->sortByName();
 
         $packs = [];
