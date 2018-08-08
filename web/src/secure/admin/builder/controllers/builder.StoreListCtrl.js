@@ -17,6 +17,7 @@
             ,'SweetAlert'
             ,'toastr'
             ,'$sngApi'
+            ,'builder.BuilderService'
             ,Controller
         ]
     );
@@ -31,6 +32,7 @@
      * @param SweetAlert
      * @param toastr
      * @param $sngApi
+     * @param BuilderService
      * @constructor
      */
     function Controller(
@@ -41,6 +43,7 @@
         ,SweetAlert
         ,toastr
         ,$sngApi
+        ,Builder
     ) {
         /**
          * Api de comunicação com o controlador de store no backend.
@@ -55,6 +58,13 @@
          * @type {Array}
          */
         $scope.stores = [];
+
+        /**
+         * Referência ao serviço de Builder.
+         *
+         * @type {Object}
+         */
+        $scope.Builder = Builder;
 
         /**
          * Inicialização do controlador.

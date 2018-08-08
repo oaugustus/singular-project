@@ -1,0 +1,45 @@
+<div ng-controller="builder.ModuloListCtrl">
+<header class="panel-heading p-b">
+    <span class="h4">
+        <i class="fa fa-cubes"></i>&nbsp; Módulos
+    </span>
+    <button class="btn btn-addon btn-danger pull-right btn-sm " ng-click="abreModalModulo()">
+        <i class="fa fa-plus"></i> Novo módulo
+    </button>
+</header>
+<div class="panel-body">
+    <ul class="breadcrumb bg-white b-a">
+        <li><a ng-click="popParent(Builder.parents.length)"><i class="fa fa-home"></i> Módulos</a></li>
+        <li ng-repeat="parent in Builder.parents" ng-class="{'active': $last}">
+            <a ng-click="popParent(Builder.parents.length - $index - 1)" ng-if="!$last">{{parent}}</a>
+            <span ng-if="$last">{{parent}}</span>
+        </li>
+    </ul>
+
+    <div class="panel panel-default">
+        <md-table-container>
+            <table md-table>
+                <thead md-head>
+                <tr md-row>
+                    <th md-column class="col-md-9"><span>Módulo</span></th>
+                </tr>
+                </thead>
+                <tbody md-body>
+                <tr md-row ng-repeat="modulo in modulos">
+                    <td md-cell>
+                        <btn class="text-info btn-link" ng-click="selectParent(modulo)">{{modulo.name}}</btn>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody md-body ng-if="modulos.length == 0">
+                <tr md-row>
+                    <td colspan="6" md-cell style="text-align: center;">
+                        <h4><i class="fa fa-cubes"></i><br> Desculpe, nenhum módulo foi encontrado.</h4>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+    </div>
+</div>
+</div>

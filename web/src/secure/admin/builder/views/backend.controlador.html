@@ -13,9 +13,9 @@
                 <div class="md-toolbar-tools">
                     <md-icon>search</md-icon>
                     <form flex name="filter.form">
-                        <input type="text" ng-model="query.filter" ng-model-options="filter.options" placeholder="filtrar">
+                        <input type="text" ng-model="Builder.query.filter" placeholder="filtrar">
                     </form>
-                    <md-button class="md-icon-button" ng-click="removeFilter()">
+                    <md-button class="md-icon-button" ng-click="Builder.query.filter = ''">
                         <md-icon>close</md-icon>
                     </md-button>
                 </div>
@@ -30,7 +30,7 @@
                     </tr>
                     </thead>
                     <tbody md-body>
-                    <tr md-row ng-repeat="controlador in controladores | filter:query.filter as results">
+                    <tr md-row ng-repeat="controlador in controladores | filter:Builder.query.filter as results">
                         <td md-cell>
                             {{controlador.pacote}}
                         </td>
