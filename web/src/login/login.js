@@ -21,6 +21,9 @@
             ,'singular.ui'
             ,'ngMaterial'
             ,'ngMessages'
+            ,'TesteCtrl'
+            ,'login.TesteCtrl'
+            ,'login.TesteCtrl'
             /*@modules*/
         ]
     )

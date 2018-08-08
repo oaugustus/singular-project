@@ -27,7 +27,8 @@
             query: {
                 filter: ''
             },
-            parents: []
+            parents: [],
+            selected: ''
         };
 
 

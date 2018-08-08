@@ -8,7 +8,7 @@
      * @author Otávio Fernandes <otavio@netonsolucoes.com.br>
      */
     angular.module('admin.builder').controller(
-        'builder.ModuloModalCtrl',
+        'builder.FrontControladorModalCtrl',
         [
              '$scope'
             ,'$uibModalInstance'
@@ -45,24 +45,39 @@
         $scope.moduloApi = $sngApi('builder/modulo');
 
         /**
-         * Objeto do modulo.
+         * Tipos de controladores.
+         *
+         * @type {array}
+         */
+        $scope.tipos = [
+            {id: 'common', display: 'Comum'},
+            {id: 'list', display: 'Lista'},
+            {id: 'form', display: 'Formulário'},
+            {id: 'modal', display: 'Modal'}
+        ];
+
+        /**
+         * Objeto do controlador.
          *
          * @type {object}
          */
-        $scope.modulo = {
-            dir: Builder.selected
+        $scope.controlador = {
+            dir: Builder.selected,
+            modulo: getNomeModulo(Builder.selected)
         };
+
+        $scope.forms = {};
 
         /**
          * Salva o registro do novo modulo.
          */
-        $scope.createModulo = function() {
+        $scope.createControlador = function() {
             // marca que o formulário já foi submetido
             $scope.isSubmited = true;
 
-            if (!$scope.forms.modulo.$invalid) {
+            if (!$scope.forms.controlador.$invalid) {
                 $scope.isSaving = true;
-                $scope.moduloApi.call('create',$scope.modulo).then(function(response){
+                $scope.controladorApi.call('create',$scope.controlador).then(function(response){
                     $scope.isSaving = false;
 
                     if (!response.success) {
@@ -88,6 +103,27 @@
             $uibModalInstance.close();
         };
 
+        /**
+         * Recupera o namespace do módulo.
+         *
+         * @param path
+         */
+        function getNomeModulo(path) {
+            path = path.split('\\').join('/');
+            var parts = path.split('/');
+
+            if (parts.length > 1) {
+                var namespace = parts[parts.length -2];
+
+                if (namespace == "") {
+                    namespace = "app";
+                }
+
+                return  namespace + '.' + parts[parts.length - 1];
+            } else {
+                return 'app.' + parts[0];
+            }
+        }
     }
 
 }());

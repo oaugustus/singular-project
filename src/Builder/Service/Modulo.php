@@ -17,39 +17,70 @@ use Symfony\Component\Finder\Finder;
 class Modulo extends SingularService
 {
     /**
-     * Recupera a lista de módulos da aplicação.
+     * Recupera a lista de módulos da aplicação de forma hierárquica.
      *
-     * @param string $parent
+     * @param string $path
      * @return array
      */
-    public function listModulos($parent)
+    public function listModulos($path)
     {
         $app = $this->app;
 
-        $controllers = [];
+        $parents = explode('/', $path);
+        $modulos = [];
 
-        $finder = new Finder();
-        $parentDir = $app['injector.directory.src'].DIRECTORY_SEPARATOR.$parent;
+        for ($i = 0; $i < count($parents); $i++) {
+            $finder = new Finder();
+            $parent = $this->getPath($i, $parents);
+            $previous = '';
 
-        $finder
-            ->files()
-            ->name('*.js')
-            ->in($parentDir)
-            ->depth('== 1')
-            ->sortByName();
-
-        foreach ($finder as $file) {
-            $moduleFile = str_replace('.js','',$file->getFilename());
-
-            if ($file->getRelativePath() == $moduleFile) {
-                $controllers[] = [
-                    'name' => $moduleFile,
-                    'parent' => $parent
-                ];
+            if ($i > 0) {
+                $previous = $this->getPath($i -1, $parents);
             }
+
+            $parentDir = $app['injector.directory.src'].DIRECTORY_SEPARATOR.$parent;
+
+            $finder
+                ->files()
+                ->name('*.js')
+                ->in($parentDir)
+                ->depth('== 1')
+                ->sortByName();
+
+            $modulo = ['name' => $parents[$i],'parent' => $previous];
+
+            foreach ($finder as $file) {
+                $moduleFile = str_replace('.js','',$file->getFilename());
+
+                if ($file->getRelativePath() == $moduleFile) {
+                    $modulo['childs'][] = [
+                        'name' => $moduleFile,
+                        'parent' => $parent
+                    ];
+
+                }
+            }
+
+            $modulos[] = $modulo;
+
         }
 
-        return $controllers;
+        return $modulos;
+    }
+
+    /**
+     * Recupera o caminho completo de um módulo.
+     *
+     * @param $index
+     * @param $list
+     *
+     * @return string
+     */
+    private function getPath($index, $list)
+    {
+        $parents = array_slice($list, 0, $index+1);
+
+        return implode(DIRECTORY_SEPARATOR, $parents);
     }
 
 }

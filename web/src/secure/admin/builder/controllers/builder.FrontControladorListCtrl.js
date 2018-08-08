@@ -3,12 +3,12 @@
     'use strict';
 
     /**
-     * Controlador responsável pela listagem de módulos do builder.
+     * Controlador responsável pela listagem de controladores de frontend do builder.
      *
      * @author Otávio Fernandes <otavio@netonsolucoes.com.br>
      */
     angular.module('admin.builder').controller(
-        'builder.ModuloListCtrl',
+        'builder.FrontControladorListCtrl',
         [
             '$scope'
             ,'$state'
@@ -53,11 +53,11 @@
         $scope.moduloApi = $sngApi('builder/modulo');
 
         /**
-         * Módulo.
+         * Api de comunicação com o controlador FrontControlador no backend.
          *
-         * @type {Object}
+         * @type {$sngApi}
          */
-        $scope.modulo = {};
+        $scope.controladorApi = $sngApi('builder/front_controlador');
 
         /**
          * Referência ao serviço do Builder.
@@ -71,6 +71,7 @@
          */
         $scope.onInit = function(){
             loadModulos(Builder.selected);
+            loadControladores();
         };
 
         /**
@@ -85,17 +86,17 @@
         /**
          * Abre a modal de criação de pacote.
          */
-        $scope.abreModalModulo = function () {
+        $scope.abreModalControlador = function () {
 
             var modal = $uibModal.open({
-                templateUrl: 'src/secure/admin/builder/views/frontend.modulo.modal.html',
-                controller: 'builder.ModuloModalCtrl',
+                templateUrl: 'src/secure/admin/builder/views/frontend.controlador.modal.html',
+                controller: 'builder.FrontControladorModalCtrl',
                 size: 'md',
                 scope: $scope
             });
 
             modal.result.then(function (rec) {
-                loadModulos(Builder.selected);
+                loadControladores(Builder.selected);
             });
 
         };
@@ -120,7 +121,18 @@
                 }
 
                 Builder.selected = path;
+                loadControladores();
                 Builder.parents = response.results;
+            });
+        }
+
+        /**
+         * Carrega os controladores de frontend da aplicação.
+         */
+        function loadControladores() {
+
+            $scope.controladorApi.call('find',{path: Builder.selected}).then(function(response){
+                $scope.controladores = response.results;
             });
         }
 

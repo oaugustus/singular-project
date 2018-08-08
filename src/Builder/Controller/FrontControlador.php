@@ -15,16 +15,16 @@ use Singular\Annotation\After;
 use Singular\Annotation\Before;
 
 /**
- * Classe Modulo
+ * Classe FrontControlador
  *
  * @Controller
  *
  * @author Otávio Fernandes <otavio@netonsolucoes.com.br>
  */
-class Modulo extends SingularController
+class FrontControlador extends SingularController
 {
     /**
-     * Retorna a lista dos módulos em um nível da hierarquia.
+     * Retorna a lista dos controladores em um path.
      *
      * @Route(method="post")
      *
@@ -39,7 +39,7 @@ class Modulo extends SingularController
         $path = $request->get('path','');
 
         return $app->json([
-            'results' => $app['builder.service.modulo']->listModulos($path),
+            'results' => $app['builder.service.front_controlador']->listControladores($path),
             'success' => true
         ]);
 
@@ -58,13 +58,20 @@ class Modulo extends SingularController
     {
         $app = $this->app;
 
-        $module = $request->get('name');
+        $controlador = $request->get('name');
+        $modulo = $request->get('modulo');
         $dir = str_replace('/',DIRECTORY_SEPARATOR,$request->get('dir'));
+
+//        if ($dir[0] == DIRECTORY_SEPARATOR) {
+//            $dir = substr($dir, 1, count($dir)-1);
+//        }
+
+        $tipo = $request->get('tipo');
         $author = isset($app['author.name']) ? $app['author.name'] : 'Author';
         $email = isset($app['author.email']) ? $app['author.email'] : 'Email';
 
         try {
-            $app['singular.service.module']->create($module, $dir, $author, $email);
+            $app['singular.service.front_controller']->create($controlador, $modulo, $dir, $tipo, $author, $email);
             $created = true;
         } catch(\Exception $e) {
             $created = false;
