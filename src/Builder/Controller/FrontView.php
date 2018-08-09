@@ -15,16 +15,16 @@ use Singular\Annotation\After;
 use Singular\Annotation\Before;
 
 /**
- * Classe FrontControlador
+ * Classe FrontView
  *
  * @Controller
  *
  * @author Otávio Fernandes <otavio@netonsolucoes.com.br>
  */
-class FrontControlador extends SingularController
+class FrontView extends SingularController
 {
     /**
-     * Retorna a lista dos controladores em um path.
+     * Retorna a lista das views em um path.
      *
      * @Route(method="post")
      *
@@ -39,14 +39,14 @@ class FrontControlador extends SingularController
         $path = $request->get('path','');
 
         return $app->json([
-            'results' => $app['builder.service.front_controlador']->listControladores($path),
+            'results' => $app['builder.service.front_view']->listViews($path),
             'success' => true
         ]);
 
     }
 
     /**
-     * Cria um novo controlador.
+     * Cria uma nova view.
      *
      * @Route(method="post")
      *
@@ -58,17 +58,15 @@ class FrontControlador extends SingularController
     {
         $app = $this->app;
 
-        $servico = $request->get('name');
-        $modulo = $request->get('modulo');
+        $view = $request->get('name');
         $dir = str_replace('/',DIRECTORY_SEPARATOR,$request->get('dir'));
-
         $tipo = $request->get('tipo');
 
         $author = isset($app['author.name']) ? $app['author.name'] : 'Author';
         $email = isset($app['author.email']) ? $app['author.email'] : 'Email';
 
         try {
-            $app['singular.service.front_controller']->create($servico, $modulo, $dir, $tipo, $author, $email);
+            $app['singular.service.front_view']->create($view, $dir, $tipo, $author, $email);
             $created = true;
         } catch(\Exception $e) {
             $created = false;

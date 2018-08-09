@@ -37,10 +37,10 @@
                             <a ng-click="changePage('frontend.controlador')"  class="list-group-item" ng-class="{'active': currentPage == 'frontend.controlador'}">
                                 <i class="fa fa-fw fa-bolt"></i> Controladores
                             </a>
-                            <a href class="list-group-item">
+                            <a href class="list-group-item" ng-click="changePage('frontend.servico')" ng-class="{'active': currentPage == 'frontend.servico'}">
                                 <i class="fa fa-fw fa-cogs"></i> Serviços
                             </a>
-                            <a href class="list-group-item">
+                            <a href class="list-group-item" ng-click="changePage('frontend.view')" ng-class="{'active': currentPage == 'frontend.view'}">
                                 <i class="fa fa-fw fa-window-maximize"></i> Views
                             </a>
                         </div>

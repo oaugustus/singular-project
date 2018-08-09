@@ -3,12 +3,12 @@
     'use strict';
 
     /**
-     * Controlador responsável pela modal criação de um novo controlador.
+     * Servico responsável pela modal criação de um novo módulo.
      *
      * @author Otávio Fernandes <otavio@netonsolucoes.com.br>
      */
     angular.module('admin.builder').controller(
-        'builder.FrontControladorModalCtrl',
+        'builder.FrontServicoModalCtrl',
         [
              '$scope'
             ,'$uibModalInstance'
@@ -20,7 +20,7 @@
     );
 
     /**
-     * Função de definição do controlador.
+     * Função de definição do servico.
      *
      * @param $scope
      * @param $uibModalInstance
@@ -38,14 +38,14 @@
     ) {
 
         /**
-         * Api de comunicação com o controlador de modulo no backend.
+         * Api de comunicação com o servico de modulo no backend.
          *
          * @type {$sngApi}
          */
         $scope.moduloApi = $sngApi('builder/modulo');
 
         /**
-         * Tipos de controladores.
+         * Tipos de servicoes.
          *
          * @type {array}
          */
@@ -57,11 +57,11 @@
         ];
 
         /**
-         * Objeto do controlador.
+         * Objeto do servico.
          *
          * @type {object}
          */
-        $scope.controlador = {
+        $scope.servico = {
             dir: Builder.selected,
             modulo: getNomeModulo(Builder.selected)
         };
@@ -71,19 +71,19 @@
         /**
          * Salva o registro do novo modulo.
          */
-        $scope.createControlador = function() {
+        $scope.createServico = function() {
             // marca que o formulário já foi submetido
             $scope.isSubmited = true;
 
-            if (!$scope.forms.controlador.$invalid) {
+            if (!$scope.forms.servico.$invalid) {
                 $scope.isSaving = true;
-                $scope.controladorApi.call('create',$scope.controlador).then(function(response){
+                $scope.servicoApi.call('create',$scope.servico).then(function(response){
                     $scope.isSaving = false;
 
                     if (!response.success) {
-                        toastr.error('Já existe um controlador registrado com este nome!');
+                        toastr.error('Já existe um serviço registrado com este nome!');
                     } else {
-                        toastr.success('Controlador criado com sucesso!');
+                        toastr.success('Serviço criado com sucesso!');
                         $scope.close();
                     }
                 });

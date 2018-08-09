@@ -3,12 +3,12 @@
     'use strict';
 
     /**
-     * Controlador responsável pela modal criação de um novo controlador.
+     * View responsável pela modal criação de uma view.
      *
      * @author Otávio Fernandes <otavio@netonsolucoes.com.br>
      */
     angular.module('admin.builder').controller(
-        'builder.FrontControladorModalCtrl',
+        'builder.FrontViewModalCtrl',
         [
              '$scope'
             ,'$uibModalInstance'
@@ -20,7 +20,7 @@
     );
 
     /**
-     * Função de definição do controlador.
+     * Função de definição do view.
      *
      * @param $scope
      * @param $uibModalInstance
@@ -38,32 +38,32 @@
     ) {
 
         /**
-         * Api de comunicação com o controlador de modulo no backend.
+         * Api de comunicação com o view de modulo no backend.
          *
          * @type {$sngApi}
          */
         $scope.moduloApi = $sngApi('builder/modulo');
 
         /**
-         * Tipos de controladores.
+         * Tipos de views.
          *
          * @type {array}
          */
         $scope.tipos = [
-            {id: 'common', display: 'Comum'},
             {id: 'list', display: 'Lista'},
             {id: 'form', display: 'Formulário'},
-            {id: 'modal', display: 'Modal'}
+            {id: 'tab', display: 'Tab'},
+            {id: 'modal', display: 'Modal'},
+            {id: 'filter', display: 'Filter'}
         ];
 
         /**
-         * Objeto do controlador.
+         * Objeto do view.
          *
          * @type {object}
          */
-        $scope.controlador = {
-            dir: Builder.selected,
-            modulo: getNomeModulo(Builder.selected)
+        $scope.view = {
+            dir: Builder.selected
         };
 
         $scope.forms = {};
@@ -71,19 +71,19 @@
         /**
          * Salva o registro do novo modulo.
          */
-        $scope.createControlador = function() {
+        $scope.createView = function() {
             // marca que o formulário já foi submetido
             $scope.isSubmited = true;
 
-            if (!$scope.forms.controlador.$invalid) {
+            if (!$scope.forms.view.$invalid) {
                 $scope.isSaving = true;
-                $scope.controladorApi.call('create',$scope.controlador).then(function(response){
+                $scope.viewApi.call('create',$scope.view).then(function(response){
                     $scope.isSaving = false;
 
                     if (!response.success) {
-                        toastr.error('Já existe um controlador registrado com este nome!');
+                        toastr.error('Já existe uma view registrada com este nome!');
                     } else {
-                        toastr.success('Controlador criado com sucesso!');
+                        toastr.success('View criada com sucesso!');
                         $scope.close();
                     }
                 });
@@ -102,28 +102,6 @@
         $scope.close = function(){
             $uibModalInstance.close();
         };
-
-        /**
-         * Recupera o namespace do módulo.
-         *
-         * @param path
-         */
-        function getNomeModulo(path) {
-            path = path.split('\\').join('/');
-            var parts = path.split('/');
-
-            if (parts.length > 1) {
-                var namespace = parts[parts.length -2];
-
-                if (namespace == "") {
-                    namespace = "app";
-                }
-
-                return  namespace + '.' + parts[parts.length - 1];
-            } else {
-                return 'app.' + parts[0];
-            }
-        }
     }
 
 }());
