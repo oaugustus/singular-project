@@ -166,6 +166,10 @@
 
                             };
 
+                            $scope.close = function(){
+                                $uibModalInstance.close();
+                            };
+
                             $scope.apply = function(){
                                 rawFilter = $scope.filter;
                                 fire('apply', rawFilter);
