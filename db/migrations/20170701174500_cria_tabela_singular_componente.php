@@ -89,19 +89,6 @@ class CriaTabelaSingularComponente extends AbstractMigration
                 ]
             );
 
-
-        // define os relacionamentos
-        $componente
-            ->addForeignKey(
-                'menu_id',
-                'singular_modulo',
-                'id',
-                [
-                    'delete' => 'CASCADE',
-                    'update' => 'NO_ACTION'
-                ]
-            );
-
         // cria a tabela
         $componente->create();
     }

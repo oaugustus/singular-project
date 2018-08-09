@@ -3,7 +3,7 @@
     <span class="h4">
         <i class="fa fa-folder-open"></i>&nbsp; Pacotes
     </span>
-    <button class="btn btn-addon btn-danger pull-right btn-sm " ng-click="abreModalPacote()">
+    <button class="btn btn-addon btn-danger pull-right btn-sm " acl="c-builder-pacote" ng-click="abreModalPacote()">
         <i class="fa fa-plus"></i> Novo pacote
     </button>
 </header>
@@ -23,8 +23,8 @@
                         {{pacote.name}}
                     </td>
                     <td md-cell >
-                        <button class="btn btn-xs btn-default pull-right" ng-if="!pacote.active && pacote.name != 'Sessao' && pacote.name != 'Builder'" ng-click="enablePacote(pacote.name)">Ativar</button>
-                        <button class="btn btn-xs btn-default pull-right" ng-if="pacote.active && pacote.name != 'Sessao' && pacote.name != 'Builder'" ng-click="disablePacote(pacote.name)">Desativar</button>
+                        <button class="btn btn-xs btn-default pull-right" acl="c-builder-pacote" ng-if="!pacote.active && pacote.name != 'Sessao' && pacote.name != 'Builder'" ng-click="enablePacote(pacote.name)">Ativar</button>
+                        <button class="btn btn-xs btn-default pull-right" acl="c-builder-pacote" ng-if="pacote.active && pacote.name != 'Sessao' && pacote.name != 'Builder'" ng-click="disablePacote(pacote.name)">Desativar</button>
                     </td>
                 </tr>
                 </tbody>

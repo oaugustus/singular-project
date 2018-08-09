@@ -27,6 +27,7 @@
     ){
         $stateProvider.state('app.builder', {
             url: '/builder',
+            acl:'m-builder',
             controller: 'builder.BuilderCtrl',
             templateUrl: getView('builder')
         })
