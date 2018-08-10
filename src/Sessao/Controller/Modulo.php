@@ -50,12 +50,29 @@ class Modulo extends SingularController
      *
      * @return array
      */
-    public function afterSave(Request $request, $response)
+    protected function afterSave(Request $request, $response)
     {
         $app = $this->app;
 
         // cria o componente vinculado a este menu
         $app['sessao.service.componente']->createFromModulo($request->get('id'), $request->request->all());
+
+        return $response;
+    }
+
+    /**
+     * Função executada após remover o registro do módulo.
+     *
+     * @param Request $request
+     * @param array   $response
+     *
+     * @return array
+     */
+    protected function afterRemove(Request $request, $response)
+    {
+        $app = $this->app;
+
+        $app['sessao.store.componente']->removeByModulo($request->get('id'));
 
         return $response;
     }

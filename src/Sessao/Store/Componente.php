@@ -71,4 +71,18 @@ class Componente extends SingularStore
 
         return $ids;
     }
+
+    /**
+     * Remove todos os componentes e módulos vinculados há um módulo.
+     *
+     * @param integer $moduloId
+     */
+    public function removeByModulo($moduloId)
+    {
+        $componente = $this->findOneBy(['menu_id' => $moduloId]);
+
+        $this->removeBy(['parent' => $componente['id']]);
+
+        $this->remove($componente['id']);
+    }
 }

@@ -40,7 +40,8 @@ class Componente extends SingularService
                 'text' => $moduloData['modulo'],
                 'chave' => 'm-'.$slugfy->slugify($moduloData['modulo'],'_'),
                 'parent_id' => null,
-                'parent' => '#'
+                'parent' => '#',
+                'session.perfil_id' => $moduloData['session.perfil_id']
             ];
 
             $this->saveComponente($data);
@@ -72,6 +73,9 @@ class Componente extends SingularService
 
         if (!$hasId && $data['tipo'] == 'M') {
             $this->createSubComponentes($componenteId, $data['text']);
+
+            // garante acesso aos componentes criados para o usuário logado
+            $app['singular.service.component']->grantFullAccess($data['session.perfil_id']);
         }
     }
 

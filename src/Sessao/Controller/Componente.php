@@ -52,7 +52,7 @@ class Componente extends SingularController
 
         try {
             $data = $request->request->all();
-            
+
             $componenteId = $app['sessao.service.componente']->saveComponente($data);
 
             $success = true;
