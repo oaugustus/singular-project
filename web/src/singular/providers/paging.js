@@ -18,12 +18,16 @@
         var provider = this;
 
         this.$get = [function(){
-            function pagingFactory(){
+            function pagingFactory(rawPaging){
+                if (!rawPaging) {
+                    rawPaging = {};
+                }
+                
                 var Paging = {
                     isPagingProvider: true,
-                    limit: 100,
-                    options: [10,25,50,100,500],
-                    page: 1,
+                    limit: rawPaging.limit || 100,
+                    options: rawPaging.options || [10,25,50,100,500],
+                    page: rawPaging.page || 1,
                     total: 0,
                     /**
                      * Função que recupera a paginação a ser enviada para o backend.
