@@ -22,7 +22,7 @@
                 if (!rawPaging) {
                     rawPaging = {};
                 }
-                
+
                 var Paging = {
                     isPagingProvider: true,
                     limit: rawPaging.limit || 100,

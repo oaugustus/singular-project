@@ -12,7 +12,7 @@ class InsereRegistrosComponentes1533850323 extends AbstractMigration
 
         $comonentes = [
             ["id" => "5b6cb0a925cce","text" => "Builder","chave" => "m-builder","tipo" => "M","icon" => "fa fa-cubes","parent" => "#","menu_id" => "5b6731ad834ef","migration" => "1533850323"]
-            ,["id" => "5b6cb0fd9b398","text" => "Criar pacote","chave" => "c-builder-criar_pacotes","tipo" => "C","icon" => "fa fa-folder-open","parent" => "5b6cb0a925cce","menu_id" => null,"migration" => "1533850323"]
+            ,["id" => "5b6cb0fd9b398","text" => "Criar pacote","chave" => "c-builder-pacote","tipo" => "C","icon" => "fa fa-folder-open","parent" => "5b6cb0a925cce","menu_id" => null,"migration" => "1533850323"]
             ,["id" => "5b6cb129b76f4","text" => "Criar controlador de backend","chave" => "c-builder-controlador_backend","tipo" => "C","icon" => "fa fa-cloud","parent" => "5b6cb0a925cce","menu_id" => null,"migration" => "1533850323"]
             ,["id" => "5b6cb14a1422c","text" => "Criar serviço de backend","chave" => "c-builder-servico_backend","tipo" => "C","icon" => "fa fa-cogs","parent" => "5b6cb0a925cce","menu_id" => null,"migration" => "1533850323"]
             ,["id" => "5b6cb16a4878c","text" => "Criar store","chave" => "c-builder-store","tipo" => "C","icon" => "fa fa-database","parent" => "5b6cb0a925cce","menu_id" => null,"migration" => "1533850323"]
